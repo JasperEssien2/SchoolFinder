@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/colorCyan500</color>
+    <color name="colorPrimaryDark">@color/colorCyan700</color>
+    <color name="colorAccent">@color/colorCyan200</color>
+
+    <color name="colorCyan500">#005662</color>
+    <color name="colorCyan700">#112B2F</color>
+    <color name="colorCyan200">#4fb3bf</color>
+    <color name="colorGrey">#777777</color>
+    <color name="colorLightGrey">#AAAAAA</color>
+    <color name="colorWhite">#FFffffff</color>
+</resources>
+

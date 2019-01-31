@@ -1,0 +1,44 @@
+<resources>
+
+    <string name="button_activities">Activities</string>
+    <string name="button_get_location">Location</string>
+    <string name="button_edit_courses">Edit Courses</string>
+    <string name="button_add_logo">Add Logo</string>
+
+    <string name="edittext_owners_name">Owners name</string>
+    <string name="edittext_owners_biography">Owners biography</string>
+    <string name="edittext_owners_contact">Owners contact</string>
+    <string name="edittext_owners_email">Owners email</string>
+    <string name="edittext_school_name">School name</string>
+    <string name="edittext_school_contact">School contact</string>
+    <string name="edittext_School_email">School email</string>
+    <string name="edittext_School_biography">School biography</string>
+
+    <string name="title_gallery">Gallery</string>
+    <string name="title_certificates">Certificates</string>
+    <string name="title_achievement">Achievements</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_owner_settings">Owner Settings</string>
+    <string name="title_school_settings">School Settings</string>
+    <string name="title_classes_or_dept_settings">Classes/Dept Settings</string>
+    <string name="title_questions_settings">Questions Settings</string>
+
+    <string name="dialog_title_add_classes">Add Classes</string>
+    <string name="dialog_title_select_courses">Select Courses</string>
+    <string name="dialog_title_requires_exam">Requires Exam?</string>
+
+    <string name="dialog_button_edit">Edit</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_proceed">Proceed</string>
+    <string name="dialog_button_add_course">Add courses</string>
+    <string name="dialog_button_exam_courses">Exam courses</string>
+
+    <string name="tab_school_settings">School Settings</string>
+    <string name="tab_school_owner_settings">Owner Settings</string>
+    <string name="tab_classes_settings">Classes Settings</string>
+    <string name="tab_questions_settings">Questions Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

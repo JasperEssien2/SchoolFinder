@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">School Finder</string>
+
+    <string name="button_notification">Notifications</string>
+    <string name="button_settings">Settings</string>
+    <string name="button_get_location">Location</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="button_sign_in">Log in</string>
+
+    <string name="title_notification">Notification</string>
+    <string name="title_certificates">Certificates</string>
+    <string name="title_achievement">Achievements</string>
+    <string name="dialog_button_edit">Edit</string>
+    <string name="button_search">Search</string>
+    <string name="school_detail_cert_header">SCHOOL CERIFICATES</string>
+    <string name="school_biography">SCHOOL BIOGRAPHY</string>
+    <string name="school_detail_about_owner">ABOUT OWNER</string>
+    <string name="change_password">Change Password</string>
+
+
+</resources>

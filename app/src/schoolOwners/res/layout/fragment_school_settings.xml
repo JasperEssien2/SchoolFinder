@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/school_settings_name_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/edittext_background"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_notification"
+                    android:hint="@string/edittext_school_name"
+                    android:theme="@style/Base.Widget.AppCompat.EditText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/school_settings_contact_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittext_background"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_notification"
+                    android:hint="@string/edittext_school_contact"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_name_field"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_name_field" />
+
+                <EditText
+                    android:id="@+id/school_settings_email_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittext_background"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_notification"
+                    android:hint="@string/edittext_School_email"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_contact_field"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_contact_field" />
+
+                <EditText
+                    android:id="@+id/school_settings_location_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittext_background"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_notification"
+                    android:hint="@string/button_get_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_email_field"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_email_field" />
+
+                <EditText
+                    android:id="@+id/school_settings_biography_field"
+                    style="@style/EditTextSettingsStyle"
+                    android:layout_height="100dp"
+                    android:drawableStart="@drawable/ic_notification"
+                    android:hint="@string/edittext_School_biography"
+                    android:maxHeight="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_location_field"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_location_field" />
+
+                <TextView
+                    android:id="@+id/school_settings_certificate_header"
+                    style="@style/HeaderTextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/title_certificates"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_biography_field"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_biography_field" />
+
+                <FrameLayout
+                    android:id="@+id/school_settings_certificate_frame"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_certificate_header"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_certificate_header">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/school_settings_certificate_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="bottom"
+                        android:orientation="horizontal" />
+
+                    <ImageButton
+                        android:id="@+id/school_settings_add_certificate_button"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/circle_background"
+                        android:elevation="6dp"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_add_photo" />
+
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/school_settings_achievement_header"
+                    style="@style/HeaderTextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/title_achievement"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_biography_field"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_certificate_frame" />
+
+                <FrameLayout
+                    android:id="@+id/school_settings_achievement_frame"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/school_settings_achievement_header"
+                    app:layout_constraintTop_toBottomOf="@+id/school_settings_achievement_header">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/school_settings_achievement_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="bottom"
+                        android:orientation="horizontal" />
+
+                    <ImageButton
+                        android:id="@+id/school_settings_add_achievement_button"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/circle_background"
+                        android:elevation="6dp"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_add_photo" />
+
+
+                </FrameLayout>
+
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/school_settings_edit_courses"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|center"
+            android:background="@drawable/ic_edit_courses_background"
+            android:text="@string/button_edit_courses"
+            android:textColor="#FFffffff" />
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

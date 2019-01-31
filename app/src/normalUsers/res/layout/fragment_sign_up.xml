@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sign_in_login_background"
+        tools:context=".Fragments.SignUpFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+        <android.support.constraint.ConstraintLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/owner_settings_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:elevation="6dp"
+                    android:src="@drawable/place_holder"
+
+                    android:background="@drawable/circle_background"
+                    android:contentDescription="School owners profile image"
+                    app:civ_border_color="@color/colorWhite"
+                    app:civ_border_width="2dp"
+                    app:civ_circle_background_color="#777777"
+                    tools:layout_editor_absoluteX="165dp"
+                    tools:layout_editor_absoluteY="67dp" />
+
+                <ImageView
+                    android:id="@+id/owner_settings_image_picker"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/circle_background"
+                    android:src="@drawable/ic_add_photo"
+                    android:padding="6dp"
+                    android:backgroundTint="@color/colorCyan200"
+                    android:elevation="6dp" />
+
+            </FrameLayout>
+
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/signup_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@drawable/ic_check_white"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_person_outline_white"
+                android:hint="@string/edit_name"
+                android:inputType="text"
+                android:textColorHint="@color/colorWhite"
+                app:backgroundTint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/signup_contact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@drawable/ic_check_white"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_phone_white"
+                android:hint="@string/edit_contact"
+                android:inputType="number"
+                android:textColorHint="@color/colorWhite"
+                app:backgroundTint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_name" />
+
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/signup_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@drawable/ic_check_white"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_mail_white"
+                android:hint="@string/edit_email"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/colorWhite"
+                app:backgroundTint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_contact" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/signup_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@drawable/ic_check_white"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_add_location_white"
+                android:hint="@string/edit_location"
+                android:inputType="text"
+                android:textColorHint="@color/colorWhite"
+                app:backgroundTint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_email" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/login_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@drawable/ic_check_white"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_lock_white"
+                android:hint="@string/edit_password"
+                android:inputType="textPassword"
+                android:textColorHint="@color/colorWhite"
+                app:backgroundTint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="@+id/signup_email"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/signup_email"
+                app:layout_constraintTop_toBottomOf="@+id/signup_location" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/login_confirm_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@drawable/ic_check_white"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_lock_white"
+                android:hint="@string/edit_confirm_password"
+                android:inputType="textPassword"
+                android:textColorHint="@color/colorWhite"
+                app:backgroundTint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="@+id/login_password"
+                app:layout_constraintStart_toStartOf="@+id/login_password"
+                app:layout_constraintTop_toBottomOf="@+id/login_password" />
+
+            <FrameLayout
+                android:id="@+id/login_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/login_sign_up_button_background"
+                android:elevation="10dp"
+                android:minHeight="45dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_confirm_password">
+
+                <TextView
+                    android:id="@+id/sign_up_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/button_sign_up"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
+                    android:textColor="@color/colorWhite" />
+
+                <ProgressBar
+                    android:id="@+id/sign_up_progressbar"
+                    android:layout_width="@dimen/login_signup_progressbar_dimen"
+                    android:layout_height="@dimen/login_signup_progressbar_dimen"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+</layout>

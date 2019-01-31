@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<android.support.design.widget.CoordinatorLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<android.support.v4.widget.NestedScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <android.support.constraint.ConstraintLayout
+                android:background="@drawable/background_dark"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/settings_logo_image_view"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="64dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/curved_rectangle_white" />
+
+                <Button
+                    android:id="@+id/settings_add_logo"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/curved_rectangle_white"
+                    android:text="@string/button_add_logo"
+                    android:textColor="@color/colorCyan500"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/settings_logo_image_view"
+                    app:layout_constraintStart_toStartOf="@+id/settings_logo_image_view"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_logo_image_view" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/button_owner_settings"
+                    style="@style/style_card_button"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="64dp"
+                    android:layout_marginStart="64dp"
+                    app:cardBackgroundColor="#ffffff"
+                    app:cardCornerRadius="10dp"
+                    app:elevation="6dp"
+                    app:layout_constraintBottom_toTopOf="@+id/button_school_settings"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        style="@style/style_card_button_text"
+                        android:text="@string/title_owner_settings" />
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/button_school_settings"
+                    style="@style/style_card_button"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="64dp"
+                    android:layout_marginStart="64dp"
+                    app:cardBackgroundColor="#ffffff"
+                    app:cardCornerRadius="10dp"
+                    app:elevation="6dp"
+                    app:layout_constraintBottom_toTopOf="@+id/button_class_dept_settings"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        style="@style/style_card_button_text"
+                        android:text="@string/title_school_settings" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/button_class_dept_settings"
+                    style="@style/style_card_button"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="64dp"
+                    android:layout_marginStart="64dp"
+                    app:cardBackgroundColor="#ffffff"
+                    app:cardCornerRadius="10dp"
+                    app:elevation="6dp"
+                    app:layout_constraintBottom_toTopOf="@+id/button_question_settings"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        style="@style/style_card_button_text"
+                        android:textSize="@dimen/text_size_16sp"
+                        android:text="@string/title_classes_or_dept_settings" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/button_question_settings"
+                    style="@style/style_card_button"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="42dp"
+                    android:layout_marginEnd="64dp"
+                    android:layout_marginStart="64dp"
+                    app:cardBackgroundColor="#ffffff"
+                    app:cardCornerRadius="10dp"
+                    app:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        style="@style/style_card_button_text"
+                        android:text="@string/title_questions_settings" />
+                </android.support.v7.widget.CardView>
+
+
+                <!--<android.support.v7.widget.CardView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_marginBottom="32dp"-->
+                <!--android:layout_marginEnd="40dp"-->
+                <!--android:layout_marginStart="40dp"-->
+                <!--android:layout_marginTop="32dp"-->
+                <!--app:cardBackgroundColor="@color/colorCyan500"-->
+                <!--app:cardCornerRadius="7dp"-->
+                <!--app:cardElevation="10dp"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent">-->
+
+                <!--<android.support.constraint.ConstraintLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+
+                <!--</android.support.constraint.ConstraintLayout>-->
+                <!--</android.support.v7.widget.CardView>-->
+
+            </android.support.constraint.ConstraintLayout>
+
+        <!--</android.support.v4.widget.NestedScrollView>-->
+
+
+    <!--</android.support.design.widget.CoordinatorLayout>-->
+</layout>
