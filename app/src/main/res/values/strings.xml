@@ -16,6 +16,10 @@
     <string name="school_biography">SCHOOL BIOGRAPHY</string>
     <string name="school_detail_about_owner">ABOUT OWNER</string>
     <string name="change_password">Change Password</string>
+    <string name="school_certificates_header">SCHOOL CERTIFICATES</string>
+    <string name="school_achievements_header">SCHOOL ACHIEVEMENTS</string>
+    <string name="password">Password</string>
+    <string name="edit_confirm_password">Confirm Password</string>
 
 
 </resources>
