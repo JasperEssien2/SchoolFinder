@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:clipChildren="false"
+        tools:context=".Fragments.SearchFragment">
+
+
+        <link.fls.swipestack.SwipeStack
+            android:id="@+id/swipeStack"
+            android:layout_width="400dp"
+            android:layout_height="450dp"
+
+            android:layout_gravity="center"
+            android:background="@null"
+            app:stack_rotation="0"
+            app:stack_spacing="0dp" />
+
+    </FrameLayout>
+</layout>

@@ -1,4 +1,4 @@
-package com.example.android.schoolfinder.normalUsers.Fragments;
+package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 
 import android.content.Intent;
@@ -19,17 +19,22 @@ import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.FragmentLoginBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallbacks;
-import com.example.android.schoolfinder.normalUsers.HomeActivity;
+import com.example.android.schoolfinder.schoolOwners.HomeActivity;
 import com.google.firebase.auth.FirebaseUser;
+
+//import com.example.android.schoolfinder.HomeActivity;
+//import com.example.android.schoolfinder.schoolOwners.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment implements AuthenticationCallbacks {
+public class LoginFragment extends Fragment implements AuthenticationCallbacks, View.OnClickListener {
+
     private FragmentLoginBinding loginBinding;
-    private AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks;
     private AppCompatEditText mEmailE, mPasswordE;
     private TextInputLayout mEmailL, mPasswordL;
+
+    private AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -39,18 +44,9 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         loginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         initFields();
-        loginBinding.loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setAuthFieldErrorNull();
-                authenticationViewPagerCallbacks.loginButtonClicked(true, null, null);
-                loginButtonClicked();
-            }
-        });
+        loginBinding.loginButton.setOnClickListener(this);
 
         loginBinding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,11 +57,6 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks {
         return loginBinding.getRoot();
     }
 
-    /**
-     * This is used to initialize the authentication callback
-     *
-     * @param authenticationViewPagerCallbacks callback
-     */
     public void initAuthenticationCallbacks(AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks) {
 
         this.authenticationViewPagerCallbacks = authenticationViewPagerCallbacks;
@@ -174,5 +165,20 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks {
     @Override
     public void loggedOut() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.login_button:
+                setAuthFieldErrorNull();
+                loginButtonClicked();
+                authenticationViewPagerCallbacks.loginButtonClicked(true, null, null);
+                break;
+            case R.id.sign_up_button:
+                authenticationViewPagerCallbacks.signUpButtonClicked(false, (School) null, null);
+                break;
+        }
     }
 }

@@ -57,150 +57,244 @@
             </FrameLayout>
 
 
-            <!--<android.support.design.widget.TextInputLayout-->
-                <!--android:id="@+id/signup_owner_name_inputLayout"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:padding="0dp"-->
-                <!--app:errorEnabled="true">-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/signup_owner_name_inputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@null"
+                android:hint="@string/edittext_owners_name"
+                android:textColorHint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout">
 
-                <!--<EditText-->
-                    <!--android:gravity="bottom"-->
-                    <!--android:padding="0dp"-->
-                    <!--android:layout_margin="0dp"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content" />-->
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/signup_owner_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:drawableStart="@drawable/ic_person_outline_white"
+                    android:drawableEnd="@drawable/ic_check_white"
+                    android:drawablePadding="16dp"
+                    android:inputType="text"
+                    android:textColorHint="@color/colorWhite"
+                    app:backgroundTint="@color/colorWhite" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/signup_owner_contact_inputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/edittext_owners_contact"
+                android:textColorHint="@color/colorWhite"
+                app:contentPadding="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_owner_name_inputLayout">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/signup_owner_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:drawableStart="@drawable/ic_phone_white"
+                    android:drawableEnd="@drawable/ic_check_white"
+                    android:drawablePadding="16dp"
+                    android:inputType="number"
+                    android:textColorHint="@color/colorWhite"
+                    app:backgroundTint="@color/colorWhite" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/signup_owner_email_inputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/edittext_owners_email"
+                android:textColorHint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_owner_contact_inputLayout">
+
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/signup_owner_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_mail_white"
+                    android:drawableEnd="@drawable/ic_check_white"
+                    android:drawablePadding="16dp"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/colorWhite"
+                    app:backgroundTint="@color/colorWhite" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/signup_owner_location_inputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/button_get_location"
+                android:textColorHint="@color/colorWhite"
+                app:counterOverflowTextAppearance="@style/MyOverflowText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_owner_email_inputLayout">
+
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/signup_owner_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_add_location_white"
+                    android:drawableEnd="@drawable/ic_check_white"
+                    android:drawablePadding="16dp"
+                    android:inputType="text"
+                    android:textColorHint="@color/colorWhite"
+                    app:backgroundTint="@color/colorWhite" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/signup_owner_biography_inputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/edittext_owners_biography"
+                android:textColorHint="@color/colorWhite"
+                app:counterEnabled="true"
+                app:counterMaxLength="200"
+                app:counterOverflowTextAppearance="@style/MyOverflowText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_owner_location_inputLayout">
+
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/signup_owner_biography"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_person_outline_white"
+                    android:drawableEnd="@drawable/ic_check_white"
+                    android:drawablePadding="16dp"
+                    android:inputType="text"
+                    android:minHeight="70dp"
+                    android:textColorHint="@color/colorWhite"
+                    app:backgroundTint="@color/colorWhite" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:id="@+id/login_password_inputLayout"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:hint="@string/password"-->
+            <!--android:textColorHint="@color/colorWhite"-->
+            <!--app:layout_constraintEnd_toEndOf="@+id/signup_owner_email_inputLayout"-->
+            <!--app:layout_constraintHorizontal_bias="0.0"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/signup_owner_email_inputLayout"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/signup_owner_biography_inputLayout"-->
+            <!--app:passwordToggleEnabled="true">-->
+
+
+            <!--<android.support.v7.widget.AppCompatEditText-->
+            <!--android:id="@+id/login_password"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:drawableStart="@drawable/ic_lock_white"-->
+            <!--android:drawableEnd="@drawable/ic_check_white"-->
+            <!--android:drawablePadding="16dp"-->
+            <!--android:hint="@string/password"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:textColorHint="@color/colorWhite"-->
+            <!--app:backgroundTint="@color/colorWhite" />-->
+
             <!--</android.support.design.widget.TextInputLayout>-->
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/signup_owner_name"
+
+            <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:id="@+id/login_confirm_password_inputLayout"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:hint="@string/edit_confirm_password"-->
+            <!--android:textColorHint="@color/colorWhite"-->
+            <!--app:layout_constraintEnd_toEndOf="@+id/login_password_inputLayout"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/login_password_inputLayout"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/login_password_inputLayout"-->
+            <!--app:passwordToggleEnabled="true">-->
+
+            <!--<android.support.v7.widget.AppCompatEditText-->
+            <!--android:id="@+id/login_confirm_password"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--android:drawableStart="@drawable/ic_lock_white"-->
+            <!--android:drawableEnd="@drawable/ic_check_white"-->
+            <!--android:drawablePadding="16dp"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:textColorHint="@color/colorWhite"-->
+            <!--app:backgroundTint="@color/colorWhite" />-->
+
+            <!--</android.support.design.widget.TextInputLayout>-->
+
+            <FrameLayout
+                android:id="@+id/next_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_person_outline_white"
-                android:drawableEnd="@drawable/ic_check_white"
-                android:drawablePadding="16dp"
-                android:hint="@string/edittext_owners_name"
-                android:inputType="text"
-                android:textColorHint="@color/colorWhite"
-                app:backgroundTint="@color/colorWhite"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/login_sign_up_button_background"
+                android:elevation="10dp"
+                android:minHeight="45dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/signup_owner_biography_inputLayout">
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/signup_owner_contact"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_phone_white"
-                android:drawableEnd="@drawable/ic_check_white"
-                android:drawablePadding="16dp"
-                android:hint="@string/edittext_owners_contact"
-                android:inputType="number"
-                android:textColorHint="@color/colorWhite"
-                app:backgroundTint="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_owner_name" />
+                <TextView
+                    android:id="@+id/move_to_next_page_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/next"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
+                    android:textColor="@color/colorWhite" />
 
+                <!--<ProgressBar-->
+                <!--android:id="@+id/sign_up_progressbar"-->
+                <!--android:layout_width="@dimen/login_signup_progressbar_dimen"-->
+                <!--android:layout_height="@dimen/login_signup_progressbar_dimen"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:visibility="gone" />-->
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/signup_owner_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_mail_white"
-                android:drawableEnd="@drawable/ic_check_white"
-                android:drawablePadding="16dp"
-                android:hint="@string/edittext_owners_email"
-                android:inputType="textEmailAddress"
-                android:textColorHint="@color/colorWhite"
-                app:backgroundTint="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_owner_contact" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/signup_owner_location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_add_location_white"
-                android:drawableEnd="@drawable/ic_check_white"
-                android:drawablePadding="16dp"
-                android:hint="@string/button_get_location"
-                android:inputType="text"
-                android:textColorHint="@color/colorWhite"
-                app:backgroundTint="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_owner_email" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/signup_owner_biography"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_person_outline_white"
-                android:drawableEnd="@drawable/ic_check_white"
-                android:drawablePadding="16dp"
-                android:hint="@string/edittext_owners_biography"
-                android:inputType="text"
-                android:minHeight="70dp"
-                android:textColorHint="@color/colorWhite"
-                app:backgroundTint="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_owner_location" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/login_password"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/ic_lock_white"
-                android:drawableEnd="@drawable/ic_check_white"
-                android:drawablePadding="16dp"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:textColorHint="@color/colorWhite"
-                app:backgroundTint="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="@+id/signup_owner_email"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/signup_owner_email"
-                app:layout_constraintTop_toBottomOf="@+id/signup_owner_biography" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/login_confirm_password"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/ic_lock_white"
-                android:drawableEnd="@drawable/ic_check_white"
-                android:drawablePadding="16dp"
-                android:hint="@string/edit_confirm_password"
-                android:inputType="textPassword"
-                android:textColorHint="@color/colorWhite"
-                app:backgroundTint="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="@+id/login_password"
-                app:layout_constraintStart_toStartOf="@+id/login_password"
-                app:layout_constraintTop_toBottomOf="@+id/login_password" />
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/login_button"
@@ -215,14 +309,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_confirm_password">
+                app:layout_constraintTop_toBottomOf="@+id/next_button">
 
                 <TextView
-                    android:id="@+id/move_to_next_page_textview"
+                    android:id="@+id/move_to_login_page_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/next"
+                    android:text="@string/login"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
                     android:textColor="@color/colorWhite" />
 

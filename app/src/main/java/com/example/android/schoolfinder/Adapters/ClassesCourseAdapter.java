@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import com.example.android.schoolfinder.Models.Course;
 
-import Models.Course;
+import java.util.List;
 
 public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdapter.ClassCourseViewHolder> {
     private List<Course> mCourseList;

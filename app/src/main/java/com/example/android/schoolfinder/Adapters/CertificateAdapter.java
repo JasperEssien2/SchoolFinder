@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import com.example.android.schoolfinder.Models.Certificate;
 
-import Models.Certificate;
+import java.util.List;
 
 public class CertificateAdapter extends RecyclerView.Adapter<CertificateAdapter.CertificateViewHolder> {
     private List<Certificate> certificateList;

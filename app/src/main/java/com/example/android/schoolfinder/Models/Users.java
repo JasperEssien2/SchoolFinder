@@ -1,8 +1,39 @@
-package Models;
+package com.example.android.schoolfinder.Models;
 
-public class Users {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Users implements Parcelable {
     private String id, name, contact, email, location, biography, profileImageUrl;
     private long latitude;
+
+    public static final Creator<Users> CREATOR = new Creator<Users>() {
+        @Override
+        public Users createFromParcel(Parcel in) {
+            return new Users(in);
+        }
+
+        @Override
+        public Users[] newArray(int size) {
+            return new Users[size];
+        }
+    };
+
+    public Users() {
+
+    }
+
+    protected Users(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        contact = in.readString();
+        email = in.readString();
+        location = in.readString();
+        biography = in.readString();
+        profileImageUrl = in.readString();
+        latitude = in.readLong();
+        longitude = in.readLong();
+    }
 
     public long getLatitude() {
         return latitude;
@@ -76,5 +107,23 @@ public class Users {
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeString(contact);
+        parcel.writeString(email);
+        parcel.writeString(location);
+        parcel.writeString(biography);
+        parcel.writeString(profileImageUrl);
+        parcel.writeLong(latitude);
+        parcel.writeLong(longitude);
     }
 }

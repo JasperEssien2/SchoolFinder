@@ -6,21 +6,22 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_school_card_frame_height"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
-        android:padding="5dp">
+        android:paddingBottom="4dp">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="400dp"
             android:layout_gravity="bottom"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            app:contentPaddingBottom="5dp"
             android:elevation="7dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="7dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/schoolCardBackgroundImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -44,9 +45,9 @@
                     android:id="@+id/item_school_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="50dp"
+                    android:layout_marginEnd="8dp"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/text_size_24sp"
@@ -61,9 +62,9 @@
                     android:id="@+id/item_school_location"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:gravity="center_vertical|center_horizontal"
 
                     android:textColor="@color/colorWhite"
@@ -78,9 +79,9 @@
                     android:id="@+id/item_school_motto"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
@@ -91,11 +92,12 @@
                     tools:text="Secure your future through knowledge!!" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -136,22 +138,22 @@
                 <android.support.v7.widget.CardView
                     android:id="@+id/school_details_mid_card"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:background="@color/colorGrey"
+                    android:layout_height="0dp"
 
+                    android:background="@color/colorGrey"
                     android:elevation="10dp"
                     app:cardElevation="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline6">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingTop="2dp">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:id="@+id/follow_frame"
@@ -168,7 +170,7 @@
                             <TextView
                                 android:id="@+id/followers_count"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="100k" />
 
@@ -190,7 +192,7 @@
                             <TextView
                                 android:id="@+id/neutral_count_textview"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="100k" />
 
@@ -212,7 +214,7 @@
                             <TextView
                                 android:id="@+id/smile_count_textview"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="100k" />
 
@@ -234,7 +236,7 @@
                             <TextView
                                 android:id="@+id/sad_count_textview"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="100k" />
 
@@ -244,6 +246,13 @@
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.79" />
 
             </android.support.constraint.ConstraintLayout>
 
