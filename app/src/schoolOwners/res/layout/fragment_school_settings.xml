@@ -92,7 +92,7 @@
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/school_website"
-                                android:layout_width="@dimen/social_media_width_height"
+                                android:layout_width="@dimen/dimen_30dp"
                                 android:layout_height="@dimen/dimen_30dp"
 
                                 android:src="@drawable/ic_internet"
