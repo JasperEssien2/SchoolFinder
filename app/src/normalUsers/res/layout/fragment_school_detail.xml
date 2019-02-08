@@ -5,7 +5,8 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/school_details_expresion_card"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
@@ -135,7 +136,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/school_details_social_card"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="8dp"
                 android:background="@color/colorGrey"
@@ -652,7 +653,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.gms.maps.MapView
-
+                        android:id="@+id/school_location_map"
                         android:layout_width="match_parent"
                         android:layout_height="260dp"
                         android:background="#00000000"
@@ -680,13 +681,13 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/comment_on_school_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="normal"
-            android:layout_gravity="bottom|end"
-            android:src="@drawable/ic_edit_white"
-            android:layout_margin="16dp"/>
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/comment_on_school_fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:fabSize="normal"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:src="@drawable/ic_edit_white"-->
+        <!--android:layout_margin="16dp"/>-->
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -47,7 +47,7 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks {
             @Override
             public void onClick(View view) {
                 setAuthFieldErrorNull();
-                authenticationViewPagerCallbacks.loginButtonClicked(true, null, null);
+//                authenticationViewPagerCallbacks.loginButtonClicked(true, null, null);
                 loginButtonClicked();
             }
         });
@@ -136,6 +136,9 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks {
     }
 
 
+    /**
+     * This method defines the action to take when login button is clicked
+     */
     private void loginButtonClicked() {
         if (validateFields() == 0) {
             enableProgressbar();

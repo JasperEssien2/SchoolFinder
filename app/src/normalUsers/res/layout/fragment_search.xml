@@ -3,23 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorWhite"
         android:clipChildren="false"
         tools:context=".Fragments.SearchFragment">
 
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <link.fls.swipestack.SwipeStack
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:fitsSystemWindows="true"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+                app:title="Search" />
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/swipeStack"
-            android:layout_width="400dp"
-            android:layout_height="450dp"
-
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
             android:layout_gravity="center"
-            android:background="@null"
-            app:stack_rotation="0"
-            app:stack_spacing="0dp" />
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
 
-    </FrameLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_search"
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@color/colorWhite"
+            app:elevation="10dp"
+            app:fabSize="normal" />
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

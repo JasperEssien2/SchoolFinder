@@ -9,6 +9,7 @@ import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.BaseAuthentication;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,7 +93,14 @@ public class Authentication implements BaseAuthentication {
                             mCallbacks.login(true,
                                     task.getResult() != null ? task.getResult().getUser() : null);
                         } else {
+                            task.addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e(TAG, e.getLocalizedMessage());
+                                }
+                            });
                             mCallbacks.login(false, null);
+
                         }
                     }
                 });

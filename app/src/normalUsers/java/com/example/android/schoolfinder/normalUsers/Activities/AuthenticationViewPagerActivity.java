@@ -5,14 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-//import com.example.android.schoolfinder.Adapters.AuthViewPagerAdapter;
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
-//import com.example.android.schoolfinder.HomeActivity;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -28,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+//import com.example.android.schoolfinder.Adapters.AuthViewPagerAdapter;
+//import com.example.android.schoolfinder.HomeActivity;
+
 public class AuthenticationViewPagerActivity extends AppCompatActivity implements AuthenticationViewPagerCallbacks {
     private static final String TAG = AuthenticationViewPagerActivity.class.getSimpleName();
     private ActivityAuthenticationBinding authenticationBinding;
@@ -36,6 +36,7 @@ public class AuthenticationViewPagerActivity extends AppCompatActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authenticationBinding = DataBindingUtil.setContentView(this, R.layout.activity_authentication);
+
         authenticationBinding
                 .authViewPager
                 .setAdapter(new AuthViewPagerAdapter(getSupportFragmentManager(), this));
@@ -51,8 +52,7 @@ public class AuthenticationViewPagerActivity extends AppCompatActivity implement
             DatabaseReference dbRef =
             FirebaseDatabase
                     .getInstance()
-                    .getReference()
-                    .child(FirebaseConstants.NORMAL_USERS_NODE)
+                    .getReference(FirebaseConstants.NORMAL_USERS_NODE)
                     .child(currentUser.getUid())
                     .child(FirebaseConstants.USER_DETAIL_NODE);
             Log.e(TAG, dbRef.toString());

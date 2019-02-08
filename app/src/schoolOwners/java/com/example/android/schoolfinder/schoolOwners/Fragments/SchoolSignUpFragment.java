@@ -1,11 +1,16 @@
 package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +22,14 @@ import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
+import com.example.android.schoolfinder.Utility.AppLocationService;
+import com.example.android.schoolfinder.Utility.GeocoderHandler;
+import com.example.android.schoolfinder.Utility.LocationAddress;
 import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.FragmentSchoolSignUpFieldsBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallbacks;
+import com.example.android.schoolfinder.interfaces.GetLocationCallback;
 import com.example.android.schoolfinder.schoolOwners.Activities.AuthenticationViewPagerActivity;
 import com.example.android.schoolfinder.schoolOwners.HomeActivity;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +45,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
 
     private static final String TAG = SchoolSignUpFragment.class.getSimpleName();
     FragmentSchoolSignUpFieldsBinding schoolSignUpFieldsBinding;
+    private AppLocationService locationService;
     private Authentication auth = new Authentication(this);
     private AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks;
     private AppCompatEditText mSchoolNameE, mSchoolContactE, mSchoolEmailE, mSchoolLocationE, mSchoolBiographyE,
@@ -43,11 +53,12 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     private TextInputLayout mSchoolNameL, mSchoolContactL, mSchoolEmailL, mSchoolLocationL, mSchoolBiographyL,
             mPasswordL, mConfirmPasswordL;
     private Users mSchoolOwnerDetails;
+    private double latitude, longitude;
+    private String addressFromLocation;
 
     public SchoolSignUpFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,12 +67,16 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         schoolSignUpFieldsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_school_sign_up_fields,
                 container, false);
         initFields();
+        if (getActivity() != null)
+            locationService = new AppLocationService(getActivity());
         schoolSignUpFieldsBinding
                 .loginButton.setOnClickListener(this);
         schoolSignUpFieldsBinding
                 .signupButton.setOnClickListener(this);
         schoolSignUpFieldsBinding
                 .signupPrevious.setOnClickListener(this);
+        mSchoolLocationE.setFocusable(false);
+        mSchoolLocationE.setOnClickListener(this);
         return schoolSignUpFieldsBinding.getRoot();
     }
 
@@ -73,6 +88,51 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     public void initAuthenticationCallbacks(AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks) {
 
         this.authenticationViewPagerCallbacks = authenticationViewPagerCallbacks;
+    }
+
+    private void onLocationEdittextClicked() {
+        if (locationService != null) {
+            final Location location = locationService
+                    .getLocation(LocationManager.GPS_PROVIDER);
+            Log.e(TAG, "onLocationEdittextClicked() called ---  --- ");
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                final LocationAddress locationAddress = new LocationAddress();
+                locationAddress.getAddressFromLocation(latitude, longitude,
+                        getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
+                            @Override
+                            public void setAddress(String address) {
+                                Log.e(TAG, "Addreess oooh --- " + address);
+                                addressFromLocation = address;
+                            }
+                        }));
+            }else {
+                showSettingsAlert();
+            }
+        }
+    }
+
+    public void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                getActivity());
+        alertDialog.setTitle("SETTINGS");
+        alertDialog.setMessage("Enable Location Provider! Go to settings menu?");
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        getActivity().startActivity(intent);
+                    }
+                });
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
     }
 
     /**
@@ -284,6 +344,10 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
             case R.id.signup_previous:
                 authenticationViewPagerCallbacks.previousButtonCLicked();
                 break;
+            case R.id.signup_school_location:
+                onLocationEdittextClicked();
+                break;
         }
     }
+
 }

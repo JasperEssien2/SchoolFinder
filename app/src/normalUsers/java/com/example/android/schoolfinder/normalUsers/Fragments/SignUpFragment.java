@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-//import com.example.android.schoolfinder.Activities.AuthenticationViewPagerActivity;
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.School;
@@ -24,6 +23,8 @@ import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallba
 import com.example.android.schoolfinder.normalUsers.Activities.AuthenticationViewPagerActivity;
 import com.example.android.schoolfinder.normalUsers.HomeActivity;
 import com.google.firebase.auth.FirebaseUser;
+
+//import com.example.android.schoolfinder.Activities.AuthenticationViewPagerActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -195,6 +196,7 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks 
 
     @Override
     public void signUp(boolean signedUpSuccessful, FirebaseUser user) {
+        if (user.getUid() == null) return;
         Users users = getUser();
         users.setId(user.getUid());
         if (signedUpSuccessful)

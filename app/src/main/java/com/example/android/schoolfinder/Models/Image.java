@@ -4,7 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Image implements Parcelable {
-    private String id, imageUrl, imageTag;
+    private String id;
+    private String imageUrl;
+    private String imageTag;
 
     public static final Creator<Image> CREATOR = new Creator<Image>() {
         @Override
@@ -17,6 +19,13 @@ public class Image implements Parcelable {
             return new Image[size];
         }
     };
+
+    public Image(String id, String imageUrl, String imageTag) {
+
+        this.id = id;
+        this.imageUrl = imageUrl;
+        this.imageTag = imageTag;
+    }
 
     protected Image(Parcel in) {
         id = in.readString();

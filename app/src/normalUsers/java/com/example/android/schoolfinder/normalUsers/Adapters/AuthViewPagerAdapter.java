@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.android.schoolfinder.BuildConfig;
 import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallbacks;
 import com.example.android.schoolfinder.normalUsers.Fragments.AuthMainFragment;
 import com.example.android.schoolfinder.normalUsers.Fragments.LoginFragment;
@@ -17,19 +16,14 @@ public class AuthViewPagerAdapter extends FragmentPagerAdapter {
     public AuthViewPagerAdapter(FragmentManager fm, AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks) {
         super(fm);
         this.authenticationViewPagerCallbacks = authenticationViewPagerCallbacks;
-        if(BuildConfig.BUILD_VARIANT.equals("normalUser")){
-            numOfPages = 3;
-        }else if(BuildConfig.BUILD_VARIANT.equals("schoolOwner")){
-            numOfPages = 4;
-        }
     }
 
 
     @Override
     public Fragment getItem(int position) {
 
-        if(BuildConfig.BUILD_VARIANT.equals("normalUser")){
-            switch (position){
+
+        switch (position) {
                 case 0:
                     AuthMainFragment authMainFragment = new AuthMainFragment();
                     authMainFragment.initAuthenticationCallbacks(authenticationViewPagerCallbacks);
@@ -45,20 +39,11 @@ public class AuthViewPagerAdapter extends FragmentPagerAdapter {
                     signUpFragment.initAuthenticationCallbacks(authenticationViewPagerCallbacks);
                     return signUpFragment;
             }
-        }else if(BuildConfig.BUILD_VARIANT.equals("schoolOwner")){
-//            switch (position){
-//                case 0:
-//                    return new AuthMainFragment();
-//                case 1:
-//                    return new LoginFragment();
-//
-//                case 2:
-//                    return new SignUpFragment();
-//            }
-        }
+
 
         return null;
     }
+
 
     @Override
     public int getCount() {
