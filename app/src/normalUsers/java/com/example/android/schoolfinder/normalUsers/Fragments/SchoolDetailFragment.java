@@ -116,6 +116,10 @@ public class SchoolDetailFragment extends Fragment {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
                         Log.e(TAG, "map ready  ooooooooh");
+                        // Add a marker in Sydney and move the camera
+//                        LatLng sydney = new LatLng(-34, 151);
+//                        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                         googleMap.setLocationSource(new LocationSource() {
                             @Override
                             public void activate(OnLocationChangedListener onLocationChangedListener) {

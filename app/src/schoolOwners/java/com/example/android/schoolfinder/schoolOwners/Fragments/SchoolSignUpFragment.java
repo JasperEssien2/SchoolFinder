@@ -91,6 +91,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     }
 
     private void onLocationEdittextClicked() {
+
         if (locationService != null) {
             final Location location = locationService
                     .getLocation(LocationManager.GPS_PROVIDER);
@@ -99,12 +100,13 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 final LocationAddress locationAddress = new LocationAddress();
-                locationAddress.getAddressFromLocation(latitude, longitude,
+                LocationAddress.getAddressFromLocation(latitude, longitude,
                         getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
                             @Override
                             public void setAddress(String address) {
                                 Log.e(TAG, "Addreess oooh --- " + address);
                                 addressFromLocation = address;
+                                mSchoolLocationE.setText(address);
                             }
                         }));
             }else {
@@ -326,6 +328,16 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         Intent intent = new Intent(getActivity(), AuthenticationViewPagerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void userGotten(School school) {
+
+    }
+
+    @Override
+    public void userGotten(Users users) {
+
     }
 
     @Override

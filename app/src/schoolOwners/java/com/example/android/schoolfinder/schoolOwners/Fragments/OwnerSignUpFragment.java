@@ -166,6 +166,16 @@ public class OwnerSignUpFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
+    public void userGotten(School school) {
+
+    }
+
+    @Override
+    public void userGotten(Users users) {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next_button:

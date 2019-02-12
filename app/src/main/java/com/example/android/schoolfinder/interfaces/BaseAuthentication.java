@@ -18,4 +18,6 @@ public interface BaseAuthentication {
     void deleteAccount(Users users);
 
     void deleteAccount(School school);
+
+    void getUserDetail(String id, boolean isSchool);
 }

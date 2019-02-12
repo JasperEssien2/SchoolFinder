@@ -178,4 +178,14 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks {
     public void loggedOut() {
 
     }
+
+    @Override
+    public void userGotten(School school) {
+
+    }
+
+    @Override
+    public void userGotten(Users users) {
+
+    }
 }

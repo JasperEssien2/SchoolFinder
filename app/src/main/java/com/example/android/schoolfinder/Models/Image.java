@@ -20,6 +20,10 @@ public class Image implements Parcelable {
         }
     };
 
+    public Image() {
+
+    }
+
     public Image(String id, String imageUrl, String imageTag) {
 
         this.id = id;

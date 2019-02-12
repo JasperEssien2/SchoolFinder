@@ -2,6 +2,7 @@ package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -46,6 +47,9 @@ public class AuthMainFragment extends Fragment {
                 authenticationViewPagerCallbacks.signUpButtonClicked(false, (Users) null, null);
             }
         });
+        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Pacifico.ttf");
+
+        fragmentAuthMainBinding.authWelcomeText.setTypeface(custom_font);
         return fragmentAuthMainBinding.getRoot();
     }
 

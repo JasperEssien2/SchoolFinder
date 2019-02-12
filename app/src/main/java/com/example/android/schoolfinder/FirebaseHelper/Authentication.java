@@ -13,8 +13,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Authentication implements BaseAuthentication {
 
@@ -104,6 +107,41 @@ public class Authentication implements BaseAuthentication {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void getUserDetail(String id, boolean isSchool) {
+        if (isSchool) {
+            reference.child(FirebaseConstants.SCHOOLS_USERS_NODE)
+                    .child(id)
+                    .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            mCallbacks.userGotten(dataSnapshot.getValue(School.class));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        } else {
+            reference.child(FirebaseConstants.NORMAL_USERS_NODE)
+                    .child(id)
+                    .child(FirebaseConstants.USER_DETAIL_NODE)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            mCallbacks.userGotten(dataSnapshot.getValue(Users.class));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        }
     }
 
     @Override

@@ -68,27 +68,27 @@ public class SearchFragment extends Fragment implements CardStackListener {
     List<School> getDummySchoolList(){
         ArrayList<School> list = new ArrayList<>();
         list.add(new School("", "Bright Hope", "11 Ndia Street",
-                "", "Securing knowledge", "", "", "", "",
+                "", "Securing knowledge", "", "", "", "", "",
                 "", null, 10, 2, 200,
                 2000, 0, 0, null, null,
                 getImages("http://www.stpetersschools.org/images/inner/St-Peter's-School-Building.jpg"), null, null));
         list.add(new School("", "Ask your father", "Oyigbo, Canada",
-                "", "Asking fathers since 1990", "", "", "", "",
+                "", "Asking fathers since 1990", "", "", "", "", "",
                 "", null, 10, 2, 200,
                 2000, 0, 0, null, null,
                 getImages("http://media.oregonlive.com/portland_impact/photo/portland-french-school-2e61d93176c0b95c.jpg"), null, null));
         list.add(new School("", "Stupid Hope", "11 Ndia Street",
-                "", "Securing stupidness", "", "", "", "",
+                "", "Securing stupidness", "", "", "", "", "",
                 "", null, 10, 2, 200,
                 2000, 0, 0, null, null,
                 getImages("https://alsoc.in/wp-content/themes/alsoc/images/2.jpg"), null, null));
         list.add(new School("", "Bright Hope", "11 Ndia Street",
-                "", "Securing knowledge", "", "", "", "",
+                "", "Securing knowledge", "", "", "", "", "",
                 "", null, 10, 2, 200,
                 2000, 0, 0, null, null,
                 getImages("http://media.oregonlive.com/portland_impact/photo/portland-french-school-2e61d93176c0b95c.jpg"), null, null));
         list.add(new School("", "Bright Hope", "11 Ndia Street",
-                "", "Securing knowledge", "", "", "", "",
+                "", "Securing knowledge", "", "", "", "", "",
                 "", null, 10, 2, 200,
                 2000, 0, 0, null, null,
                 getImages("https://www.wbps.org/cms/lib/NJ01911727/Centricity/ModuleInstance/98/large/school%20front.jpg"), null, null));

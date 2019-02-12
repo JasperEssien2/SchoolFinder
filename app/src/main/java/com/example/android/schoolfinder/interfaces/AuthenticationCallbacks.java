@@ -15,4 +15,8 @@ public interface AuthenticationCallbacks {
     void userInsertedToDatabase(School school);
 
     void loggedOut();
+
+    void userGotten(School school);
+
+    void userGotten(Users users);
 }

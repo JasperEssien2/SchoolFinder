@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.CoordinatorLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -57,7 +58,7 @@
                 <android.support.v7.widget.CardView
                     android:id="@+id/school_details_social_card"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
@@ -542,7 +543,7 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/school_certificates_recycler_view"
                             android:layout_width="0dp"
-                            android:layout_height="68dp"
+                            android:layout_height="90dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="32dp"
@@ -631,7 +632,7 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/school_achievement_recycler_view"
                             android:layout_width="0dp"
-                            android:layout_height="70dp"
+                            android:layout_height="90dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="32dp"
@@ -704,7 +705,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.gms.maps.MapView
-
+                            android:id="@+id/school_map_view"
                             android:layout_width="match_parent"
                             android:layout_height="260dp"
                             android:background="#00000000"

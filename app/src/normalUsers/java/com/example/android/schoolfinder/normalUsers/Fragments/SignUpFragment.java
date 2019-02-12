@@ -229,4 +229,14 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    @Override
+    public void userGotten(School school) {
+
+    }
+
+    @Override
+    public void userGotten(Users users) {
+
+    }
 }

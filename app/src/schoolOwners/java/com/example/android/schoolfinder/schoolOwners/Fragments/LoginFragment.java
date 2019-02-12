@@ -168,6 +168,16 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks, 
     }
 
     @Override
+    public void userGotten(School school) {
+
+    }
+
+    @Override
+    public void userGotten(Users users) {
+
+    }
+
+    @Override
     public void onClick(View view) {
 
         switch (view.getId()) {

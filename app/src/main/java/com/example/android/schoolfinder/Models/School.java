@@ -23,6 +23,7 @@ public class School implements Parcelable {
     private String schoolBiography;
     private String schoolMotto;
     private String schoolContact;
+    private String schoolLogoImageUrl;
     private long latitude;
     private long longitude;
     private String schoolFacebook, schoolTwitter, schoolEmail, schoolWebsite;
@@ -43,7 +44,7 @@ public class School implements Parcelable {
 
 
     public School(String id, String schoolName, String schoolLocation, String schoolBiography,
-                  String schoolMotto, String schoolContact, String schoolFacebook, String schoolTwitter, String schoolEmail,
+                  String schoolMotto, String schoolContact, String schoolLogoImageUrl, String schoolFacebook, String schoolTwitter, String schoolEmail,
                   String schoolWebsite, Users schoolOwnerDetails, long followersCount, long notImpressedExpressionCount,
                   long impressedExpressionCount, long normalExpressionCount, long latitude, long longitude,
                   List<Certificate> certificates, List<Certificate> achievements, List<Image> schoolImages,
@@ -55,6 +56,7 @@ public class School implements Parcelable {
         this.schoolBiography = schoolBiography;
         this.schoolMotto = schoolMotto;
         this.schoolContact = schoolContact;
+        this.schoolLogoImageUrl = schoolLogoImageUrl;
         this.schoolFacebook = schoolFacebook;
         this.schoolTwitter = schoolTwitter;
         this.schoolEmail = schoolEmail;
@@ -80,6 +82,7 @@ public class School implements Parcelable {
         schoolBiography = in.readString();
         schoolMotto = in.readString();
         schoolContact = in.readString();
+        schoolLogoImageUrl = in.readString();
         latitude = in.readLong();
         longitude = in.readLong();
         schoolFacebook = in.readString();
@@ -287,6 +290,7 @@ public class School implements Parcelable {
         parcel.writeString(schoolBiography);
         parcel.writeString(schoolMotto);
         parcel.writeString(schoolContact);
+        parcel.writeString(schoolLogoImageUrl);
         parcel.writeLong(latitude);
         parcel.writeLong(longitude);
         parcel.writeString(schoolFacebook);
@@ -303,5 +307,13 @@ public class School implements Parcelable {
         parcel.writeLong(notImpressedExpressionCount);
         parcel.writeLong(impressedExpressionCount);
         parcel.writeLong(normalExpressionCount);
+    }
+
+    public String getSchoolLogoImageUrl() {
+        return schoolLogoImageUrl;
+    }
+
+    public void setSchoolLogoImageUrl(String schoolLogoImageUrl) {
+        this.schoolLogoImageUrl = schoolLogoImageUrl;
     }
 }

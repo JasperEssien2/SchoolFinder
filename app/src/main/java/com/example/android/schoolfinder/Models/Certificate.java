@@ -19,6 +19,10 @@ public class Certificate implements Parcelable {
         }
     };
 
+    public Certificate() {
+
+    }
+
     protected Certificate(Parcel in) {
         id = in.readString();
         name = in.readString();
