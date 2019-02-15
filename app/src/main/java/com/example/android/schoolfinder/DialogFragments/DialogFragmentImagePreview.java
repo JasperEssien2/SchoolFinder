@@ -45,6 +45,7 @@ public class DialogFragmentImagePreview extends DialogFragment {
             Picasso
                     .get()
                     .load(uri)
+//                    .centerCrop()
                     .into(mImagePreviewBinding.imageView);
             mStorageCallback = (MediaStorageCallback) getArguments().getSerializable("mediaCallback");
 

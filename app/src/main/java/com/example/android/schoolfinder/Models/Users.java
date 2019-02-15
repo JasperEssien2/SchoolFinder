@@ -5,7 +5,8 @@ import android.os.Parcelable;
 
 public class Users implements Parcelable {
     private String id, name, contact, email, location, biography, profileImageUrl;
-    private long latitude;
+    private double latitude;
+    private double longitude;
 
     public static final Creator<Users> CREATOR = new Creator<Users>() {
         @Override
@@ -31,27 +32,25 @@ public class Users implements Parcelable {
         location = in.readString();
         biography = in.readString();
         profileImageUrl = in.readString();
-        latitude = in.readLong();
-        longitude = in.readLong();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
-    private long longitude;
 
     public String getId() {
         return id;
@@ -123,7 +122,7 @@ public class Users implements Parcelable {
         parcel.writeString(location);
         parcel.writeString(biography);
         parcel.writeString(profileImageUrl);
-        parcel.writeLong(latitude);
-        parcel.writeLong(longitude);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
     }
 }

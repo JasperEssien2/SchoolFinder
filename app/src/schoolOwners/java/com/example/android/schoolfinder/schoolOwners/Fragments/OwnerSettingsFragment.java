@@ -30,7 +30,6 @@ import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -85,15 +84,15 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
         ownerSettingsBinding.ownersEmailEditButton.setOnClickListener(this);
         ownerSettingsBinding.ownersContactEditButton.setOnClickListener(this);
         ownerSettingsBinding.ownersNameEditButton.setOnClickListener(this);
-        ownerSettingsBinding.schoolOwnerSettingsImagePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e(TAG, "Owner settings image picker button clicked oh");
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
-            }
-        });
+//        ownerSettingsBinding.schoolOwnerSettingsImagePicker.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.e(TAG, "Owner settings image picker button clicked oh");
+//                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+//                photoPickerIntent.setType("image/*");
+//                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+//            }
+//        });
 
         return ownerSettingsBinding.getRoot();
     }
@@ -106,9 +105,9 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
         ownerSettingsBinding.settingsSchoolOwnerContact.setText(owner.getContact());
         ownerSettingsBinding.settingsSchoolOwnerEmail.setText(owner.getEmail());
         ownerSettingsBinding.settingsSchoolOwnerLocation.setText(owner.getLocation());
-        Picasso.get()
-                .load(owner.getProfileImageUrl())
-                .into(ownerSettingsBinding.ownerSettingsImage);
+//        Picasso.get()
+//                .load(owner.getProfileImageUrl())
+//                .into(ownerSettingsBinding.ownerSettingsImage);
 
     }
 
@@ -166,17 +165,17 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
 
     @Override
     public void profileImageStored(String imageUrl, boolean isSuccesful) {
-        if (imageUrl != null) {
-            if (imagePreview != null) {
-                imagePreview.dismiss();
-                school.getSchoolOwnerDetails().setProfileImageUrl(imageUrl);
-                authentication.putNewUserInDb(school);
-                Picasso.get()
-                        .load(imageUrl)
-                        .into(ownerSettingsBinding.ownerSettingsImage);
-            }
-        } else
-            Toast.makeText(getActivity(), "Error saving image, try again!", Toast.LENGTH_SHORT).show();
+//        if (imageUrl != null) {
+//            if (imagePreview != null) {
+//                imagePreview.dismiss();
+//                school.getSchoolOwnerDetails().setProfileImageUrl(imageUrl);
+//                authentication.putNewUserInDb(school);
+//                Picasso.get()
+//                        .load(imageUrl)
+//                        .into(ownerSettingsBinding.ownerSettingsImage);
+//            }
+//        } else
+//            Toast.makeText(getActivity(), "Error saving image, try again!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -236,14 +235,15 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
 
         if (!isFocused) {
             editText.setEnabled(false);
+//            editText.setFocusable();
             switch (fieldName) {
                 case "name":
                     ownerDetails.setName(newText);
-                    setEditButtonIcon(false, ownerSettingsBinding.ownersNameEditButton);
+//                    setEditButtonIcon(false, ownerSettingsBinding.ownersNameEditButton);
                     break;
                 case "biography":
                     ownerDetails.setBiography(newText);
-                    setEditButtonIcon(false, ownerSettingsBinding.ownersBiographyEditButton);
+//                    setEditButtonIcon(false, ownerSettingsBinding.ownersBiographyEditButton);
                     break;
                 case "contact":
                     ownerDetails.setContact(newText);
@@ -251,7 +251,7 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
                     break;
                 case "email":
                     ownerDetails.setEmail(newText);
-                    setEditButtonIcon(false, ownerSettingsBinding.ownersEmailEditButton);
+//                    setEditButtonIcon(false, ownerSettingsBinding.ownersEmailEditButton);
                     break;
             }
             if (ownerDetails != null)
@@ -265,26 +265,30 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
         switch (view.getId()) {
             case R.id.owners_biography_edit_button:
                 editFieldButtonClicked(ownerSettingsBinding.settingsSchoolOwnerBiography);
-                ownerSettingsBinding.settingsSchoolOwnerBiography.requestFocus();
                 isBiographyEditMode = !isBiographyEditMode;
+                if (isBiographyEditMode)
+                    ownerSettingsBinding.settingsSchoolOwnerBiography.requestFocus();
                 setEditButtonIcon(isBiographyEditMode, ownerSettingsBinding.ownersBiographyEditButton);
                 break;
             case R.id.owners_name_edit_button:
                 editFieldButtonClicked(ownerSettingsBinding.settingsSchoolOwnerName);
-                ownerSettingsBinding.settingsSchoolOwnerName.requestFocus();
                 isNameEditMode = !isNameEditMode;
+                if (isNameEditMode)
+                    ownerSettingsBinding.settingsSchoolOwnerName.requestFocus();
                 setEditButtonIcon(isNameEditMode, ownerSettingsBinding.ownersNameEditButton);
                 break;
             case R.id.owners_contact_edit_button:
                 editFieldButtonClicked(ownerSettingsBinding.settingsSchoolOwnerContact);
                 isContactEditMode = !isContactEditMode;
-                ownerSettingsBinding.settingsSchoolOwnerContact.requestFocus();
+                if (isContactEditMode)
+                    ownerSettingsBinding.settingsSchoolOwnerContact.requestFocus();
                 setEditButtonIcon(isContactEditMode, ownerSettingsBinding.ownersContactEditButton);
                 break;
             case R.id.owners_email_edit_button:
                 editFieldButtonClicked(ownerSettingsBinding.settingsSchoolOwnerEmail);
-                ownerSettingsBinding.settingsSchoolOwnerEmail.requestFocus();
                 isEmailEditMode = !isEmailEditMode;
+                if (isEmailEditMode)
+                    ownerSettingsBinding.settingsSchoolOwnerEmail.requestFocus();
                 setEditButtonIcon(isEmailEditMode, ownerSettingsBinding.ownersEmailEditButton);
                 break;
             case R.id.owner_settings_image:

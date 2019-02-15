@@ -49,6 +49,7 @@ public class Authentication implements BaseAuthentication {
                         } else {
                             mCallbacks.signUp(false, null);
                             Log.e(TAG, "SignedUp completed and is NOT successful ooh ? ");
+                            Log.e(TAG, task.getException().getMessage());
                         }
                     }
                 });

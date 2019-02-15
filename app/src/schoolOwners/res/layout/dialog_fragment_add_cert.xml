@@ -9,21 +9,19 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content">-->
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/cert_name"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Cert name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:hint="Cert name" />
 
         <ImageView
             android:id="@+id/image_view"
@@ -32,35 +30,26 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:background="#DDDDDD"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cert_name"
-            tools:layout_editor_absoluteY="109dp" />
+            />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/cert_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:hint="Cert Description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_view" />
-
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cert_description">
+            android:hint="Cert Description" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp">
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/cancel"
@@ -84,7 +73,7 @@
 
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
     <!--</FrameLayout>-->
 </layout>

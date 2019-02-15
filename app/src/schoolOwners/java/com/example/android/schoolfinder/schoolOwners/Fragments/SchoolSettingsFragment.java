@@ -3,8 +3,6 @@ package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,7 +36,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,17 +153,17 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
         schoolSettingsBinding.schoolSettingsEditSchoolBiography.setOnClickListener(this);
         schoolSettingsBinding.schoolSettingsEditSchoolAchievement.setOnClickListener(this);
         schoolSettingsBinding.schoolSettingsEditSchoolCertificates.setOnClickListener(this);
-        schoolSettingsBinding.schoolSettingsEditSchoolChangeLogo.setOnClickListener(this);
+//        schoolSettingsBinding.schoolSettingsEditSchoolChangeLogo.setOnClickListener(this);
         schoolSettingsBinding.schoolSettingsEditSchoolLocation.setOnClickListener(this);
-        schoolSettingsBinding.schoolSettingsEditSchoolChangeLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e(TAG, "Owner settings image picker button clicked oh");
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
-            }
-        });
+//        schoolSettingsBinding.schoolSettingsEditSchoolChangeLogo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.e(TAG, "Owner settings image picker button clicked oh");
+//                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+//                photoPickerIntent.setType("image/*");
+//                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+//            }
+//        });
         schoolSettingsBinding.schoolSettingsEditSchoolCertificates
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -195,10 +192,10 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
         if (school == null) return;
         schoolSettingsBinding.schoolDetailDescriptionText.setText(school.getSchoolBiography());
         schoolSettingsBinding.schoolDetailMottoText.setText(school.getSchoolMotto());
-        if (school.getSchoolLogoImageUrl() != null)
-            Picasso.get()
-                    .load(school.getSchoolLogoImageUrl())
-                    .into(schoolSettingsBinding.schoolSettingsLogoImgview);
+//        if (school.getSchoolLogoImageUrl() != null)
+//            Picasso.get()
+//                    .load(school.getSchoolLogoImageUrl())
+//                    .into(schoolSettingsBinding.schoolSettingsLogoImgview);
         certificateAdapter.setCertificateList(school.getCertificates() != null ?
                 school.getCertificates() : new ArrayList<Certificate>());
         schoolSettingsBinding.schoolCertificatesRecyclerView
@@ -216,9 +213,9 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 
     private void setUpMap() {
         if (locationService != null) {
-            final Location location = locationService
-                    .getLocation(LocationManager.GPS_PROVIDER);
-            if (location != null) {
+//            final Location location = locationService
+//                    .getLocation(LocationManager.GPS_PROVIDER);
+            if (true) {
 
                 schoolSettingsBinding.schoolMapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
@@ -277,32 +274,40 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.school_settings_edit_school_biography:
+//                view.requestFocus();
                 isBiographyEditMode = !isBiographyEditMode;
-                if (!isBiographyEditMode) schoolSettingsBinding.schoolSettingsEditSchoolBiography
-                        .setImageResource(R.drawable.ic_edit_white);
-                else schoolSettingsBinding.schoolSettingsEditSchoolBiography
-                        .setImageResource(R.drawable.ic_check_white_24dp);
+                if (!isBiographyEditMode) {
+                    schoolSettingsBinding.schoolSettingsEditSchoolBiography
+                            .setImageResource(R.drawable.ic_edit_white);
+                } else {
+                    schoolSettingsBinding.schoolSettingsEditSchoolBiography
+                            .setImageResource(R.drawable.ic_check_white_24dp);
+                    schoolSettingsBinding.schoolDetailDescriptionText.requestFocus();
+                }
                 editFieldButtonClicked(schoolSettingsBinding.schoolDetailDescriptionText);
-                schoolSettingsBinding.schoolDetailDescriptionText.requestFocus();
                 break;
             case R.id.school_settings_edit_school_motto:
                 isMottoEditMode = !isMottoEditMode;
-                if (!isMottoEditMode) schoolSettingsBinding.schoolSettingsEditSchoolMotto
-                        .setImageResource(R.drawable.ic_edit_white);
-                else schoolSettingsBinding.schoolSettingsEditSchoolMotto
-                        .setImageResource(R.drawable.ic_check_white_24dp);
+                if (!isMottoEditMode) {
+                    schoolSettingsBinding.schoolSettingsEditSchoolMotto
+                            .setImageResource(R.drawable.ic_edit_white);
+                } else {
+                    schoolSettingsBinding.schoolSettingsEditSchoolMotto
+                            .setImageResource(R.drawable.ic_check_white_24dp);
+                    schoolSettingsBinding.schoolDetailMottoText.requestFocus();
+                }
                 editFieldButtonClicked(schoolSettingsBinding.schoolDetailMottoText);
-                schoolSettingsBinding.schoolDetailMottoText.requestFocus();
                 break;
             case R.id.school_settings_edit_school_change_logo:
 
                 break;
             case R.id.school_settings_edit_school_achievement:
+                view.requestFocus();
                 break;
             case R.id.school_settings_edit_school_certificates:
+                view.requestFocus();
                 isCertificateEditMode = !isCertificateEditMode;
 //                if(!isCertificateEditMode) schoolSettingsBinding.schoolSettingsEditSchoolCertificates
 //                        .setImageResource(R.drawable.ic_edit_white);
@@ -310,6 +315,7 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 //                        .setImageResource(R.drawable.ic_check_white_24dp);
                 break;
             case R.id.school_settings_edit_school_location:
+                view.requestFocus();
                 break;
         }
     }
@@ -368,6 +374,7 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void userInsertedToDatabase(School school) {
+        Log.e(TAG, "userInsertedToDatabase()");
         if (school != null) {
             this.school = school;
             setUpViewWithData(school);
@@ -443,17 +450,17 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void logoStored(String imageUrl) {
-        if (imageUrl != null) {
-            if (imagePreview != null) {
-                imagePreview.dismiss();
-                school.setSchoolLogoImageUrl(imageUrl);
-                authentication.putNewUserInDb(school);
-                Picasso.get()
-                        .load(imageUrl)
-                        .into(schoolSettingsBinding.schoolSettingsLogoImgview);
-            }
-        } else
-            Toast.makeText(getActivity(), "Error saving image, try again!", Toast.LENGTH_SHORT).show();
+//        if (imageUrl != null) {
+//            if (imagePreview != null) {
+//                imagePreview.dismiss();
+//                school.setSchoolLogoImageUrl(imageUrl);
+//                authentication.putNewUserInDb(school);
+//                Picasso.get()
+//                        .load(imageUrl)
+//                        .into(schoolSettingsBinding.schoolSettingsLogoImgview);
+//            }
+//        } else
+//            Toast.makeText(getActivity(), "Error saving image, try again!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -467,6 +474,7 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 
         switch (requestCode) {
             case SELECT_PHOTO:
+                if (data == null) return;
                 if (resultCode == RESULT_OK) {
                     final Uri imageUri = data.getData();
 //                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
@@ -483,6 +491,7 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case SELECT_PHOTO_CERT:
+                if (data == null) return;
                 final Uri imageUri2 = data.getData();
 //                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
 //                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);

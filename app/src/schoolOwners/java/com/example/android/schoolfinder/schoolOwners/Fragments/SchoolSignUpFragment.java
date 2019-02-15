@@ -1,14 +1,23 @@
 package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
@@ -16,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
@@ -34,6 +44,8 @@ import com.example.android.schoolfinder.schoolOwners.Activities.AuthenticationVi
 import com.example.android.schoolfinder.schoolOwners.HomeActivity;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 //import com.example.android.schoolfinder.Activities.AuthenticationViewPagerActivity;
 //import com.example.android.schoolfinder.HomeActivity;
 //import com.example.android.schoolfinder.schoolOwners.R;
@@ -47,6 +59,11 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     FragmentSchoolSignUpFieldsBinding schoolSignUpFieldsBinding;
     private AppLocationService locationService;
     private Authentication auth = new Authentication(this);
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+    private Location mLocation;
+    final Criteria criteria = new Criteria();
     private AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks;
     private AppCompatEditText mSchoolNameE, mSchoolContactE, mSchoolEmailE, mSchoolLocationE, mSchoolBiographyE,
             mPasswordE, mConfirmPasswordE;
@@ -55,6 +72,37 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     private Users mSchoolOwnerDetails;
     private double latitude, longitude;
     private String addressFromLocation;
+    private static final int ALL_PERMISSIONS_RESULT = 1011;
+    private final LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            mLocation = location;
+            LocationAddress.getAddressFromLocation(mLocation.getLatitude(), mLocation.getLongitude(),
+                    getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
+                        @Override
+                        public void setAddress(String address) {
+                            schoolSignUpFieldsBinding.signupSchoolLocation.setText(address);
+                            Log.e(TAG, "Adresss oooooh -----------------------------" + address);
+                        }
+                    }));
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
+    private LocationManager locationManager;
 
     public SchoolSignUpFragment() {
         // Required empty public constructor
@@ -77,6 +125,22 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                 .signupPrevious.setOnClickListener(this);
         mSchoolLocationE.setFocusable(false);
         mSchoolLocationE.setOnClickListener(this);
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        permissionsToRequest = permissionsToRequest(permissions);
+
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setSpeedRequired(false);
+        criteria.setCostAllowed(true);
+        criteria.setHorizontalAccuracy(Criteria.ACCURACY_HIGH);
+        criteria.setVerticalAccuracy(Criteria.ACCURACY_HIGH);
+
+        // Now create a location manager
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         return schoolSignUpFieldsBinding.getRoot();
     }
 
@@ -92,27 +156,43 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
 
     private void onLocationEdittextClicked() {
 
-        if (locationService != null) {
-            final Location location = locationService
-                    .getLocation(LocationManager.GPS_PROVIDER);
-            Log.e(TAG, "onLocationEdittextClicked() called ---  --- ");
-            if (location != null) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-                final LocationAddress locationAddress = new LocationAddress();
-                LocationAddress.getAddressFromLocation(latitude, longitude,
-                        getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
-                            @Override
-                            public void setAddress(String address) {
-                                Log.e(TAG, "Addreess oooh --- " + address);
-                                addressFromLocation = address;
-                                mSchoolLocationE.setText(address);
-                            }
-                        }));
-            }else {
-                showSettingsAlert();
-            }
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),  permissionsToRequest.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
         }
+        locationManager.requestSingleUpdate(criteria, locationListener, null);
+
+//        if (locationService != null) {
+//            final Location location = locationService
+//                    .getLocation(LocationManager.GPS_PROVIDER);
+//            Log.e(TAG, "onLocationEdittextClicked() called ---  --- ");
+//            if (location != null) {
+//                latitude = location.getLatitude();
+//                longitude = location.getLongitude();
+//                final LocationAddress locationAddress = new LocationAddress();
+//                LocationAddress.getAddressFromLocation(latitude, longitude,
+//                        getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
+//                            @Override
+//                            public void setAddress(String address) {
+//                                Log.e(TAG, "Addreess oooh --- " + address);
+//                                addressFromLocation = address;
+//                                mSchoolLocationE.setText(address);
+//                            }
+//                        }));
+//            }else {
+//                showSettingsAlert();
+//            }
+//        }
     }
 
     public void showSettingsAlert() {
@@ -148,6 +228,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         mSchoolEmailE = schoolSignUpFieldsBinding.signupSchoolEmail;
         mSchoolEmailL = schoolSignUpFieldsBinding.signupSchoolEmailInputLayout;
         mSchoolLocationE = schoolSignUpFieldsBinding.signupSchoolLocation;
+        mSchoolLocationE.setText("Location");
         mSchoolLocationL = schoolSignUpFieldsBinding.signupSchoolLocationInputLayout;
         mSchoolBiographyE = schoolSignUpFieldsBinding.signupSchoolBiography;
         mSchoolBiographyL = schoolSignUpFieldsBinding.signupSchoolBiographyInputLayout;
@@ -156,6 +237,48 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         mConfirmPasswordE = schoolSignUpFieldsBinding.signUpConfirmPassword;
         mConfirmPasswordL = schoolSignUpFieldsBinding.signUpConfirmPasswordInputLayout;
     }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case ALL_PERMISSIONS_RESULT:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    locationManager.requestSingleUpdate(criteria, locationListener, null);
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+        }
+    }
+
+    private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String perm : wantedPermissions) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean hasPermission(String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getActivity().checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+        }
+
+        return true;
+    }
+
 
     /**
      * Gets the text from the edittext
@@ -295,6 +418,11 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     @Override
     public void signUp(boolean signedUpSuccessful, FirebaseUser user) {
         Log.e(TAG, "SignedUp method called: successful? " + signedUpSuccessful);
+        if(user == null) {
+            Toast.makeText(getActivity(), "Sign up was't, succesful please try again",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         School school = getSchool();
         if (school != null) {
             school.setId(user.getUid());

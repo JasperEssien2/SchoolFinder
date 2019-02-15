@@ -17,7 +17,6 @@ public class AuthViewPagerAdapter extends FragmentPagerAdapter {
     public AuthViewPagerAdapter(FragmentManager fm, AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks) {
         super(fm);
         this.authenticationViewPagerCallbacks = authenticationViewPagerCallbacks;
-
     }
 
 

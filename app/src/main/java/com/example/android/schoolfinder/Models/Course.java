@@ -7,9 +7,32 @@ import java.util.List;
 
 public class Course implements Parcelable {
     private String id, courseName;
-    private List<Users> headTeachersOfCourse;
+    private Users headTeacherOfCourse;
     private List<Question> courseExamQuestions;
     private boolean isSelectedAsSchoolCourse, isSelectedAsExamCourse;
+
+
+    protected Course(Parcel in) {
+        id = in.readString();
+        courseName = in.readString();
+        headTeacherOfCourse = in.readParcelable(Users.class.getClassLoader());
+        isSelectedAsSchoolCourse = in.readByte() != 0;
+        isSelectedAsExamCourse = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(courseName);
+        dest.writeParcelable(headTeacherOfCourse, flags);
+        dest.writeByte((byte) (isSelectedAsSchoolCourse ? 1 : 0));
+        dest.writeByte((byte) (isSelectedAsExamCourse ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public static final Creator<Course> CREATOR = new Creator<Course>() {
         @Override
@@ -22,14 +45,6 @@ public class Course implements Parcelable {
             return new Course[size];
         }
     };
-
-    protected Course(Parcel in) {
-        id = in.readString();
-        courseName = in.readString();
-        headTeachersOfCourse = in.createTypedArrayList(Users.CREATOR);
-        isSelectedAsSchoolCourse = in.readByte() != 0;
-        isSelectedAsExamCourse = in.readByte() != 0;
-    }
 
     public String getId() {
         return id;
@@ -47,12 +62,12 @@ public class Course implements Parcelable {
         this.courseName = courseName;
     }
 
-    public List<Users> getHeadTeachersOfCourse() {
-        return headTeachersOfCourse;
+    public Users getHeadTeacherOfCourse() {
+        return headTeacherOfCourse;
     }
 
-    public void setHeadTeachersOfCourse(List<Users> headTeachersOfCourse) {
-        this.headTeachersOfCourse = headTeachersOfCourse;
+    public void setHeadTeacherOfCourse(Users headTeacherOfCourse) {
+        this.headTeacherOfCourse = headTeacherOfCourse;
     }
 
     public List<Question> getCourseExamQuestions() {
@@ -79,17 +94,4 @@ public class Course implements Parcelable {
         isSelectedAsExamCourse = selectedAsExamCourse;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(courseName);
-        parcel.writeTypedList(headTeachersOfCourse);
-        parcel.writeByte((byte) (isSelectedAsSchoolCourse ? 1 : 0));
-        parcel.writeByte((byte) (isSelectedAsExamCourse ? 1 : 0));
-    }
 }

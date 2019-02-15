@@ -22,6 +22,10 @@ public class Class implements Parcelable {
         }
     };
 
+    public Class(){
+
+    }
+
     protected Class(Parcel in) {
         id = in.readString();
         nameOfClass = in.readString();

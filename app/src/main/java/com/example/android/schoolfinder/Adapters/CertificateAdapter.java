@@ -44,6 +44,7 @@ public class CertificateAdapter extends RecyclerView.Adapter<CertificateAdapter.
         Picasso
                 .get()
                 .load(certificate.getImageOfCert().getImageUrl())
+//                .centerCrop()
                 .into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

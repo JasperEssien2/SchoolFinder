@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
 import com.example.android.schoolfinder.schoolOwners.Fragments.ClassCourseSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.Fragments.OwnerSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.Fragments.SchoolSettingsFragment;
+import com.example.android.schoolfinder.schoolOwners.interfaces.SchoolSettingsViewPagerCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +25,15 @@ public class SchoolSettingsPagerAdapter extends FragmentPagerAdapter {
     private List<String> pageTitles;
     private Activity mActivity;
     private Bundle mSchool;
+    private SchoolSettingsViewPagerCallback mViewPagerCallback;
     private ActivitySettingsViewPagerBinding settingsViewPagerBinding;
 
-    public SchoolSettingsPagerAdapter(FragmentManager fm, Activity activity, Bundle school) {
+    public SchoolSettingsPagerAdapter(FragmentManager fm, Activity activity, Bundle school,
+                                      SchoolSettingsViewPagerCallback viewPagerCallback) {
         super(fm);
         mActivity = activity;
         mSchool = school;
+        mViewPagerCallback = viewPagerCallback;
         pageTitles = new ArrayList<>();
         pageTitles.add("School Settings");
         pageTitles.add("Owner Settings");
@@ -43,18 +48,24 @@ public class SchoolSettingsPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
+//                mViewPagerCallback.showLogoHideOwnerPic();
                 SchoolSettingsFragment schoolSettingsFragment = SchoolSettingsFragment.newInstance(mSchool);
                 return schoolSettingsFragment;
             case 1:
+//                mViewPagerCallback.hideLogoShowOwnerPic();
                 OwnerSettingsFragment ownerSettingsFragment = OwnerSettingsFragment.newInstance(mSchool);
                 return ownerSettingsFragment;
 
             case 2:
-                ClassCourseSettingsFragment classSettingsFragment = new ClassCourseSettingsFragment();
+//                mViewPagerCallback.hideLogoShowOwnerPic();/
+                mSchool.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
+                ClassCourseSettingsFragment classSettingsFragment = ClassCourseSettingsFragment.newInstance(mSchool);
                 return classSettingsFragment;
 
             case 3:
-                ClassCourseSettingsFragment courseSettingsFragment = new ClassCourseSettingsFragment();
+//                mViewPagerCallback.hideLogoShowOwnerPic();
+                mSchool.putBoolean(BundleConstants.IS_CLASS_SEETTING, false);
+                ClassCourseSettingsFragment courseSettingsFragment = ClassCourseSettingsFragment.newInstance(mSchool);
                 return courseSettingsFragment;
 
         }
@@ -62,6 +73,7 @@ public class SchoolSettingsPagerAdapter extends FragmentPagerAdapter {
 
         return null;
     }
+
 
     @Nullable
     @Override

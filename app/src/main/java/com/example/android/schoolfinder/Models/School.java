@@ -24,8 +24,8 @@ public class School implements Parcelable {
     private String schoolMotto;
     private String schoolContact;
     private String schoolLogoImageUrl;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
     private String schoolFacebook, schoolTwitter, schoolEmail, schoolWebsite;
     private Users schoolOwnerDetails;
     private List<Certificate> certificates;
@@ -46,7 +46,7 @@ public class School implements Parcelable {
     public School(String id, String schoolName, String schoolLocation, String schoolBiography,
                   String schoolMotto, String schoolContact, String schoolLogoImageUrl, String schoolFacebook, String schoolTwitter, String schoolEmail,
                   String schoolWebsite, Users schoolOwnerDetails, long followersCount, long notImpressedExpressionCount,
-                  long impressedExpressionCount, long normalExpressionCount, long latitude, long longitude,
+                  long impressedExpressionCount, long normalExpressionCount, double latitude, double longitude,
                   List<Certificate> certificates, List<Certificate> achievements, List<Image> schoolImages,
                   List<Class> classes, List<Course> courses) {
 
@@ -83,8 +83,8 @@ public class School implements Parcelable {
         schoolMotto = in.readString();
         schoolContact = in.readString();
         schoolLogoImageUrl = in.readString();
-        latitude = in.readLong();
-        longitude = in.readLong();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
         schoolFacebook = in.readString();
         schoolTwitter = in.readString();
         schoolEmail = in.readString();
@@ -165,19 +165,19 @@ public class School implements Parcelable {
         this.schoolBiography = schoolBiography;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -291,8 +291,8 @@ public class School implements Parcelable {
         parcel.writeString(schoolMotto);
         parcel.writeString(schoolContact);
         parcel.writeString(schoolLogoImageUrl);
-        parcel.writeLong(latitude);
-        parcel.writeLong(longitude);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
         parcel.writeString(schoolFacebook);
         parcel.writeString(schoolTwitter);
         parcel.writeString(schoolEmail);

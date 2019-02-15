@@ -50,6 +50,7 @@ public class AddCertDialogFragment extends DialogFragment {
             Picasso
                     .get()
                     .load(uri)
+//                    .centerCrop()
                     .into(mAddCertBinding.imageView);
             mStorageCallback = (MediaStorageCallback) getArguments().getSerializable("mediaCallback");
 
