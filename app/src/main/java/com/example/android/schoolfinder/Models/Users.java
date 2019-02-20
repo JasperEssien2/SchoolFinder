@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Users implements Parcelable {
-    private String id, name, contact, email, location, biography, profileImageUrl;
+    private String id, name, contact, email, location, biography, profileImageUrl, country, state_region, city;
     private double latitude;
     private double longitude;
 
@@ -32,6 +32,9 @@ public class Users implements Parcelable {
         location = in.readString();
         biography = in.readString();
         profileImageUrl = in.readString();
+        country = in.readString();
+        state_region = in.readString();
+        city = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
     }
@@ -122,7 +125,26 @@ public class Users implements Parcelable {
         parcel.writeString(location);
         parcel.writeString(biography);
         parcel.writeString(profileImageUrl);
+        parcel.writeString(country);
+        parcel.writeString(state_region);
+        parcel.writeString(city);
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
+    }
+
+    public String getState_region() {
+        return state_region;
+    }
+
+    public void setState_region(String state_region) {
+        this.state_region = state_region;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

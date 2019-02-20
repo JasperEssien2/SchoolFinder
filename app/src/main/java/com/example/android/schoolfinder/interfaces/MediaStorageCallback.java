@@ -4,7 +4,7 @@ import com.example.android.schoolfinder.Models.Certificate;
 
 import java.io.Serializable;
 
-public interface MediaStorageCallback extends Serializable {
+public interface MediaStorageCallback{
 
     void profileImageStored(String imageUrl, boolean isSuccesful);
 

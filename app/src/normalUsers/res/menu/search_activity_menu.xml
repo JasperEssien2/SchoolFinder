@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/title_search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/filter_by_country"
+        android:title="@string/filter_by_country" />
+
+    <item
+        android:id="@+id/filter_by_category"
+        android:title="@string/filter_by_category">
+        <menu>
+            <group android:id="@+id/filter_by_category_group"
+                android:checkableBehavior="all">
+                <item
+                    android:id="@+id/category_tetiary"
+                    android:title="@string/title_tertiary"
+                    android:checkable="true"/>
+
+                <item
+                    android:id="@+id/category_high_school"
+                    android:title="@string/title_high_school"
+                    android:checkable="true"/>
+
+                <item
+                    android:id="@+id/category_mid_school"
+                    android:title="@string/title_mid_school"
+                    android:checkable="true"/>
+
+                <item
+                    android:id="@+id/category_kindergarten_nursery"
+                    android:title="@string/title_kindergarten_nurseries"
+                    android:checkable="true"/>
+
+                <item
+                    android:id="@+id/category_others"
+                    android:title="@string/title_others"
+                    android:checkable="true"/>
+            </group>
+
+            <item
+                android:id="@+id/done"
+                android:title="@string/title_done" />
+        </menu>
+    </item>
+
+</menu>

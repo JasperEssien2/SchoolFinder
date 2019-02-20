@@ -16,4 +16,7 @@
     <string name="school_detail_motto_header">SCHOOL MOTTO</string>
     <string name="school_achievements_header">SCHOOL ACHIEVEMENTS</string>
     <string name="school_certificates_header">SCHOOL CERTIFICATES</string>
+    <string name="title_search">Search</string>
+    <string name="filter_by_country">Filter by Country</string>
+    <string name="filter_by_category">Filter by Category</string>
 </resources>

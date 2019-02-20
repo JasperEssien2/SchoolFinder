@@ -31,6 +31,8 @@
         <activity android:name=".normalUsers.HomeActivity" />
         <activity android:name=".schoolOwners.HomeActivity" />
         <activity android:name=".schoolOwners.Activities.SettingsViewPagerActivity" />
+        <activity android:name=".normalUsers.Activities.AuthenticationViewPagerActivity" />
+        <activity android:name=".normalUsers.Activities.SearchActivity" />
         <!--<activity android:name=".schoolOwners.HomeActivity" />-->
         <!--<activity android:name=".schoolOwners.Activities.AuthenticationViewPagerActivity" />-->
         <service android:name=".Utility.AppLocationService" />

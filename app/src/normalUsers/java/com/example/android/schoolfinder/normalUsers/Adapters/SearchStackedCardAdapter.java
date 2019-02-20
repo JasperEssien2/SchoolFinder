@@ -58,6 +58,7 @@ public class SearchStackedCardAdapter extends CardStackView.Adapter<SearchStacke
             Picasso
                     .get()
                     .load(school.getSchoolImages().get(0).getImageUrl())
+                    .placeholder(R.color.colorGrey)
                     .error(R.drawable.skool_image1)
                     .into(viewHolder.backgroundImage);
         }

@@ -3,6 +3,8 @@ package com.example.android.schoolfinder.normalUsers.Fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -26,6 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.android.countryregioncitypicker.Models.Country;
+import com.example.android.countryregioncitypicker.Models.GeoNamesViewModels;
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
@@ -66,6 +71,7 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
     final Looper looper = null;
     private Authentication auth = new Authentication(this);
     private MediaStorage storage = new MediaStorage(this);
+    private String mCountry, mState_region, mCity;
     // lists for permissions
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
@@ -78,6 +84,9 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
             mConfirmPasswordL;
     private Location mLocation;
     private Uri imageUri;
+    private GeoNamesViewModels.CountriesViewModel countriesViewModel;
+    private String mAddress = "";
+
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -85,11 +94,30 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
             LocationAddress.getAddressFromLocation(mLocation.getLatitude(), mLocation.getLongitude(),
                     getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
                         @Override
-                        public void setAddress(String address) {
+                        public void setAddress(String address, String country, String stateRegion, String city) {
+                            if (address == null) {
+                                countriesViewModel = new ViewModelProvider.NewInstanceFactory()
+                                        .create(GeoNamesViewModels.CountriesViewModel.class);
+                                countriesViewModel.getCountry(mLocation.getLatitude(), mLocation.getLongitude())
+                                        .observe(SignUpFragment.this, new Observer<Country>() {
+                                            @Override
+                                            public void onChanged(@Nullable Country country) {
+                                                mCountry = country.getCountryName();
+                                                mState_region = country.getAdminName1();
+                                                mAddress = mState_region + ", " + mCountry;
+                                            }
+                                        });
+                            } else {
+                                mCountry = country;
+                                mState_region = stateRegion;
+                                mCity = city;
+                                mAddress = address;
+                            }
                             fragmentSignUpBinding
-                                    .signupLocation.setText(address);
-                            Log.e(TAG, "Adresss oooooh -----------------------------" + address);
+                                    .signupLocation.setText(mAddress);
+                            Log.e(TAG, "Adresss oooooh -----------------------------" + mAddress);
                         }
+
                     }));
         }
 
@@ -158,7 +186,7 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
                         Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
                                 PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(),  permissionsToRequest.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
+                    ActivityCompat.requestPermissions(getActivity(), permissionsToRequest.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -390,6 +418,8 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
         users.setLocation(getTextFromEditText(mLocationE));
         users.setLatitude(mLocation.getLatitude());
         users.setLongitude(mLocation.getLongitude());
+        users.setState_region(mState_region);
+        users.setCountry(mCountry);
         return users;
     }
 

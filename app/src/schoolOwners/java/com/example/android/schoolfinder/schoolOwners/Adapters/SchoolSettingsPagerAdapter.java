@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
@@ -17,7 +18,7 @@ import com.example.android.schoolfinder.schoolOwners.interfaces.SchoolSettingsVi
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchoolSettingsPagerAdapter extends FragmentPagerAdapter {
+public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final String TAG = SchoolSettingsPagerAdapter.class.getSimpleName();
     private int NUM_OF_PAGE = 4;
@@ -25,7 +26,7 @@ public class SchoolSettingsPagerAdapter extends FragmentPagerAdapter {
     private List<String> pageTitles;
     private Activity mActivity;
     private Bundle mSchool;
-    private SchoolSettingsViewPagerCallback mViewPagerCallback;
+//    private SchoolSettingsViewPagerCallback mViewPagerCallback;
     private ActivitySettingsViewPagerBinding settingsViewPagerBinding;
 
     public SchoolSettingsPagerAdapter(FragmentManager fm, Activity activity, Bundle school,
@@ -33,7 +34,7 @@ public class SchoolSettingsPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         mActivity = activity;
         mSchool = school;
-        mViewPagerCallback = viewPagerCallback;
+//        mViewPagerCallback = viewPagerCallback;
         pageTitles = new ArrayList<>();
         pageTitles.add("School Settings");
         pageTitles.add("Owner Settings");

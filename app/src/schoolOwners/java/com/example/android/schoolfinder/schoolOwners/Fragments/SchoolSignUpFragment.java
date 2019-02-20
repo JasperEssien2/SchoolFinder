@@ -3,6 +3,8 @@ package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,6 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.android.countryregioncitypicker.Models.Country;
+import com.example.android.countryregioncitypicker.Models.GeoNamesViewModels;
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.School;
@@ -41,10 +46,12 @@ import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallbacks;
 import com.example.android.schoolfinder.interfaces.GetLocationCallback;
 import com.example.android.schoolfinder.schoolOwners.Activities.AuthenticationViewPagerActivity;
+import com.example.android.schoolfinder.schoolOwners.DialogFragments.CategoryDialogFragment;
 import com.example.android.schoolfinder.schoolOwners.HomeActivity;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //import com.example.android.schoolfinder.Activities.AuthenticationViewPagerActivity;
 //import com.example.android.schoolfinder.HomeActivity;
@@ -56,14 +63,16 @@ import java.util.ArrayList;
 public class SchoolSignUpFragment extends Fragment implements AuthenticationCallbacks, View.OnClickListener {
 
     private static final String TAG = SchoolSignUpFragment.class.getSimpleName();
+    private static final int ALL_PERMISSIONS_RESULT = 1011;
+    final Criteria criteria = new Criteria();
     FragmentSchoolSignUpFieldsBinding schoolSignUpFieldsBinding;
     private AppLocationService locationService;
     private Authentication auth = new Authentication(this);
+    private String mCountry, mState_region, mCity;
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
     private Location mLocation;
-    final Criteria criteria = new Criteria();
     private AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks;
     private AppCompatEditText mSchoolNameE, mSchoolContactE, mSchoolEmailE, mSchoolLocationE, mSchoolBiographyE,
             mPasswordE, mConfirmPasswordE;
@@ -72,7 +81,8 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     private Users mSchoolOwnerDetails;
     private double latitude, longitude;
     private String addressFromLocation;
-    private static final int ALL_PERMISSIONS_RESULT = 1011;
+    private GeoNamesViewModels.CountriesViewModel countriesViewModel;
+    private String mAddress = "";
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -80,9 +90,34 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
             LocationAddress.getAddressFromLocation(mLocation.getLatitude(), mLocation.getLongitude(),
                     getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
                         @Override
-                        public void setAddress(String address) {
-                            schoolSignUpFieldsBinding.signupSchoolLocation.setText(address);
-                            Log.e(TAG, "Adresss oooooh -----------------------------" + address);
+                        public void setAddress(String address, String country, String stateRegion, String city) {
+                            if (address == null) {
+                                Log.e(TAG, "Address === null ooh");
+                                countriesViewModel = new ViewModelProvider.NewInstanceFactory()
+                                        .create(GeoNamesViewModels.CountriesViewModel.class);
+                                countriesViewModel.getCountry(mLocation.getLatitude(), mLocation.getLongitude())
+                                        .observe(SchoolSignUpFragment.this, new Observer<Country>() {
+                                            @Override
+                                            public void onChanged(@Nullable Country country) {
+//                                                if (country != null) {
+                                                    mCountry = country.getCountryName();
+//                                                }
+//                                                assert country != null;
+                                                mState_region = country.getAdminName1();
+                                                mAddress = mState_region + ", " + mCountry;
+                                                Log.e(TAG, "Address ---- " + mAddress);
+                                                schoolSignUpFieldsBinding.signupSchoolLocation.setText(mAddress);
+                                            }
+                                        });
+                            } else {
+                                Log.e(TAG, "Address NOT null ooh");
+                                mCountry = country;
+                                mState_region = stateRegion;
+                                mCity = city;
+                                mAddress = address;
+                                schoolSignUpFieldsBinding.signupSchoolLocation.setText(mAddress);
+                            }
+                            Log.e(TAG, "Adresss oooooh -----------------------------" + mAddress);
                         }
                     }));
         }
@@ -103,6 +138,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         }
     };
     private LocationManager locationManager;
+    private List<String> categories;
 
     public SchoolSignUpFragment() {
         // Required empty public constructor
@@ -125,6 +161,8 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                 .signupPrevious.setOnClickListener(this);
         mSchoolLocationE.setFocusable(false);
         mSchoolLocationE.setOnClickListener(this);
+        schoolSignUpFieldsBinding.signupSchoolCategory.setFocusable(false);
+        schoolSignUpFieldsBinding.signupSchoolCategory.setOnClickListener(this);
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
@@ -154,13 +192,16 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         this.authenticationViewPagerCallbacks = authenticationViewPagerCallbacks;
     }
 
+    /**
+     * Action to take when the location edittext field is clicked
+     */
     private void onLocationEdittextClicked() {
 
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),  permissionsToRequest.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
+            ActivityCompat.requestPermissions(getActivity(), permissionsToRequest.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -193,6 +234,25 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
 //                showSettingsAlert();
 //            }
 //        }
+    }
+
+    /**
+     * Action to take when the category edittext field is clicked
+     */
+    private void onCategoryEdittextClicked() {
+        CategoryDialogFragment categoryDialogFragment = new CategoryDialogFragment();
+        categoryDialogFragment.initSchoolSignUpFragment(this);
+        categoryDialogFragment.show(getActivity().getSupportFragmentManager(), null);
+    }
+
+    /**
+     * This is called in the CategoryDialogFragment to set the categories chosen by the user
+     * @param categories of the school
+     */
+    public void setSchoolCategories(List<String> categories) {
+        this.categories = categories;
+        if (categories != null && !categories.isEmpty())
+            schoolSignUpFieldsBinding.signupSchoolCategory.setText(categories.toString().substring(1, categories.toString().length() - 1));
     }
 
     public void showSettingsAlert() {
@@ -228,7 +288,6 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         mSchoolEmailE = schoolSignUpFieldsBinding.signupSchoolEmail;
         mSchoolEmailL = schoolSignUpFieldsBinding.signupSchoolEmailInputLayout;
         mSchoolLocationE = schoolSignUpFieldsBinding.signupSchoolLocation;
-        mSchoolLocationE.setText("Location");
         mSchoolLocationL = schoolSignUpFieldsBinding.signupSchoolLocationInputLayout;
         mSchoolBiographyE = schoolSignUpFieldsBinding.signupSchoolBiography;
         mSchoolBiographyL = schoolSignUpFieldsBinding.signupSchoolBiographyInputLayout;
@@ -259,6 +318,11 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         }
     }
 
+    /**
+     * This method adds permission to request from the device
+     * @param wantedPermissions
+     * @return list of permission required
+     */
     private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
         ArrayList<String> result = new ArrayList<>();
 
@@ -271,6 +335,12 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         return result;
     }
 
+    /**
+     * For android 6.0 up, this method checks to see if the app has permission from the device to use
+     * location
+     * @param permission required
+     * @return
+     */
     private boolean hasPermission(String permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return getActivity().checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
@@ -347,6 +417,11 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
             errorCount++;
         }
 
+        if (!Validation.validateFields(getTextFromEditText(schoolSignUpFieldsBinding.signupSchoolCategory))) {
+            schoolSignUpFieldsBinding.signupSchoolCategoryInputLayout.setError(Validation.EMPTY_FIELD);
+            errorCount++;
+        }
+
         if (!Validation.validateFields(getTextFromEditText(mSchoolBiographyE))) {
             mSchoolBiographyL.setError(Validation.EMPTY_FIELD);
             errorCount++;
@@ -404,6 +479,9 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
             school.setSchoolEmail(getTextFromEditText(mSchoolEmailE));
             school.setSchoolLocation(getTextFromEditText(mSchoolLocationE));
             school.setSchoolBiography(getTextFromEditText(mSchoolBiographyE));
+            school.setCountry(mCountry);
+            school.setState_region(mState_region);
+            school.setSchoolCategory(categories);
             Log.e(TAG, "School owner detail null");
             return school;
         }
@@ -418,7 +496,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     @Override
     public void signUp(boolean signedUpSuccessful, FirebaseUser user) {
         Log.e(TAG, "SignedUp method called: successful? " + signedUpSuccessful);
-        if(user == null) {
+        if (user == null) {
             Toast.makeText(getActivity(), "Sign up was't, succesful please try again",
                     Toast.LENGTH_SHORT).show();
             return;
@@ -486,6 +564,9 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                 break;
             case R.id.signup_school_location:
                 onLocationEdittextClicked();
+                break;
+            case R.id.signup_school_category:
+                onCategoryEdittextClicked();
                 break;
         }
     }

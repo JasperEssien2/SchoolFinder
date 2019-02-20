@@ -16,6 +16,7 @@ public class Course implements Parcelable {
         id = in.readString();
         courseName = in.readString();
         headTeacherOfCourse = in.readParcelable(Users.class.getClassLoader());
+        courseExamQuestions = in.createTypedArrayList(Question.CREATOR);
         isSelectedAsSchoolCourse = in.readByte() != 0;
         isSelectedAsExamCourse = in.readByte() != 0;
     }
@@ -25,6 +26,7 @@ public class Course implements Parcelable {
         dest.writeString(id);
         dest.writeString(courseName);
         dest.writeParcelable(headTeacherOfCourse, flags);
+        dest.writeTypedList(courseExamQuestions);
         dest.writeByte((byte) (isSelectedAsSchoolCourse ? 1 : 0));
         dest.writeByte((byte) (isSelectedAsExamCourse ? 1 : 0));
     }

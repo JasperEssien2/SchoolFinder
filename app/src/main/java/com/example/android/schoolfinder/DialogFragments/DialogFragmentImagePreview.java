@@ -15,18 +15,21 @@ import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.DialogFragmentImagePreviewBinding;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
+//import com.example.android.schoolfinder.schoolOwners.Activities.SettingsViewPagerActivity;
 import com.squareup.picasso.Picasso;
 
 public class DialogFragmentImagePreview extends DialogFragment {
     private DialogFragmentImagePreviewBinding mImagePreviewBinding;
     private MediaStorageCallback mStorageCallback;
     private MediaStorage mMediaStorage;
+//    private MediaStorageCallback storageCallback;
 
     public static DialogFragmentImagePreview newInstance(MediaStorageCallback storageCallback, Uri uri,
                                                          int action) {
         DialogFragmentImagePreview dialogFragmentImagePreview = new DialogFragmentImagePreview();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("mediaCallback", storageCallback);
+//        bundle.putSerializable("mediaCallback", storageCallback);
+        dialogFragmentImagePreview.initMediaStorageCallback(storageCallback);
         bundle.putString("uri", uri.toString());
         bundle.putInt("action", action);
         dialogFragmentImagePreview.setArguments(bundle);
@@ -38,7 +41,7 @@ public class DialogFragmentImagePreview extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mImagePreviewBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_image_preview,
                 container, false);
-        if (getArguments() != null && getArguments().containsKey("mediaCallback")) {
+        if (getArguments() != null && getArguments().containsKey("uri")) {
             final Uri uri = Uri.parse(getArguments().getString("uri"));
             final int action = getArguments().getInt("action");
 
@@ -47,7 +50,7 @@ public class DialogFragmentImagePreview extends DialogFragment {
                     .load(uri)
 //                    .centerCrop()
                     .into(mImagePreviewBinding.imageView);
-            mStorageCallback = (MediaStorageCallback) getArguments().getSerializable("mediaCallback");
+//            mStorageCallback = (MediaStorageCallback) getArguments().getSerializable("mediaCallback");
 
             mMediaStorage = new MediaStorage(mStorageCallback);
 
@@ -78,4 +81,9 @@ public class DialogFragmentImagePreview extends DialogFragment {
     }
 
 
+    public void initMediaStorageCallback(MediaStorageCallback storageCallback) {
+
+        mStorageCallback = storageCallback;
+        mMediaStorage = new MediaStorage(mStorageCallback);
+    }
 }

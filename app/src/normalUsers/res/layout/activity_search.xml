@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
         android:clipChildren="false"
+        android:paddingBottom="16dp"
         tools:context=".Fragments.SearchFragment">
 
         <android.support.design.widget.AppBarLayout
@@ -21,21 +22,28 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@color/colorCyan200"
                 android:fitsSystemWindows="true"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
                 app:title="Search" />
 
         </android.support.design.widget.AppBarLayout>
 
-
+        <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/swipeStack"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <!--</android.support.v4.widget.NestedScrollView>-->
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
@@ -47,5 +55,6 @@
             app:backgroundTint="@color/colorWhite"
             app:elevation="10dp"
             app:fabSize="normal" />
+
     </android.support.design.widget.CoordinatorLayout>
 </layout>

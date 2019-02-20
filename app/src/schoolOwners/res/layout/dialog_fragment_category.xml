@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorCyan200"
+            android:minHeight="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Select Categories"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <CheckBox
+            android:id="@+id/checkbox_tertiary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="32dp"
+            android:text="Tertiary"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_high_school"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="32dp"
+            android:text="High School"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_mid_school"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="32dp"
+            android:text="Mid School"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_kindergarten_nursery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="32dp"
+            android:text="Kindergarten/Nurseries"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_others"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="32dp"
+            android:text="Others"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:text="Done"/>
+    </LinearLayout>
+</layout>

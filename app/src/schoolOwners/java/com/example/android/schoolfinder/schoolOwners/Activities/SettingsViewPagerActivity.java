@@ -50,6 +50,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
             school = getSchool();
             setUpViewWithData(school);
         }
+
         settingsViewPagerBinding.settingsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -101,9 +102,14 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         });
         settingsViewPagerBinding.settingsTabs.setupWithViewPager(settingsViewPagerBinding.settingsViewpager);
         settingsViewPagerBinding.settingsViewpager.setAdapter(new SchoolSettingsPagerAdapter(
-                getSupportFragmentManager(),this, getIntent().getExtras(), this));
+                getSupportFragmentManager(),this, getBundle(), this));
     }
 
+    private Bundle getBundle(){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleConstants.SCHOOL_BUNDLE, getSchool());
+        return bundle;
+    }
     private School getSchool() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -238,7 +244,8 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
 //                        imageView.setImageBitmap(selectedImage);
                     if (imageUri != null) {
                         imagePreview = DialogFragmentImagePreview
-                                .newInstance(this, imageUri, BundleConstants.ACTION_STORE_LOGO);
+                                .newInstance(this,imageUri, BundleConstants.ACTION_STORE_LOGO);
+//                        imagePreview.initMediaStorageCallback(this);
                         imagePreview.show(getSupportFragmentManager(),
                                 null);
                     } else
@@ -256,6 +263,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                     if (imageUri != null) {
                         imagePreview = DialogFragmentImagePreview
                                 .newInstance(this, imageUri, BundleConstants.ACTION_STORE_PROFILE_IMAGE);
+//                        imagePreview.initMediaStorageCallback(this);
                         imagePreview.show(getSupportFragmentManager(),
                                 null);
                     } else

@@ -1,6 +1,7 @@
 package com.example.android.schoolfinder.FirebaseHelper;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
@@ -18,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Authentication implements BaseAuthentication {
 
@@ -55,18 +59,50 @@ public class Authentication implements BaseAuthentication {
                 });
     }
 
+    private DatabaseReference mSchoolRef;
+
     @Override
     public void putNewUserInDb(final School school) {
-        reference.child(FirebaseConstants.SCHOOLS_USERS_NODE)
+        final DatabaseReference schoolRef = reference.child(FirebaseConstants.SCHOOLS_USERS_NODE);
+        mSchoolRef = schoolRef;
+        final Map<String, Object> countryMap = new HashMap<>();
+        countryMap.put(school.getId(), true);
+        schoolRef
+//                .child(school.getCountry())
+//                .child(school.getState_region())
                 .child(school.getId())
                 .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
                 .setValue(school)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
+                        if (task.isSuccessful()) {
+                            Map<String, Object> map = null;
+                            mSchoolRef.child(FirebaseConstants.COUNTRIES)
+                                    .child(school.getCountry())
+                                    .updateChildren(countryMap, new DatabaseReference.CompletionListener() {
+                                        @Override
+                                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                            Map<String, Object> stateMap = new HashMap<>();
+                                            stateMap.put(school.getId(), true);
+                                            mSchoolRef.child(FirebaseConstants.COUNTRIES)
+                                                    .child(school.getCountry())
+                                                    .child(school.getState_region())
+                                                    .updateChildren(stateMap);
+                                        }
+                                    });
+
+                            DatabaseReference categoryRef =
+                                    reference.child(FirebaseConstants.SCHOOLS_USERS_NODE)
+                                            .child(FirebaseConstants.TYPE_NODE);
+                            for (String s : school.getSchoolCategory()) {
+                                map = new HashMap<>();
+                                map.put(school.getId(), true);
+                                categoryRef.child(s).updateChildren(map);
+                            }
                             mCallbacks.userInsertedToDatabase(school);
-                        else mCallbacks.userInsertedToDatabase((School) null);
+
+                        } else mCallbacks.userInsertedToDatabase((School) null);
                     }
                 });
     }

@@ -277,28 +277,30 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
         switch (view.getId()) {
             case R.id.school_settings_edit_school_biography:
 //                view.requestFocus();
+//                editFieldButtonClicked(schoolSettingsBinding.schoolDetailDescriptionText);
                 isBiographyEditMode = !isBiographyEditMode;
                 if (!isBiographyEditMode) {
-                    schoolSettingsBinding.schoolSettingsEditSchoolBiography
-                            .setImageResource(R.drawable.ic_edit_white);
+//                    schoolSettingsBinding.schoolSettingsEditSchoolBiography
+//                            .setImageResource(R.drawable.ic_edit_white);
+                    schoolSettingsBinding.schoolDetailDescriptionText.clearFocus();
                 } else {
-                    schoolSettingsBinding.schoolSettingsEditSchoolBiography
-                            .setImageResource(R.drawable.ic_check_white_24dp);
+//                    schoolSettingsBinding.schoolSettingsEditSchoolBiography
+//                            .setImageResource(R.drawable.ic_check_white_24dp);
                     schoolSettingsBinding.schoolDetailDescriptionText.requestFocus();
                 }
-                editFieldButtonClicked(schoolSettingsBinding.schoolDetailDescriptionText);
                 break;
             case R.id.school_settings_edit_school_motto:
+//                editFieldButtonClicked(schoolSettingsBinding.schoolDetailMottoText);
                 isMottoEditMode = !isMottoEditMode;
                 if (!isMottoEditMode) {
-                    schoolSettingsBinding.schoolSettingsEditSchoolMotto
-                            .setImageResource(R.drawable.ic_edit_white);
+//                    schoolSettingsBinding.schoolSettingsEditSchoolMotto
+//                            .setImageResource(R.drawable.ic_edit_white);
+                    schoolSettingsBinding.schoolDetailMottoText.clearFocus();
                 } else {
-                    schoolSettingsBinding.schoolSettingsEditSchoolMotto
-                            .setImageResource(R.drawable.ic_check_white_24dp);
+//                    schoolSettingsBinding.schoolSettingsEditSchoolMotto
+//                            .setImageResource(R.drawable.ic_check_white_24dp);
                     schoolSettingsBinding.schoolDetailMottoText.requestFocus();
                 }
-                editFieldButtonClicked(schoolSettingsBinding.schoolDetailMottoText);
                 break;
             case R.id.school_settings_edit_school_change_logo:
 
@@ -340,6 +342,10 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                         Log.e(TAG, "Schools new motto " + school.getSchoolMotto());
                         updateUser(school);
                     }
+                } else {
+                    schoolSettingsBinding.schoolSettingsEditSchoolMotto
+                            .setImageResource(R.drawable.ic_check_white);
+                    schoolSettingsBinding.schoolDetailMottoText.setEnabled(true);
                 }
                 break;
             case R.id.school_detail_description_text:
@@ -352,6 +358,10 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                         school.setSchoolBiography(schoolSettingsBinding.schoolDetailDescriptionText.getText().toString());
                         updateUser(school);
                     }
+                } else {
+                    schoolSettingsBinding.schoolSettingsEditSchoolBiography
+                            .setImageResource(R.drawable.ic_check_white);
+                    schoolSettingsBinding.schoolDetailDescriptionText.setEnabled(true);
                 }
                 break;
         }

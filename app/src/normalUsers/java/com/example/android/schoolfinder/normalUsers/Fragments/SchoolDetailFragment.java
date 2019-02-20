@@ -16,9 +16,12 @@ import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.AppLocationService;
 import com.example.android.schoolfinder.databinding.FragmentSchoolDetailBinding;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 //import com.example.android.schoolfinder.normalUsers.R;
 
 /**
@@ -107,39 +110,39 @@ public class SchoolDetailFragment extends Fragment {
 
     private void onLocationEdittextClicked() {
         if (locationService != null) {
-            final Location location = locationService
-                    .getLocation(LocationManager.GPS_PROVIDER);
+//            final Location location = locationService
+//                    .getLocation(LocationManager.GPS_PROVIDER);
             Log.e(TAG, "onLocationEdittextClicked() called ---  --- ");
-            if (location != null) {
+//            if (location != null) {
 
                 detailBinding.schoolLocationMap.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
                         Log.e(TAG, "map ready  ooooooooh");
                         // Add a marker in Sydney and move the camera
-//                        LatLng sydney = new LatLng(-34, 151);
-//                        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                        googleMap.setLocationSource(new LocationSource() {
-                            @Override
-                            public void activate(OnLocationChangedListener onLocationChangedListener) {
-                                onLocationChangedListener.onLocationChanged(new Location(
-                                        locationService.getLocation(LocationManager.GPS_PROVIDER)
-                                ));
-                                Log.e(TAG, "set location ooooooooh");
-                            }
-
-                            @Override
-                            public void deactivate() {
-
-                            }
-                        });
+                        LatLng sydney = new LatLng(-34, 151);
+                        googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//                        googleMap.setLocationSource(new LocationSource() {
+//                            @Override
+//                            public void activate(OnLocationChangedListener onLocationChangedListener) {
+//                                onLocationChangedListener.onLocationChanged(new Location(
+//                                        locationService.getLocation(LocationManager.GPS_PROVIDER)
+//                                ));
+//                                Log.e(TAG, "set location ooooooooh");
+//                            }
+//
+//                            @Override
+//                            public void deactivate() {
+//
+//                            }
+//                        });
                     }
                 });
 
-            } else {
-//                showSettingsAlert();
-            }
+//            } else {
+////                showSettingsAlert();
+//            }
         }
     }
 

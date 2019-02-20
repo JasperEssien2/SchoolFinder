@@ -3,19 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".Fragments.SignUpFragment">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- TODO: Update blank fragment layout -->
-        <android.support.constraint.ConstraintLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".Fragments.SignUpFragment">
 
-            <!--<FrameLayout-->
+            <!-- TODO: Update blank fragment layout -->
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp">
+
+                <!--<FrameLayout-->
                 <!--android:id="@+id/frameLayout"-->
                 <!--android:layout_width="120dp"-->
                 <!--android:layout_height="120dp"-->
@@ -27,216 +34,217 @@
                 <!--app:layout_constraintTop_toTopOf="parent">-->
 
                 <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                    <!--android:id="@+id/owner_settings_image"-->
-                    <!--android:layout_width="100dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@drawable/circle_background"-->
-                    <!--android:contentDescription="School Owner Settings profile image"-->
-                    <!--android:elevation="6dp"-->
-                    <!--android:src="@drawable/place_holder"-->
-                    <!--app:civ_border_color="@color/colorCyan500"-->
-                    <!--app:civ_border_width="2dp"-->
-                    <!--app:civ_circle_background_color="#777777"-->
-                    <!--tools:layout_editor_absoluteX="165dp"-->
-                    <!--tools:layout_editor_absoluteY="67dp" />-->
+                <!--android:id="@+id/owner_settings_image"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:background="@drawable/circle_background"-->
+                <!--android:contentDescription="School Owner Settings profile image"-->
+                <!--android:elevation="6dp"-->
+                <!--android:src="@drawable/place_holder"-->
+                <!--app:civ_border_color="@color/colorCyan500"-->
+                <!--app:civ_border_width="2dp"-->
+                <!--app:civ_circle_background_color="#777777"-->
+                <!--tools:layout_editor_absoluteX="165dp"-->
+                <!--tools:layout_editor_absoluteY="67dp" />-->
 
                 <!--<ImageView-->
-                    <!--android:id="@+id/school_owner_settings_image_picker"-->
-                    <!--android:layout_width="35dp"-->
-                    <!--android:layout_height="35dp"-->
-                    <!--android:layout_gravity="bottom|end"-->
-                    <!--android:layout_marginBottom="6dp"-->
-                    <!--android:background="@drawable/circle_background"-->
-                    <!--android:backgroundTint="@color/colorCyan200"-->
-                    <!--android:elevation="6dp"-->
-                    <!--android:padding="6dp"-->
-                    <!--android:src="@drawable/ic_add_photo" />-->
+                <!--android:id="@+id/school_owner_settings_image_picker"-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_gravity="bottom|end"-->
+                <!--android:layout_marginBottom="6dp"-->
+                <!--android:background="@drawable/circle_background"-->
+                <!--android:backgroundTint="@color/colorCyan200"-->
+                <!--android:elevation="6dp"-->
+                <!--android:padding="6dp"-->
+                <!--android:src="@drawable/ic_add_photo" />-->
 
-            <!--</FrameLayout>-->
-
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/settings_school_owner_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/settings_field_background"
-                android:drawableStart="@drawable/ic_person_outline_white"
-                android:drawablePadding="16dp"
-                android:drawableTint="@color/colorGrey"
-                android:hint="@string/edittext_owners_name"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColorHint="@color/colorLightGrey"
-                app:layout_constraintEnd_toStartOf="@+id/owners_name_edit_button"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/settings_school_owner_contact"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/settings_field_background"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_phone_white"
-                android:drawableTint="@color/colorGrey"
-                android:hint="@string/edittext_owners_contact"
-                android:inputType="number"
-                android:padding="10dp"
-                android:textColorHint="@color/colorLightGrey"
-                app:layout_constraintEnd_toStartOf="@+id/owners_contact_edit_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_name" />
+                <!--</FrameLayout>-->
 
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/settings_school_owner_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/settings_field_background"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_mail_white"
-                android:drawableTint="@color/colorGrey"
-                android:hint="@string/edittext_owners_email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:textColorHint="@color/colorLightGrey"
-                app:layout_constraintEnd_toStartOf="@+id/owners_email_edit_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_contact" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/settings_school_owner_location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/settings_field_background"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_add_location_white"
-                android:drawableTint="@color/colorGrey"
-                android:hint="@string/button_get_location"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColorHint="@color/colorLightGrey"
-                app:layout_constraintEnd_toEndOf="@+id/settings_school_owner_email"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_email" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/settings_school_owner_biography"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/settings_field_background"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_person_outline_white"
-                android:drawableTint="@color/colorGrey"
-                android:gravity="top"
-                android:hint="@string/edittext_owners_biography"
-                android:inputType="text"
-                android:minHeight="100dp"
-                android:padding="10dp"
-                android:textColorHint="@color/colorLightGrey"
-                app:layout_constraintEnd_toStartOf="@+id/owners_biography_edit_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_location" />
-
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/owners_name_edit_button"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
-                android:background="@null"
-                android:src="@drawable/ic_edit_white"
-                android:tint="@color/colorGrey"
-                app:layout_constraintBottom_toTopOf="@+id/settings_school_owner_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_name" />
-
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/owners_contact_edit_button"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
-                android:background="@null"
-                android:src="@drawable/ic_edit_white"
-                android:tint="@color/colorGrey"
-                app:layout_constraintBottom_toTopOf="@+id/settings_school_owner_contact"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_contact" />
-
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/owners_email_edit_button"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
-                android:background="@null"
-                android:src="@drawable/ic_edit_white"
-                android:tint="@color/colorGrey"
-                app:layout_constraintBottom_toTopOf="@+id/settings_school_owner_email"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_email" />
-
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/owners_biography_edit_button"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@null"
-                android:src="@drawable/ic_edit_white"
-                android:tint="@color/colorGrey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/settings_school_owner_biography" />
-
-            <FrameLayout
-                android:id="@+id/change_password_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/login_sign_up_button_background"
-                android:elevation="10dp"
-                android:minHeight="45dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_biography">
-
-                <TextView
-                    android:id="@+id/settings_change_password_textview"
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/settings_school_owner_name"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/change_password"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
-                    android:textColor="@color/colorWhite" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/settings_field_background"
+                    android:drawableStart="@drawable/ic_person_outline_white"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorGrey"
+                    android:hint="@string/edittext_owners_name"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGrey"
+                    app:layout_constraintEnd_toStartOf="@+id/owners_name_edit_button"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <!--<ProgressBar-->
-                <!--android:id="@+id/sign_up_progressbar"-->
-                <!--android:layout_width="@dimen/login_signup_progressbar_dimen"-->
-                <!--android:layout_height="@dimen/login_signup_progressbar_dimen"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:visibility="gone" />-->
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/settings_school_owner_contact"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/settings_field_background"
+                    android:drawableStart="@drawable/ic_phone_white"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorGrey"
+                    android:hint="@string/edittext_owners_contact"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGrey"
+                    app:layout_constraintEnd_toStartOf="@+id/owners_contact_edit_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_name" />
 
-            </FrameLayout>
 
-        </android.support.constraint.ConstraintLayout>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/settings_school_owner_email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/settings_field_background"
+                    android:drawableStart="@drawable/ic_mail_white"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorGrey"
+                    android:hint="@string/edittext_owners_email"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGrey"
+                    app:layout_constraintEnd_toStartOf="@+id/owners_email_edit_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_contact" />
 
-    </android.support.v4.widget.NestedScrollView>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/settings_school_owner_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/settings_field_background"
+                    android:drawableStart="@drawable/ic_add_location_white"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorGrey"
+                    android:hint="@string/button_get_location"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGrey"
+                    app:layout_constraintEnd_toEndOf="@+id/settings_school_owner_email"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_email" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/settings_school_owner_biography"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/settings_field_background"
+                    android:drawableStart="@drawable/ic_person_outline_white"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorGrey"
+                    android:gravity="top"
+                    android:hint="@string/edittext_owners_biography"
+                    android:inputType="text"
+                    android:minHeight="100dp"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorLightGrey"
+                    app:layout_constraintEnd_toStartOf="@+id/owners_biography_edit_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_location" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/owners_name_edit_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_edit_white"
+                    android:tint="@color/colorGrey"
+                    app:layout_constraintBottom_toTopOf="@+id/settings_school_owner_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_name" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/owners_contact_edit_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_edit_white"
+                    android:tint="@color/colorGrey"
+                    app:layout_constraintBottom_toTopOf="@+id/settings_school_owner_contact"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_contact" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/owners_email_edit_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_edit_white"
+                    android:tint="@color/colorGrey"
+                    app:layout_constraintBottom_toTopOf="@+id/settings_school_owner_email"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_email" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/owners_biography_edit_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_edit_white"
+                    android:tint="@color/colorGrey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/settings_school_owner_biography" />
+
+                <FrameLayout
+                    android:id="@+id/change_password_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/login_sign_up_button_background"
+                    android:elevation="10dp"
+                    android:minHeight="45dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_school_owner_biography">
+
+                    <TextView
+                        android:id="@+id/settings_change_password_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/change_password"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
+                        android:textColor="@color/colorWhite" />
+
+                    <!--<ProgressBar-->
+                    <!--android:id="@+id/sign_up_progressbar"-->
+                    <!--android:layout_width="@dimen/login_signup_progressbar_dimen"-->
+                    <!--android:layout_height="@dimen/login_signup_progressbar_dimen"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:visibility="gone" />-->
+
+                </FrameLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

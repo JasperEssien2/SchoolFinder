@@ -24,17 +24,24 @@ public class AddCertDialogFragment extends DialogFragment {
     private MediaStorageCallback mStorageCallback;
     private MediaStorage mMediaStorage;
     private Bitmap mBitmap = null;
+//    private MediaStorageCallback storageCallback;
 
     public static AddCertDialogFragment newInstance(MediaStorageCallback storageCallback, Uri uri,
                                                     int action, boolean isCert) {
         AddCertDialogFragment addCertDialogFragment = new AddCertDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("mediaCallback", storageCallback);
+//        bundle.putSerializable("mediaCallback", storageCallback);
+        addCertDialogFragment.initMediaStorageCallback(storageCallback);
         bundle.putString("uri", uri.toString());
         bundle.putInt("action", action);
         bundle.putBoolean("isCert", isCert);
         addCertDialogFragment.setArguments(bundle);
         return addCertDialogFragment;
+    }
+
+    public void initMediaStorageCallback(MediaStorageCallback storageCallback){
+
+        this.mStorageCallback = storageCallback;
     }
 
     @Nullable
@@ -52,7 +59,7 @@ public class AddCertDialogFragment extends DialogFragment {
                     .load(uri)
 //                    .centerCrop()
                     .into(mAddCertBinding.imageView);
-            mStorageCallback = (MediaStorageCallback) getArguments().getSerializable("mediaCallback");
+//            mStorageCallback = (MediaStorageCallback) getArguments().getSerializable("mediaCallback");
 
             mMediaStorage = new MediaStorage(mStorageCallback);
 
@@ -65,6 +72,7 @@ public class AddCertDialogFragment extends DialogFragment {
 //                    certificate.setImageOfCert(new Image());
                     mMediaStorage
                             .addCerticficatesImage(isCert, certificate, uri);
+                    dismiss();
                 }
             });
 

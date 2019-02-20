@@ -22,11 +22,12 @@ public class GeocoderHandler extends Handler {
             case 1:
                 Bundle bundle = msg.getData();
                 locationAddress = bundle.getString("address");
-                callback.setAddress(locationAddress);
+                callback.setAddress(locationAddress, bundle.getString("country"),
+                        bundle.getString("state_region"), bundle.getString("city"));
                 break;
             default:
                 locationAddress = null;
-                callback.setAddress(locationAddress);
+                callback.setAddress(locationAddress, null, null, null);
         }
     }
 }

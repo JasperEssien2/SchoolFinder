@@ -24,6 +24,9 @@ public class School implements Parcelable {
     private String schoolMotto;
     private String schoolContact;
     private String schoolLogoImageUrl;
+    private String country;
+    private String state_region;
+    private String city;
     private double latitude;
     private double longitude;
     private String schoolFacebook, schoolTwitter, schoolEmail, schoolWebsite;
@@ -33,6 +36,7 @@ public class School implements Parcelable {
     private List<Class> classes;
     private List<Course> courses;
     private List<Certificate> achievements;
+    private List<String> schoolCategory;
     private long followersCount;
     private long notImpressedExpressionCount;
     private long impressedExpressionCount;
@@ -83,6 +87,9 @@ public class School implements Parcelable {
         schoolMotto = in.readString();
         schoolContact = in.readString();
         schoolLogoImageUrl = in.readString();
+        country = in.readString();
+        state_region = in.readString();
+        city = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
         schoolFacebook = in.readString();
@@ -93,6 +100,7 @@ public class School implements Parcelable {
         certificates = in.createTypedArrayList(Certificate.CREATOR);
         achievements = in.createTypedArrayList(Certificate.CREATOR);
         schoolImages = in.createTypedArrayList(Image.CREATOR);
+        schoolCategory = in.createStringArrayList();
         classes = in.createTypedArrayList(Class.CREATOR);
         courses = in.createTypedArrayList(Course.CREATOR);
         followersCount = in.readLong();
@@ -291,6 +299,9 @@ public class School implements Parcelable {
         parcel.writeString(schoolMotto);
         parcel.writeString(schoolContact);
         parcel.writeString(schoolLogoImageUrl);
+        parcel.writeString(country);
+        parcel.writeString(state_region);
+        parcel.writeString(city);
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
         parcel.writeString(schoolFacebook);
@@ -303,6 +314,7 @@ public class School implements Parcelable {
         parcel.writeTypedList(schoolImages);
         parcel.writeTypedList(classes);
         parcel.writeTypedList(courses);
+        parcel.writeStringList(schoolCategory);
         parcel.writeLong(followersCount);
         parcel.writeLong(notImpressedExpressionCount);
         parcel.writeLong(impressedExpressionCount);
@@ -315,5 +327,37 @@ public class School implements Parcelable {
 
     public void setSchoolLogoImageUrl(String schoolLogoImageUrl) {
         this.schoolLogoImageUrl = schoolLogoImageUrl;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState_region() {
+        return state_region;
+    }
+
+    public void setState_region(String state_region) {
+        this.state_region = state_region;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public List<String> getSchoolCategory() {
+        return schoolCategory;
+    }
+
+    public void setSchoolCategory(List<String> schoolCategory) {
+        this.schoolCategory = schoolCategory;
     }
 }
