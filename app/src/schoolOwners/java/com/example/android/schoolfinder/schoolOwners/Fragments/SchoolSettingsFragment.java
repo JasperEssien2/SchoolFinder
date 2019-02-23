@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.example.android.schoolfinder.DialogFragments.DialogFragmentImagePrevi
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -58,12 +60,6 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
     private School school;
     private Authentication authentication;
     private CertificateAdapter certificateAdapter, achievementAdapter;
-
-
-    public SchoolSettingsFragment() {
-        // Required empty public constructor
-    }
-
     /**
      * This field is used to control the edit button icon
      * if its in edit mode a check icon be used
@@ -73,6 +69,10 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
             isCertificateEditMode, isLocationEditMode;
     private DialogFragmentImagePreview imagePreview;
     private AddCertDialogFragment certDialogFragment;
+
+    public SchoolSettingsFragment() {
+        // Required empty public constructor
+    }
 
     public static SchoolSettingsFragment newInstance(Bundle bundle) {
         SchoolSettingsFragment schoolSettingsFragment = new SchoolSettingsFragment();
@@ -127,10 +127,10 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onStart() {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         authentication = new Authentication(this);
         authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
-        super.onStart();
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -329,6 +329,7 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
     @Override
     public void onFocusChange(View view, boolean b) {
         //TODO: When it loses focus, query database to make the changes oooh
+        boolean textChanged = false;
         switch (view.getId()) {
             case R.id.school_detail_motto_text:
                 //If focus change set disable and make the changes
@@ -338,9 +339,15 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                     schoolSettingsBinding.schoolDetailMottoText.setEnabled(false);
                     School school = this.school;
                     if (!schoolSettingsBinding.schoolDetailMottoText.getText().toString().isEmpty()) {
-                        school.setSchoolMotto(schoolSettingsBinding.schoolDetailMottoText.getText().toString());
-                        Log.e(TAG, "Schools new motto " + school.getSchoolMotto());
-                        updateUser(school);
+                        if (school.getSchoolMotto() == null) textChanged = true;
+                        else if (!school.getSchoolMotto().equals(
+                                schoolSettingsBinding.schoolDetailMottoText.getText().toString()))
+                            textChanged = true;
+                        if (textChanged) {
+                            school.setSchoolMotto(schoolSettingsBinding.schoolDetailMottoText.getText().toString());
+                            Log.e(TAG, "Schools new motto " + school.getSchoolMotto());
+                            updateUser(school);
+                        }
                     }
                 } else {
                     schoolSettingsBinding.schoolSettingsEditSchoolMotto
@@ -355,8 +362,16 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                     schoolSettingsBinding.schoolDetailDescriptionText.setEnabled(false);
                     School school = this.school;
                     if (!schoolSettingsBinding.schoolDetailDescriptionText.getText().toString().isEmpty()) {
-                        school.setSchoolBiography(schoolSettingsBinding.schoolDetailDescriptionText.getText().toString());
-                        updateUser(school);
+                        if (school.getSchoolBiography() == null) textChanged = true;
+                        else if (!school.getSchoolBiography().equals(
+                                schoolSettingsBinding.schoolDetailDescriptionText.getText().toString()))
+                            textChanged = true;
+
+                        if (textChanged) {
+                            school.setSchoolBiography(schoolSettingsBinding.schoolDetailDescriptionText.getText().toString());
+                            Log.e(TAG, "Schools new biography " + school.getSchoolBiography());
+                            updateUser(school);
+                        }
                     }
                 } else {
                     schoolSettingsBinding.schoolSettingsEditSchoolBiography
@@ -475,6 +490,11 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void schoolImageAdded(String imageUrl) {
+
+    }
+
+    @Override
+    public void postImageAdded(Post post, List<Image> images) {
 
     }
 

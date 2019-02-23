@@ -15,6 +15,8 @@ import com.example.android.schoolfinder.Adapters.ClassesCourseAdapter;
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -24,6 +26,8 @@ import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.example.android.schoolfinder.schoolOwners.DialogFragments.AddClassDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 //import com.example.android.schoolfinder.schoolOwners.R;
 
 /**
@@ -173,6 +177,11 @@ public class ClassCourseSettingsFragment extends Fragment implements Authenticat
 
     @Override
     public void schoolImageAdded(String imageUrl) {
+
+    }
+
+    @Override
+    public void postImageAdded(Post post, List<Image> images) {
 
     }
 }

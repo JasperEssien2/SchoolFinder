@@ -3,11 +3,12 @@ package com.example.android.schoolfinder.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Map;
+
 public class Users implements Parcelable {
     private String id, name, contact, email, location, biography, profileImageUrl, country, state_region, city;
     private double latitude;
     private double longitude;
-
     public static final Creator<Users> CREATOR = new Creator<Users>() {
         @Override
         public Users createFromParcel(Parcel in) {
@@ -19,10 +20,13 @@ public class Users implements Parcelable {
             return new Users[size];
         }
     };
+    private long followingCount = 0;
 
     public Users() {
 
     }
+
+    private Map<String, Boolean> following;
 
     protected Users(Parcel in) {
         id = in.readString();
@@ -37,6 +41,26 @@ public class Users implements Parcelable {
         city = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
+        followingCount = in.readLong();
+        following = in.readHashMap(Boolean.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(contact);
+        dest.writeString(email);
+        dest.writeString(location);
+        dest.writeString(biography);
+        dest.writeString(profileImageUrl);
+        dest.writeString(country);
+        dest.writeString(state_region);
+        dest.writeString(city);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeLong(followingCount);
+        dest.writeMap(following);
     }
 
     public double getLatitude() {
@@ -116,22 +140,6 @@ public class Users implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(name);
-        parcel.writeString(contact);
-        parcel.writeString(email);
-        parcel.writeString(location);
-        parcel.writeString(biography);
-        parcel.writeString(profileImageUrl);
-        parcel.writeString(country);
-        parcel.writeString(state_region);
-        parcel.writeString(city);
-        parcel.writeDouble(latitude);
-        parcel.writeDouble(longitude);
-    }
-
     public String getState_region() {
         return state_region;
     }
@@ -146,5 +154,21 @@ public class Users implements Parcelable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public long getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(long followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public Map<String, Boolean> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Map<String, Boolean> following) {
+        this.following = following;
     }
 }

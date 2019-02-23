@@ -15,6 +15,8 @@ import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.DialogFragments.DialogFragmentImagePreview;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -22,11 +24,12 @@ import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBin
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.example.android.schoolfinder.schoolOwners.Adapters.SchoolSettingsPagerAdapter;
-import com.example.android.schoolfinder.schoolOwners.Fragments.SchoolSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.interfaces.SchoolSettingsViewPagerCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class SettingsViewPagerActivity extends AppCompatActivity implements AuthenticationCallbacks,
         SchoolSettingsViewPagerCallback, MediaStorageCallback {
@@ -228,6 +231,11 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
 
     @Override
     public void schoolImageAdded(String imageUrl) {
+
+    }
+
+    @Override
+    public void postImageAdded(Post post, List<Image> images) {
 
     }
 

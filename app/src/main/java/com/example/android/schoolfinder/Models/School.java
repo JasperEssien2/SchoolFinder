@@ -4,19 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.List;
+import java.util.Map;
 
 public class School implements Parcelable {
-    public static final Creator<School> CREATOR = new Creator<School>() {
-        @Override
-        public School createFromParcel(Parcel in) {
-            return new School(in);
-        }
 
-        @Override
-        public School[] newArray(int size) {
-            return new School[size];
-        }
-    };
     private String id;
     private String schoolName;
     private String schoolLocation;
@@ -41,6 +32,20 @@ public class School implements Parcelable {
     private long notImpressedExpressionCount;
     private long impressedExpressionCount;
     private long normalExpressionCount;
+    public static final Creator<School> CREATOR = new Creator<School>() {
+        @Override
+        public School createFromParcel(Parcel in) {
+            return new School(in);
+        }
+
+        @Override
+        public School[] newArray(int size) {
+            return new School[size];
+        }
+    };
+    private Map<String, Boolean> notImpressedExpressions;
+    private Map<String, Boolean> impressedExpressions;
+    private Map<String, Boolean> normalExpressions;
 
     public School() {
 
@@ -79,6 +84,8 @@ public class School implements Parcelable {
         this.courses = courses;
     }
 
+    private Map<String, Boolean> followers;
+
     protected School(Parcel in) {
         id = in.readString();
         schoolName = in.readString();
@@ -98,15 +105,86 @@ public class School implements Parcelable {
         schoolWebsite = in.readString();
         schoolOwnerDetails = in.readParcelable(Users.class.getClassLoader());
         certificates = in.createTypedArrayList(Certificate.CREATOR);
-        achievements = in.createTypedArrayList(Certificate.CREATOR);
         schoolImages = in.createTypedArrayList(Image.CREATOR);
-        schoolCategory = in.createStringArrayList();
         classes = in.createTypedArrayList(Class.CREATOR);
         courses = in.createTypedArrayList(Course.CREATOR);
+        achievements = in.createTypedArrayList(Certificate.CREATOR);
+        schoolCategory = in.createStringArrayList();
         followersCount = in.readLong();
         notImpressedExpressionCount = in.readLong();
         impressedExpressionCount = in.readLong();
         normalExpressionCount = in.readLong();
+        followers = in.readHashMap(Boolean.class.getClassLoader());
+        notImpressedExpressions = in.readHashMap(Boolean.class.getClassLoader());
+        impressedExpressions = in.readHashMap(Boolean.class.getClassLoader());
+        normalExpressions = in.readHashMap(Boolean.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(schoolName);
+        dest.writeString(schoolLocation);
+        dest.writeString(schoolBiography);
+        dest.writeString(schoolMotto);
+        dest.writeString(schoolContact);
+        dest.writeString(schoolLogoImageUrl);
+        dest.writeString(country);
+        dest.writeString(state_region);
+        dest.writeString(city);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeString(schoolFacebook);
+        dest.writeString(schoolTwitter);
+        dest.writeString(schoolEmail);
+        dest.writeString(schoolWebsite);
+        dest.writeParcelable(schoolOwnerDetails, flags);
+        dest.writeTypedList(certificates);
+        dest.writeTypedList(schoolImages);
+        dest.writeTypedList(classes);
+        dest.writeTypedList(courses);
+        dest.writeTypedList(achievements);
+        dest.writeStringList(schoolCategory);
+        dest.writeLong(followersCount);
+        dest.writeLong(notImpressedExpressionCount);
+        dest.writeLong(impressedExpressionCount);
+        dest.writeLong(normalExpressionCount);
+        dest.writeMap(followers);
+        dest.writeMap(notImpressedExpressions);
+        dest.writeMap(impressedExpressions);
+        dest.writeMap(normalExpressions);
+    }
+
+    public Map<String, Boolean> getNotImpressedExpressions() {
+        return notImpressedExpressions;
+    }
+
+    public void setNotImpressedExpressions(Map<String, Boolean> notImpressedExpressions) {
+        this.notImpressedExpressions = notImpressedExpressions;
+    }
+
+    public Map<String, Boolean> getImpressedExpressions() {
+        return impressedExpressions;
+    }
+
+    public void setImpressedExpressions(Map<String, Boolean> impressedExpressions) {
+        this.impressedExpressions = impressedExpressions;
+    }
+
+    public Map<String, Boolean> getNormalExpressions() {
+        return normalExpressions;
+    }
+
+    public void setNormalExpressions(Map<String, Boolean> normalExpressions) {
+        this.normalExpressions = normalExpressions;
+    }
+
+    public Map<String, Boolean> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Map<String, Boolean> followers) {
+        this.followers = followers;
     }
 
     public long getFollowersCount() {
@@ -288,37 +366,6 @@ public class School implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(schoolName);
-        parcel.writeString(schoolLocation);
-        parcel.writeString(schoolBiography);
-        parcel.writeString(schoolMotto);
-        parcel.writeString(schoolContact);
-        parcel.writeString(schoolLogoImageUrl);
-        parcel.writeString(country);
-        parcel.writeString(state_region);
-        parcel.writeString(city);
-        parcel.writeDouble(latitude);
-        parcel.writeDouble(longitude);
-        parcel.writeString(schoolFacebook);
-        parcel.writeString(schoolTwitter);
-        parcel.writeString(schoolEmail);
-        parcel.writeString(schoolWebsite);
-        parcel.writeParcelable(schoolOwnerDetails, i);
-        parcel.writeTypedList(certificates);
-        parcel.writeTypedList(achievements);
-        parcel.writeTypedList(schoolImages);
-        parcel.writeTypedList(classes);
-        parcel.writeTypedList(courses);
-        parcel.writeStringList(schoolCategory);
-        parcel.writeLong(followersCount);
-        parcel.writeLong(notImpressedExpressionCount);
-        parcel.writeLong(impressedExpressionCount);
-        parcel.writeLong(normalExpressionCount);
     }
 
     public String getSchoolLogoImageUrl() {

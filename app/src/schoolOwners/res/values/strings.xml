@@ -44,6 +44,8 @@
     <string name="edit_email">School Email</string>
     <string name="edit_password">Password</string>
 
+    <string name="postt_empty_list_text">You haven\'t posted anything yet!.. Press the button to add a post, post will be seen by all your followers</string>
+
     <!--Overflow label text style-->
     <style name="MyOverflowText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/colorWhite</item>

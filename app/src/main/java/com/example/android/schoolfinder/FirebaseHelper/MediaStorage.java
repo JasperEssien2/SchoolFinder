@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.List;
 
 public class MediaStorage {
 
@@ -27,6 +30,12 @@ public class MediaStorage {
                 .getInstance().getReference();
     }
 
+    /**
+     * This method is called to add profile image to firebase storage
+     *
+     * @param isSchool to check whether its a school owner profile image or not
+     * @param uri      the uri of the image to be inserted to firebase storage
+     */
     public void addProfileImage(boolean isSchool, Uri uri) {
         StorageReference ref = null;
 
@@ -60,6 +69,11 @@ public class MediaStorage {
         });
     }
 
+    /**
+     * This method is called to add an image of the school logo to firebase storage
+     *
+     * @param uri the uri of the image
+     */
     public void addSchoolLogo(Uri uri) {
         StorageReference ref = null;
 
@@ -88,6 +102,14 @@ public class MediaStorage {
         }
     }
 
+    /**
+     * This method is called to add an image of certification and achievement of the school to firebase storage
+     * in the right node
+     *
+     * @param isCertificate checks whether the image to be inserted is for certificate or achievements
+     * @param cert          an instance of Certificate so as to be stored in the database as part of the school info
+     * @param uri           the uri of the image to be stored in firebase storage
+     */
     public void addCerticficatesImage(final boolean isCertificate, final Certificate cert, Uri uri) {
         StorageReference ref = null;
 
@@ -123,6 +145,12 @@ public class MediaStorage {
         }
     }
 
+    /**
+     * This method is called to add school images to the storage
+     *
+     * @param uri the uri of the image
+     * @param tag the image tag
+     */
     public void addSchoolImages(Uri uri, final String tag) {
         StorageReference ref = null;
 
@@ -151,6 +179,15 @@ public class MediaStorage {
 
     }
 
+    public void addPostImages(List<Image> imageList) {
+
+    }
+
+    /**
+     * This method is called to delete profile pics in firebase storage
+     *
+     * @param isSchool if its a school owner pic or not
+     */
     public void deleteProfilePics(boolean isSchool) {
         StorageReference ref = null;
 

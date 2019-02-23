@@ -15,6 +15,7 @@ import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.ActivityHomeBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.schoolOwners.Activities.SettingsViewPagerActivity;
+import com.example.android.schoolfinder.schoolOwners.Fragments.ActivitiesFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -46,6 +47,15 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
                         startActivity(intent);
                     }
                 });
+        homeBinding.buttonActivities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.activity_home, new ActivitiesFragment())
+                        .commit();
+            }
+        });
 
     }
 

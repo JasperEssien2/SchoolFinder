@@ -12,4 +12,5 @@ public class BundleConstants {
     public static final int ACTION_STORE_LOGO = 56;
     public static final int ACTION_STORE_SCHOOL_IMAGES = 57;
 
+    public static final String IMAGE_URL = "image_url";
 }

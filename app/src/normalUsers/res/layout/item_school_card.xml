@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:background="@android:color/transparent">
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -261,8 +261,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/school_owner_detail_image_view"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="top|center"
             android:elevation="10dp"
             android:src="@drawable/place_holder"

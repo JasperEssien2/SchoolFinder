@@ -29,5 +29,10 @@ public class FirebaseConstants {
     public static final String TYPE_NODE = "categories";
     public static final String COUNTRIES = "Country";
     public static final String STATES = "States";
+
+    /**
+     * All constants relating to posts node
+     */
+    public static final String POSTS_NODE = "posts";
 //    public static final String OTHERS_NODE = "None";
 }

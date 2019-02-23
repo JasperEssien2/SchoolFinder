@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
@@ -22,6 +23,8 @@ import com.example.android.schoolfinder.DialogFragments.DialogFragmentImagePrevi
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -30,6 +33,8 @@ import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -62,14 +67,14 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
     }
 
     @Override
-    public void onStart() {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         authentication = new Authentication(this);
         mediaStorage = new MediaStorage(this);
 
         authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
-        super.onStart();
-
+        super.onCreate(savedInstanceState);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,6 +127,10 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
         editText.setEnabled(!editText.isEnabled());
     }
 
+    /**
+     * This disables all the edittext fields, and it is called
+     * when onCreate is called
+     */
     private void disableAllEditTextFields() {
         ownerSettingsBinding.settingsSchoolOwnerBiography.setEnabled(false);
         ownerSettingsBinding.settingsSchoolOwnerName.setEnabled(false);
@@ -130,7 +139,11 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
         ownerSettingsBinding.settingsSchoolOwnerLocation.setEnabled(false);
     }
 
-    private void clearAllFieldFocus(){
+    /**
+     * This clears all the edit text field focus
+     * and it is called when onCreate is called
+     */
+    private void clearAllFieldFocus() {
         ownerSettingsBinding.settingsSchoolOwnerBiography.clearFocus();
         ownerSettingsBinding.settingsSchoolOwnerName.clearFocus();
         ownerSettingsBinding.settingsSchoolOwnerContact.clearFocus();
@@ -213,6 +226,18 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
 
     }
 
+    @Override
+    public void postImageAdded(Post post, List<Image> images) {
+
+    }
+
+    /**
+     * This sets the button for the edittext depending on whether the edittxt is
+     * in edit mode
+     *
+     * @param isInEditMode a boolean for controlling the button to be used
+     * @param imageButton  the button
+     */
     private void setEditButtonIcon(boolean isInEditMode,
                                    AppCompatImageButton imageButton) {
 
@@ -239,46 +264,71 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
 
     }
 
+    /**
+     * This method is used to insert/replace the previous data with the new changed data
+     *
+     * @param school
+     */
     private void updateUser(School school) {
         Log.e(TAG, "Update user called --- ");
         authentication.putNewUserInDb(school);
     }
 
+    /**
+     * This method is called to perform actions on the edittext based on its focused state
+     *
+     * @param isFocused boolean indicating its focus state
+     * @param editText  the editext to perform the action
+     * @param fieldName to kno which field is calling the method on its changed focus states
+     */
     private void onFocusChangeAction(boolean isFocused, EditText editText, String fieldName) {
         School school = this.school;
         Users ownerDetails = school.getSchoolOwnerDetails();
         String newText = editText.getText().toString();
+        //This variable is used to know if the previous text chaned, if yes, then it updates the new data
+        boolean textChanged = false;
 
         Log.e(TAG, "IsFocused --- " + isFocused);
 //        if (!isFocused) {
 //            editText.setFocusable();
-        if(isFocused) editText.setEnabled(true);
+        if (isFocused) editText.setEnabled(true);
         else editText.setEnabled(false);
         switch (fieldName) {
             case "name":
                 if (!isFocused) {
-                    ownerDetails.setName(newText);
+                    if (null != ownerDetails.getName() && !ownerDetails.getName().equals(newText)) {
+                        ownerDetails.setName(newText);
+                        textChanged = true;
+                    }
                     setEditButtonIcon(false, ownerSettingsBinding.ownersNameEditButton);
                     editText.setEnabled(false);
                 } else setEditButtonIcon(true, ownerSettingsBinding.ownersNameEditButton);
                 break;
             case "biography":
                 if (!isFocused) {
-                    ownerDetails.setBiography(newText);
+                    if (null != ownerDetails.getBiography() && !ownerDetails.getBiography().equals(newText)) {
+                        ownerDetails.setBiography(newText);
+                        textChanged = true;
+                    }
                     setEditButtonIcon(false, ownerSettingsBinding.ownersBiographyEditButton);
                     editText.setEnabled(false);
                 } else setEditButtonIcon(true, ownerSettingsBinding.ownersBiographyEditButton);
                 break;
             case "contact":
                 if (!isFocused) {
-                    ownerDetails.setContact(newText);
+                    if (null != ownerDetails.getContact() && !ownerDetails.getContact().equals(newText)) {
+                        ownerDetails.setContact(newText);
+                        textChanged = true;
+                    }
                     setEditButtonIcon(false, ownerSettingsBinding.ownersContactEditButton);
                     editText.setEnabled(false);
                 } else setEditButtonIcon(true, ownerSettingsBinding.ownersContactEditButton);
                 break;
             case "email":
                 if (!isFocused) {
-                    ownerDetails.setEmail(newText);
+                    if (null != ownerDetails.getEmail() && !ownerDetails.getEmail().equals(newText)) {
+                        ownerDetails.setEmail(newText);
+                    }
                     setEditButtonIcon(false, ownerSettingsBinding.ownersEmailEditButton);
                     editText.setEnabled(false);
                 } else setEditButtonIcon(true, ownerSettingsBinding.ownersEmailEditButton);
@@ -286,7 +336,8 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
         }
         if (!isFocused && ownerDetails != null) {
             school.setSchoolOwnerDetails(ownerDetails);
-            updateUser(school);
+            if (textChanged)
+                updateUser(school);
         }
 
     }
