@@ -2,11 +2,13 @@ package com.example.android.schoolfinder.schoolOwners.Adapters;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
@@ -26,7 +28,8 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
     private List<String> pageTitles;
     private Activity mActivity;
     private Bundle mSchool;
-//    private SchoolSettingsViewPagerCallback mViewPagerCallback;
+    SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+    //    private SchoolSettingsViewPagerCallback mViewPagerCallback;
     private ActivitySettingsViewPagerBinding settingsViewPagerBinding;
 
     public SchoolSettingsPagerAdapter(FragmentManager fm, Activity activity, Bundle school,
@@ -75,6 +78,23 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
         return null;
     }
 
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        registeredFragments.put(position, fragment);
+        return fragment;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        registeredFragments.remove(position);
+        super.destroyItem(container, position, object);
+    }
+
+    public Fragment getRegisteredFragment(int position) {
+        return registeredFragments.get(position);
+    }
 
     @Nullable
     @Override

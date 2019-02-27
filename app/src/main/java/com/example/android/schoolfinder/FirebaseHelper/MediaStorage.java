@@ -151,13 +151,28 @@ public class MediaStorage {
      * @param uri the uri of the image
      * @param tag the image tag
      */
-    public void addSchoolImages(Uri uri, final String tag) {
+    public void addSchoolImages(Uri uri, String tag, String newTag) {
         StorageReference ref = null;
 
-        ref = mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(FirebaseConstants.STORAGE_SCHOOL_IMAGES)
-                .child(tag);
+        if (tag != null && newTag != null) {
+            mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(FirebaseConstants.STORAGE_SCHOOL_IMAGES)
+                    .child(tag).delete();
+            tag = newTag;
+            ref = mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(FirebaseConstants.STORAGE_SCHOOL_IMAGES)
+                    .child(tag);
+        } else if (tag != null)
+            ref = mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(FirebaseConstants.STORAGE_SCHOOL_IMAGES)
+                    .child(tag);
+
+        else
+            ref = mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(FirebaseConstants.STORAGE_SCHOOL_IMAGES);
+
         final StorageReference finalRef = ref;
+        final String tag_ = tag;
         ref.putFile(uri)
                 .continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
@@ -169,8 +184,8 @@ public class MediaStorage {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful())
-                    mStorageCallback.schoolImageAdded(task.getResult().toString());
-                else mStorageCallback.schoolImageAdded(null);
+                    mStorageCallback.schoolImageAdded(task.getResult().toString(), tag_);
+                else mStorageCallback.schoolImageAdded(null, tag_);
             }
         });
     }

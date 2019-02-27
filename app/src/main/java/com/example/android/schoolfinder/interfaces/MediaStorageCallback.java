@@ -16,7 +16,7 @@ public interface MediaStorageCallback{
 
     void logoStored(String imageUrl);
 
-    void schoolImageAdded(String imageUrl);
+    void schoolImageAdded(String imageUrl, String tag);
 
     void postImageAdded(Post post, List<Image> images);
 }

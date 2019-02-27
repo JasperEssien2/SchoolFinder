@@ -20,10 +20,13 @@ import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
+import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.example.android.schoolfinder.schoolOwners.Adapters.SchoolSettingsPagerAdapter;
+import com.example.android.schoolfinder.schoolOwners.DialogFragments.AddClassOrCourseDialogFragment;
+import com.example.android.schoolfinder.schoolOwners.Fragments.ClassCourseSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.interfaces.SchoolSettingsViewPagerCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +44,11 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     private static final String TAG = SettingsViewPagerActivity.class.getSimpleName();
     private static final int SELECT_PHOTO = 358;
     private DialogFragmentImagePreview imagePreview;
+    /**
+     * This is initialized to get the current page of the viewpager
+     */
+    private TabLayout.Tab mTab;
+    private SchoolSettingsPagerAdapter viewpagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,26 +57,32 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         setSupportActionBar(settingsViewPagerBinding.toolbar);
         authentication = new Authentication(this);
         authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
-        if(school == null) {
+        if (school == null) {
             school = getSchool();
             setUpViewWithData(school);
         }
 
         settingsViewPagerBinding.settingsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                mTab = tab;
                 settingsViewPagerBinding.settingsViewpager.setCurrentItem(tab.getPosition());
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         showLogoHideOwnerPic();
+                        hideFab();
                         break;
                     case 1:
+                        hideFab();
                         hideLogoShowOwnerPic();
                         break;
                     case 2:
+                        showFab();
                         showLogoHideOwnerPic();
                         break;
                     case 3:
+                        showFab();
                         showLogoHideOwnerPic();
                         break;
                 }
@@ -104,15 +118,62 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
             }
         });
         settingsViewPagerBinding.settingsTabs.setupWithViewPager(settingsViewPagerBinding.settingsViewpager);
-        settingsViewPagerBinding.settingsViewpager.setAdapter(new SchoolSettingsPagerAdapter(
-                getSupportFragmentManager(),this, getBundle(), this));
+        viewpagerAdapter = new SchoolSettingsPagerAdapter(
+                getSupportFragmentManager(), this, getBundle(), this);
+        settingsViewPagerBinding.settingsViewpager.setAdapter(viewpagerAdapter);
+        settingsViewPagerBinding.addCoursesClassesFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTab.getPosition() == 2) {
+                    if (school != null) {
+                        Bundle b = new Bundle();
+                        b.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
+                        AddClassOrCourseDialogFragment dialogFragment = AddClassOrCourseDialogFragment.newInstance(b);
+                        ClassCourseSettingsFragment fragment =
+                                (ClassCourseSettingsFragment) viewpagerAdapter.getRegisteredFragment(2);
+//                                        getSupportFragmentManager().findFragmentByTag(
+//                                        "android:switcher:" + R.id.settings_viewpager + ":" +
+//                                                settingsViewPagerBinding.settingsViewpager.getCurrentItem());
+                        dialogFragment.initCallback(null, school);
+                        if (fragment != null) {
+                            Log.e(TAG, "Fragment found ---- ");
+                            dialogFragment.initFragment(fragment);
+                            dialogFragment.show(getSupportFragmentManager(), null);
+                        } else {
+                            Log.e(TAG, "Fragment IS NULL ---- ");
+                        }
+                    }
+
+                } else if (mTab.getPosition() == 3) {
+                    if (school != null) {
+                        Bundle b = new Bundle();
+                        b.putBoolean(BundleConstants.IS_CLASS_SEETTING, false);
+                        AddClassOrCourseDialogFragment dialogFragment = AddClassOrCourseDialogFragment.newInstance(b);
+                        ClassCourseSettingsFragment fragment =
+                                (ClassCourseSettingsFragment) viewpagerAdapter.getRegisteredFragment(3);
+//                                        getSupportFragmentManager().findFragmentByTag(
+//                                        "android:switcher:" + R.id.settings_viewpager + ":" +
+//                                                settingsViewPagerBinding.settingsViewpager.getCurrentItem());
+                        dialogFragment.initCallback(null, school);
+                        if (fragment != null) {
+                            Log.e(TAG, "Fragment found ---- ");
+                            dialogFragment.initFragment(fragment);
+                            dialogFragment.show(getSupportFragmentManager(), null);
+                        } else {
+                            Log.e(TAG, "Fragment IS NULL ---- ");
+                        }
+                    }
+                }
+            }
+        });
     }
 
-    private Bundle getBundle(){
+    private Bundle getBundle() {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleConstants.SCHOOL_BUNDLE, getSchool());
         return bundle;
     }
+
     private School getSchool() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -123,15 +184,13 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         return null;
     }
 
-    private void setUpViewWithData(School school){
+    private void setUpViewWithData(School school) {
         if (school.getSchoolLogoImageUrl() != null)
-            Picasso.get()
-                    .load(school.getSchoolLogoImageUrl())
-                    .into(settingsViewPagerBinding.schoolSettingsLogoImgview);
-        Picasso.get()
-                .load(school.getSchoolOwnerDetails().getProfileImageUrl())
-                .centerCrop()
-                .into(settingsViewPagerBinding.ownerSettingsImage);
+            new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
+                    settingsViewPagerBinding.schoolSettingsLogoImgview);
+        if (school.getSchoolOwnerDetails().getProfileImageUrl() != null)
+            new PicassoImageLoader(this, school.getSchoolOwnerDetails().getProfileImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
+                    settingsViewPagerBinding.ownerSettingsImage);
     }
 
     @Override
@@ -146,6 +205,14 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         settingsViewPagerBinding.frameLayout.setVisibility(View.GONE);
         settingsViewPagerBinding.schoolDetailsExpresionCard.setVisibility(View.VISIBLE);
         Log.e(TAG, "showLogoHideOwnerPic() _______________________");
+    }
+
+    private void hideFab() {
+        settingsViewPagerBinding.addCoursesClassesFab.setVisibility(View.GONE);
+    }
+
+    private void showFab() {
+        settingsViewPagerBinding.addCoursesClassesFab.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -230,7 +297,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     }
 
     @Override
-    public void schoolImageAdded(String imageUrl) {
+    public void schoolImageAdded(String imageUrl, String tag) {
 
     }
 
@@ -245,14 +312,14 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         switch (requestCode) {
             case SELECT_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    if(data == null) return;
+                    if (data == null) return;
                     final Uri imageUri = data.getData();
 //                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
 //                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 //                        imageView.setImageBitmap(selectedImage);
                     if (imageUri != null) {
                         imagePreview = DialogFragmentImagePreview
-                                .newInstance(this,imageUri, BundleConstants.ACTION_STORE_LOGO);
+                                .newInstance(this, imageUri, BundleConstants.ACTION_STORE_LOGO);
 //                        imagePreview.initMediaStorageCallback(this);
                         imagePreview.show(getSupportFragmentManager(),
                                 null);
@@ -263,7 +330,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                 break;
             case SELECT_PHOTO_DP:
                 if (resultCode == RESULT_OK) {
-                    if(data == null) return;
+                    if (data == null) return;
                     final Uri imageUri = data.getData();
 //                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
 //                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);

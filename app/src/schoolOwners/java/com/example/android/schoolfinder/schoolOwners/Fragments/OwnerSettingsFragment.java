@@ -222,7 +222,7 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
     }
 
     @Override
-    public void schoolImageAdded(String imageUrl) {
+    public void schoolImageAdded(String imageUrl, String tag) {
 
     }
 

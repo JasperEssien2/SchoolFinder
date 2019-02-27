@@ -2,79 +2,82 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="400dp"
+        android:orientation="vertical">
 
-        <View
+        <FrameLayout
             android:id="@+id/view2"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorCyan500"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@color/colorCyan500">
+
+            <TextView
+                android:id="@+id/add_classes_dialog_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/dialog_title_add_classes"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_16sp" />
+        </FrameLayout>
 
         <EditText
             android:id="@+id/add_course_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#EEEEEE"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/add_classes_fragment_cancel_button"
+            android:background="#EEEEEE"
+            android:gravity="top"
+            android:hint="@string/add_class_hint_text"
+            android:minHeight="300dp"
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/edit_done_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2">
 
         </EditText>
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
+        <!--<android.support.constraint.Guideline-->
+        <!--android:id="@+id/guideline2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--app:layout_constraintGuide_percent="0.5" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/add_classes_fragment_cancel_button"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:background="@color/colorCyan500"
-            android:text="@string/dialog_button_cancel"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/add_classes_fragment_cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/colorCyan500"
+                android:text="@string/dialog_button_cancel"
+                android:textColor="#ffffff" />
 
-        <Button
-            android:id="@+id/add_classes_dialog_proceed_button"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:background="@color/colorCyan500"
-            android:text="@string/dialog_button_proceed"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2" />
+            <Button
+                android:id="@+id/add_classes_dialog_proceed_button"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/colorCyan500"
+                android:text="@string/dialog_button_proceed"
+                android:textColor="#ffffff" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/add_classes_dialog_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/dialog_title_add_classes"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/text_size_16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/view2"
-            app:layout_constraintEnd_toEndOf="@+id/view2"
-            app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toTopOf="@+id/view2" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </layout>

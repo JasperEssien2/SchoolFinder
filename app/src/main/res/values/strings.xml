@@ -32,6 +32,7 @@
     <string name="title_others">Others</string>
     <string name="title_done">Done</string>
     <string name="school_categories">Categories</string>
+    <string name="add_class_hint_text">"Format (Class - variation,), Example:\nClass one - science,\nClass one - art,"</string>
 
 
 </resources>

@@ -199,7 +199,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
     }
 
     @Override
-    public void schoolImageAdded(String imageUrl) {
+    public void schoolImageAdded(String imageUrl, String tag) {
 
     }
 

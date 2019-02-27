@@ -6,11 +6,35 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class Course implements Parcelable {
-    private String id, courseName;
+    private String id;
+    private String courseName;
     private Users headTeacherOfCourse;
     private List<Question> courseExamQuestions;
-    private boolean isSelectedAsSchoolCourse, isSelectedAsExamCourse;
+    private boolean isSelectedAsSchoolCourse;
+    private boolean isSelectedAsExamCourse;
+    /**
+     * The fields below control which default course list will be added to the prompt
+     */
+    private boolean isTertiaryCourse;
+    private boolean isHighSchoolCourse;
+    private boolean isMidSchoolCourse;
+    private boolean isKindergartenCourse;
 
+
+    public Course(String courseName, boolean isSelectedAsSchoolCourse, boolean isTertiaryCourse,
+                  boolean isHighSchoolCourse, boolean isMidSchoolCourse, boolean isKindergartenCourse) {
+
+        this.courseName = courseName;
+        this.isSelectedAsSchoolCourse = isSelectedAsSchoolCourse;
+        this.isTertiaryCourse = isTertiaryCourse;
+        this.isHighSchoolCourse = isHighSchoolCourse;
+        this.isMidSchoolCourse = isMidSchoolCourse;
+        this.isKindergartenCourse = isKindergartenCourse;
+    }
+
+    public Course() {
+
+    }
 
     protected Course(Parcel in) {
         id = in.readString();
@@ -64,6 +88,30 @@ public class Course implements Parcelable {
         this.courseName = courseName;
     }
 
+    public boolean isHighSchoolCourse() {
+        return isHighSchoolCourse;
+    }
+
+    public void setHighSchoolCourse(boolean highSchoolCourse) {
+        isHighSchoolCourse = highSchoolCourse;
+    }
+
+    public boolean isMidSchoolCourse() {
+        return isMidSchoolCourse;
+    }
+
+    public void setMidSchoolCourse(boolean midSchoolCourse) {
+        isMidSchoolCourse = midSchoolCourse;
+    }
+
+    public boolean isKindergartenCourse() {
+        return isKindergartenCourse;
+    }
+
+    public void setKindergartenCourse(boolean kindergartenCourse) {
+        isKindergartenCourse = kindergartenCourse;
+    }
+
     public Users getHeadTeacherOfCourse() {
         return headTeacherOfCourse;
     }
@@ -96,4 +144,11 @@ public class Course implements Parcelable {
         isSelectedAsExamCourse = selectedAsExamCourse;
     }
 
+    public boolean isTertiaryCourse() {
+        return isTertiaryCourse;
+    }
+
+    public void setTertiaryCourse(boolean tertiaryCourse) {
+        isTertiaryCourse = tertiaryCourse;
+    }
 }

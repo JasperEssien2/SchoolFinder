@@ -112,8 +112,7 @@
                     android:layout_height="@dimen/dimen_50dp"
                     android:layout_gravity="start|center_vertical"
                     android:background="@null"
-                    android:src="@drawable/ic_star"
-                    android:tint="@color/colorCyan200" />
+                    android:src="@drawable/ic_add_images" />
 
                 <FrameLayout
                     android:layout_width="0dp"
