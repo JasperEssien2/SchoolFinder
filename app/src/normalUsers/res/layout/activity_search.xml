@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
         android:clipChildren="false"
-        android:paddingBottom="16dp"
+        android:orientation="vertical"
         tools:context=".Fragments.SearchFragment">
 
         <android.support.design.widget.AppBarLayout
@@ -33,28 +34,198 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-        <com.yuyakaido.android.cardstackview.CardStackView
-            android:id="@+id/swipeStack"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="match_parent">
 
+            <com.yuyakaido.android.cardstackview.CardStackView
+                android:id="@+id/swipeStack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.06" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.85" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline8">
+
+                <FrameLayout
+                    android:id="@+id/follow_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/follow_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_follow"
+                        app:backgroundTint="#e3e3e3"
+                        app:borderWidth="0dp"
+                        app:fabSize="normal"
+                        app:maxImageSize="56dp"
+                        app:useCompatPadding="true" />
+
+                    <TextView
+                        android:id="@+id/followers_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/badge_text_background"
+                        android:elevation="7dp"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="9"
+                        android:textColor="#FFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/positive_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/positive_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_smile_deactivated"
+                        app:backgroundTint="#e3e3e3"
+                        app:borderWidth="0dp"
+                        app:fabSize="normal"
+                        app:maxImageSize="56dp"
+                        app:useCompatPadding="true" />
+
+                    <TextView
+                        android:id="@+id/positive_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/badge_text_background"
+                        android:elevation="7dp"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="100k"
+                        android:textColor="#FFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/neutral_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/neutral_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_neutral_deactivated"
+                        app:backgroundTint="#e3e3e3"
+                        app:borderWidth="0dp"
+                        app:fabSize="normal"
+                        app:maxImageSize="56dp"
+                        app:useCompatPadding="true" />
+
+                    <TextView
+                        android:id="@+id/neutral_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/badge_text_background"
+                        android:elevation="7dp"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="10k"
+                        android:textColor="#FFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/negative_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/negative_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_sad__1_deactivated"
+                        app:backgroundTint="#e3e3e3"
+                        app:borderWidth="0dp"
+                        app:fabSize="normal"
+                        app:maxImageSize="56dp"
+                        app:useCompatPadding="true" />
+
+                    <TextView
+                        android:id="@+id/negative_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/badge_text_background"
+                        android:elevation="7dp"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="100k"
+                        android:textColor="#FFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
         <!--</android.support.v4.widget.NestedScrollView>-->
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_search"
-            android:tint="@color/colorPrimary"
-            app:backgroundTint="@color/colorWhite"
-            app:elevation="10dp"
-            app:fabSize="normal" />
-
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 </layout>

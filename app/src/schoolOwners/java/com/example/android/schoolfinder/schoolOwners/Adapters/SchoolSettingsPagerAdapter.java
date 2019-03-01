@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -32,6 +33,8 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
     //    private SchoolSettingsViewPagerCallback mViewPagerCallback;
     private ActivitySettingsViewPagerBinding settingsViewPagerBinding;
 
+    private int tabSelectedPos;
+
     public SchoolSettingsPagerAdapter(FragmentManager fm, Activity activity, Bundle school,
                                       SchoolSettingsViewPagerCallback viewPagerCallback) {
         super(fm);
@@ -45,6 +48,11 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
         pageTitles.add("Courses Settings");
     }
 
+
+    public void tabSelected(int pos) {
+
+        this.tabSelectedPos = pos;
+    }
 
     @Override
     public Fragment getItem(int position) {
@@ -61,22 +69,48 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
                 return ownerSettingsFragment;
 
             case 2:
-//                mViewPagerCallback.hideLogoShowOwnerPic();/
+                Log.e(TAG, "class frgament called --------------");
                 mSchool.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
                 ClassCourseSettingsFragment classSettingsFragment = ClassCourseSettingsFragment.newInstance(mSchool);
                 return classSettingsFragment;
 
             case 3:
-//                mViewPagerCallback.hideLogoShowOwnerPic();
+                Log.e(TAG, "tabSelectedPos ----------- " + tabSelectedPos);
                 mSchool.putBoolean(BundleConstants.IS_CLASS_SEETTING, false);
                 ClassCourseSettingsFragment courseSettingsFragment = ClassCourseSettingsFragment.newInstance(mSchool);
+//                    if (classSettingsPageCallback != null)
+//                        classSettingsPageCallback.updateCourseClassSettingsPage(3);
                 return courseSettingsFragment;
-
+//                //To prevent the next fragment overriding this.. when tabselected, we use this tabSelectedPos
+//                //int to verify which is meant fow which, if atall wat i said made sense
+//                if (tabSelectedPos == 2) {
+//                    Log.e(TAG, "class frgament called --------------");
+//                    tabSelectedPos = 0;
+//                    mSchool.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
+//                    ClassCourseSettingsFragment classSettingsFragment2 = ClassCourseSettingsFragment.newInstance(mSchool);
+////                    if (classSettingsPageCallback != null)
+////                        classSettingsPageCallback.updateCourseClassSettingsPage(2);
+//                    return classSettingsFragment2;
+//                }
+//                if (tabSelectedPos == 3) {
+//                    Log.e(TAG, "course frgament called --------------");
+//                    mSchool.putBoolean(BundleConstants.IS_CLASS_SEETTING, false);
+//                    ClassCourseSettingsFragment courseSettingsFragment = new  ClassCourseSettingsFragment();
+////                    if (classSettingsPageCallback != null)
+////                        classSettingsPageCallback.updateCourseClassSettingsPage(3);
+//                    return courseSettingsFragment;
+//                }
         }
 
 
         return null;
     }
+
+//    public interface UpdateCourseClassSettingsPage {
+//        void updateCourseClassSettingsPage(int tabPosition);
+//    }
+
+//    private UpdateCourseClassSettingsPage classSettingsPageCallback;
 
     @NonNull
     @Override
@@ -93,6 +127,8 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public Fragment getRegisteredFragment(int position) {
+//        if(position == 2 || position == 3)
+//        classSettingsPageCallback = (ClassCourseSettingsFragment) registeredFragments.get(position);
         return registeredFragments.get(position);
     }
 

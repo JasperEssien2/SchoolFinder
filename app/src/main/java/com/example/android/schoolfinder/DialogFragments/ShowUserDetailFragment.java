@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -161,18 +162,27 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
                     head.setName(binding.teacherDetailUsername.getText().toString());
                     head.setBiography(binding.teacherDetailBiography.getText().toString());
                     school.getCourses().get(pos).setHeadTeacherOfCourse(head);
-                    authentication.putNewUserInDb(school);
+
                     if (imageUri != null) {
+                        Log.e("ShowUserDetailFragment", "imageUri != null");
 //                        if (!formerHeadName.isEmpty()) {
 //                            mediaStorage.addSchoolImages(imageUri, "Teacher-Course" + head.getId(), "Teacher-Course" + head.getName() + head.getId());
 //                        } else
                         mediaStorage.addSchoolImages(imageUri, "Teacher-Course" + head.getId(), null);
+                    } else {
+                        Log.e("ShowUserDetailFragment", "imageUri == null");
+                        authentication.putNewUserInDb(school);
                     }
                 }
             }
         }
     }
 
+    /**
+     * This method returns a unique id from firebase
+     *
+     * @return a string of the unique id
+     */
     private String getUniqueId() {
         return FirebaseDatabase.getInstance().getReference().push().getKey();
     }
@@ -248,11 +258,14 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
     @Override
     public void userInsertedToDatabase(School school) {
         if (school != null) {
-            Toast.makeText(getContext(), "Data stored successfully", Toast.LENGTH_SHORT).show();
+            if (getContext() != null)
+                Toast.makeText(getContext(), "Data stored successfully", Toast.LENGTH_SHORT).show();
             this.school = school;
             setUpViewsWithData();
-        } else
-            Toast.makeText(getContext(), "Error in saving data, try again", Toast.LENGTH_SHORT).show();
+        } else {
+            if (getContext() != null)
+                Toast.makeText(getContext(), "Error in saving data, try again", Toast.LENGTH_SHORT).show();
+        }
         binding.progressbar.setVisibility(View.GONE);
     }
 
@@ -297,14 +310,14 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
             if (tag.equals("Teacher-" + head.getId())) {
                 head.setProfileImageUrl(imageUrl);
                 school.getClasses().get(pos).setHeadOfClass(head);
-//                adapter.itemChanged(school.getClasses().get(pos), pos);
+                adapter.itemChanged(school.getClasses().get(pos), pos);
                 authentication.putNewUserInDb(school);
             }
         } else {
             if (tag.equals("Teacher-Course" + head.getId())) {
                 head.setProfileImageUrl(imageUrl);
                 school.getCourses().get(pos).setHeadTeacherOfCourse(head);
-//                adapter.itemChanged(school.getCourses().get(pos), pos);
+                adapter.itemChanged(school.getCourses().get(pos), pos);
                 authentication.putNewUserInDb(school);
             }
         }

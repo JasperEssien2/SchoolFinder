@@ -32,6 +32,7 @@ public class School implements Parcelable {
     private long notImpressedExpressionCount;
     private long impressedExpressionCount;
     private long normalExpressionCount;
+    private long postsCount;
     public static final Creator<School> CREATOR = new Creator<School>() {
         @Override
         public School createFromParcel(Parcel in) {
@@ -46,6 +47,7 @@ public class School implements Parcelable {
     private Map<String, Boolean> notImpressedExpressions;
     private Map<String, Boolean> impressedExpressions;
     private Map<String, Boolean> normalExpressions;
+    private Map<String, Boolean> posts;
 
     public School() {
 
@@ -114,10 +116,12 @@ public class School implements Parcelable {
         notImpressedExpressionCount = in.readLong();
         impressedExpressionCount = in.readLong();
         normalExpressionCount = in.readLong();
+        postsCount = in.readLong();
         followers = in.readHashMap(Boolean.class.getClassLoader());
         notImpressedExpressions = in.readHashMap(Boolean.class.getClassLoader());
         impressedExpressions = in.readHashMap(Boolean.class.getClassLoader());
         normalExpressions = in.readHashMap(Boolean.class.getClassLoader());
+        posts = in.readHashMap(Boolean.class.getClassLoader());
     }
 
     @Override
@@ -149,10 +153,12 @@ public class School implements Parcelable {
         dest.writeLong(notImpressedExpressionCount);
         dest.writeLong(impressedExpressionCount);
         dest.writeLong(normalExpressionCount);
+        dest.writeLong(postsCount);
         dest.writeMap(followers);
         dest.writeMap(notImpressedExpressions);
         dest.writeMap(impressedExpressions);
         dest.writeMap(normalExpressions);
+        dest.writeMap(posts);
     }
 
     public Map<String, Boolean> getNotImpressedExpressions() {
@@ -406,5 +412,26 @@ public class School implements Parcelable {
 
     public void setSchoolCategory(List<String> schoolCategory) {
         this.schoolCategory = schoolCategory;
+    }
+
+    @Override
+    public String toString() {
+        return "School name: " + schoolName + "\nSchool Country: " + country + "\nState: " + state_region;
+    }
+
+    public Map<String, Boolean> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Map<String, Boolean> posts) {
+        this.posts = posts;
+    }
+
+    public long getPostsCount() {
+        return postsCount;
+    }
+
+    public void setPostsCount(long postsCount) {
+        this.postsCount = postsCount;
     }
 }

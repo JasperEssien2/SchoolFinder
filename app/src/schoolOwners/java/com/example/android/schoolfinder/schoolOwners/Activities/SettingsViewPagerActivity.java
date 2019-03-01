@@ -61,13 +61,21 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
             school = getSchool();
             setUpViewWithData(school);
         }
+        settingsViewPagerBinding.settingsTabs.setupWithViewPager(settingsViewPagerBinding.settingsViewpager);
+        viewpagerAdapter = new SchoolSettingsPagerAdapter(
+                getSupportFragmentManager(), this, getBundle(), this);
+        settingsViewPagerBinding.settingsViewpager.setAdapter(viewpagerAdapter);
 
         settingsViewPagerBinding.settingsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mTab = tab;
+                viewpagerAdapter.tabSelected(tab.getPosition());
                 settingsViewPagerBinding.settingsViewpager.setCurrentItem(tab.getPosition());
+
+                Log.e(TAG, "Tab position ----- " + tab.getPosition());
+
                 switch (tab.getPosition()) {
                     case 0:
                         showLogoHideOwnerPic();
@@ -117,10 +125,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO_DP);
             }
         });
-        settingsViewPagerBinding.settingsTabs.setupWithViewPager(settingsViewPagerBinding.settingsViewpager);
-        viewpagerAdapter = new SchoolSettingsPagerAdapter(
-                getSupportFragmentManager(), this, getBundle(), this);
-        settingsViewPagerBinding.settingsViewpager.setAdapter(viewpagerAdapter);
+
         settingsViewPagerBinding.addCoursesClassesFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -263,7 +268,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                 authentication.putNewUserInDb(school);
                 Picasso.get()
                         .load(imageUrl)
-                        .centerCrop()
+//                        .centerCrop()
                         .into(settingsViewPagerBinding.ownerSettingsImage);
             }
         } else
@@ -289,7 +294,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                 authentication.putNewUserInDb(school);
                 Picasso.get()
                         .load(imageUrl)
-                        .centerCrop()
+//                        .centerCrop()
                         .into(settingsViewPagerBinding.schoolSettingsLogoImgview);
             }
         } else

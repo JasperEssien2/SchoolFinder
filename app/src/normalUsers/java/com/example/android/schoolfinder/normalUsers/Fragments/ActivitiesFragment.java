@@ -1,4 +1,4 @@
-package com.example.android.schoolfinder.schoolOwners.Fragments;
+package com.example.android.schoolfinder.normalUsers.Fragments;
 
 
 import android.arch.lifecycle.Observer;
@@ -30,7 +30,6 @@ import com.example.android.schoolfinder.databinding.FragmentActivitiesBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
-import com.example.android.schoolfinder.schoolOwners.DialogFragments.AddPostDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -71,35 +70,22 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
-        postAdapter = new PostAdapter(getActivity(), true);
+        postAdapter = new PostAdapter(getActivity(), false);
         setUpRecyclerView();
-        postViewModel.getPostLiveData(true, FirebaseAuth.getInstance().getCurrentUser().getUid())
+        postViewModel.getPostLiveData(false, FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .observe(this, new Observer<List<Post>>() {
                     @Override
                     public void onChanged(@Nullable List<Post> posts) {
                         if (posts != null && !posts.isEmpty()) {
                             postListNotEmpty();
                             postAdapter.setPostList(posts);
-//                            for (Post pos : posts) {
-//                                postAdapter.putPostItem(pos);
-//                                Log.e(TAG, "--- post list not empty and its looping right now -- " + pos.toString());
-//                            }
                         } else {
                             postListEmpty();
                             Log.e(TAG, "--- post list IS EMPTY OR NULL ");
                         }
                     }
                 });
-        binding.addPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                if (getBundle() != null) {
-                AddPostDialogFragment postDialogFragment = AddPostDialogFragment.newInstance(getBundle());
-                postDialogFragment.initActivityFragment(ActivitiesFragment.this);
-                postDialogFragment.show(getActivity().getSupportFragmentManager(), null);
-//                }
-            }
-        });
+
         return binding.getRoot();
     }
 
@@ -118,8 +104,6 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
      * @param post instance to be added
      */
     public void addPost(Post post) {
-        if (school != null && school.getSchoolName() != null)
-            post.setAuthor(school.getSchoolName());
         if (post.getImageList() != null && !post.getImageList().isEmpty())
             mediaStorage.addPostImages(post.getImageList());
         else transactionsAction.writeNewPost(post);

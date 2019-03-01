@@ -36,10 +36,10 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassCourseSettingsFragment extends Fragment implements AuthenticationCallbacks,
+public class CourseSettingsFragment extends Fragment implements AuthenticationCallbacks,
         MediaStorageCallback {
 
-    private static final String TAG = ClassCourseSettingsFragment.class.getSimpleName();
+    private static final String TAG = CourseSettingsFragment.class.getSimpleName();
     private FragmentClassCourseSettingsBinding classCourseSettingsBinding;
     private ClassesCourseAdapter adapter;
     private Authentication authentication;
@@ -47,12 +47,12 @@ public class ClassCourseSettingsFragment extends Fragment implements Authenticat
     private boolean isClass;
     private AddClassOrCourseDialogFragment dialogFragment;
 
-    public ClassCourseSettingsFragment() {
+    public CourseSettingsFragment() {
         // Required empty public constructor
     }
 
-    public static ClassCourseSettingsFragment newInstance(Bundle bundle) {
-        ClassCourseSettingsFragment classCourseSettingsFragment = new ClassCourseSettingsFragment();
+    public static CourseSettingsFragment newInstance(Bundle bundle) {
+        CourseSettingsFragment classCourseSettingsFragment = new CourseSettingsFragment();
         classCourseSettingsFragment.setArguments(bundle);
         return classCourseSettingsFragment;
     }

@@ -25,15 +25,17 @@ public class PostViewModels extends ViewModel {
     private DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
     private List<String> getAllPostUid(boolean isSchool, String userId, final TaskToGetAllUidCallback callback) {
+        Log.e(TAG, "getAllPostUid() called --------------- ");
         final List<String> ids = new ArrayList<>();
         if (isSchool)
             dbRef = dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE).child(userId).child(FirebaseConstants.POSTS_NODE);
         else
             dbRef = dbRef.child(FirebaseConstants.NORMAL_USERS_NODE).child(userId).child(FirebaseConstants.POSTS_NODE);
+        Log.e(TAG, "post dbRef --------------- " + dbRef.toString());
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                Log.e(TAG, "DataSnapshot for user or school detail node --------------- " + dataSnapshot.getChildren().toString());
                 for (DataSnapshot s : dataSnapshot.getChildren()) {
                     ids.add(s.getKey());
                     Log.e(TAG, "Datasnapshot key --------------- " + s.getKey());
@@ -49,14 +51,22 @@ public class PostViewModels extends ViewModel {
         return ids;
     }
 
+//    public MediatorLiveData getMediatorLiveData(){
+//
+//    }
 
     public LiveData<List<Post>> getPostLiveData(boolean isSchool, String ids) {
-        PostQueryLivedata livedata = new PostQueryLivedata();
+        //This is to get the livedata of the main post node
+        PostQueryLivedata livedata = new PostQueryLivedata(isSchool, ids);
+        //This is to get the livedata of the user or school posts node
+//        PostQueryLivedata userPostNodeLivedata = new PostQueryLivedata(true, isSchool, ids);
         LiveData<List<Post>> postLiveData = Transformations
                 .map(livedata, new Deserializer(isSchool, ids));
         Log.e(TAG, "getPostLiveData() called ------------------- ");
         return postLiveData;
     }
+
+//    public LiveData<List<>>
 
     private interface TaskToGetAllUidCallback {
         void uidAllGotten(List<String> idList);
@@ -72,7 +82,7 @@ public class PostViewModels extends ViewModel {
 
             this.isSchool = isSchool;
             this.uid = uid;
-            getAllPostUid(isSchool, uid, this);
+
         }
 
         @Override
@@ -83,6 +93,7 @@ public class PostViewModels extends ViewModel {
         @Override
         public List<Post> apply(DataSnapshot input) {
             Log.e(TAG, "Deserializer apply() called ------------------- ");
+            getAllPostUid(isSchool, uid, this);
             postList.clear();
 
             for (String id : idList) {

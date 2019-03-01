@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.ActivityHomeBinding;
 import com.example.android.schoolfinder.normalUsers.Activities.SearchActivity;
+import com.example.android.schoolfinder.normalUsers.Fragments.ActivitiesFragment;
 import com.example.android.schoolfinder.normalUsers.Fragments.SettingsFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -35,7 +36,11 @@ public class HomeActivity extends AppCompatActivity {
         homeBinding.buttonNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(homeBinding.activityHome.getId(), new ActivitiesFragment())
+                        .commit();
             }
         });
 

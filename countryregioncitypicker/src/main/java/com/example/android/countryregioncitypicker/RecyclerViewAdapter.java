@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> implements Filterable {
+    private static final String TAG = RecyclerViewAdapter.class.getSimpleName();
     private List<Country> countryList = new ArrayList<>();
     private List<StateRegion> stateRegionList = new ArrayList<>();
     private Activity activity;
@@ -122,6 +124,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         }
 
                         filteredCountryList = filteredList;
+                        Log.e(TAG, "filteredCountryList ------------- " + filteredCountryList.toString());
                     } else {
                         List<StateRegion> filteredList = new ArrayList<>();
                         for (StateRegion row : stateRegionList) {
@@ -134,6 +137,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         }
 
                         filteredStateRegionList = filteredList;
+                        Log.e(TAG, "filteredStateRegionList ------------- " + filteredStateRegionList.toString());
                     }
                 }
 

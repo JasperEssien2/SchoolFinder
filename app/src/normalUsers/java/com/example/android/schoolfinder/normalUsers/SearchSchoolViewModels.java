@@ -61,17 +61,21 @@ public class SearchSchoolViewModels extends ViewModel {
 
         @Override
         public List<School> apply(DataSnapshot input) {
+            Log.e(TAG, "Deserializer's apply() called -------------- ");
             schoolList.clear();
+            schoolsUidList.clear();
             dataSnapshot = input;
             if (mSchoolCategories != null && !mSchoolCategories.isEmpty()) {
 //                filterSchoolsByCategories(input, true);
-                addIdsFromStates(input);
+                filterIdListByCategories(input);
             } else {
 //                filterByCountryStateRegion(input, true);
-                filterIdListByCategories(input);
+                addIdsFromStates(input);
             }
             for (String s : schoolsUidList) {
-                schoolList.add(input.child(s).getValue(School.class));
+                schoolList.add(input.child(s).child(FirebaseConstants.SCHOOL_DETAIL_NODE).getValue(School.class));
+                Log.e(TAG, "Url ---- " + input.child(s).child(FirebaseConstants.SCHOOL_DETAIL_NODE).getRef().toString());
+//                Log.e(TAG, "Value ---- " + input.child(s).child(FirebaseConstants.SCHOOL_DETAIL_NODE).getValue(School.class).toString());
             }
             return schoolList;
         }
@@ -90,6 +94,7 @@ public class SearchSchoolViewModels extends ViewModel {
                     .child(mStateRegionChoice);
             for (DataSnapshot s : stateSnapShot.getChildren()) {
                 schoolsUidList.add(s.getKey());
+                Log.e(TAG, "*******************----- " + s.toString() + " -----****************");
             }
 
         }

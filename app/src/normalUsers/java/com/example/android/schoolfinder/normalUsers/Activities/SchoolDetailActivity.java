@@ -20,6 +20,7 @@ import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.ActivitySchoolDetailBinding;
 import com.example.android.schoolfinder.normalUsers.Adapters.SchoolDetailPagerAdapter;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -37,6 +38,7 @@ public class SchoolDetailActivity extends AppCompatActivity {
 //        setColorPrimary();
         School school = getSchool();
         Image image = null;
+        loadImage("https://images.megapixl.com/3337/33377575.jpg"); //TODO: This is for test purpose only
         if (school != null && school.getSchoolImages() != null) {
             image = school.getSchoolImages().get(0);
             loadImage(image.getImageUrl());
@@ -107,6 +109,7 @@ public class SchoolDetailActivity extends AppCompatActivity {
                 .load(url)
                 .resize(imageDimensionWidth, imageDimensionHeight)
                 .centerCrop()
+                .networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.NO_CACHE)
                 .error(R.drawable.skool_image1)
                 .into(new Target() {
                     @Override
@@ -124,6 +127,7 @@ public class SchoolDetailActivity extends AppCompatActivity {
                                 }
                             });
                         } catch (Exception e) {
+                            Log.e(TAG, "picasso failed --- " + e.getMessage());
                             // if Bitmap fetch fails, fallback to primary colors
                             Log.e(TAG, "onCreate: failed to create bitmap from background", e.fillInStackTrace());
                             schoolDetailBinding.collapsingToolbar.setContentScrimColor(

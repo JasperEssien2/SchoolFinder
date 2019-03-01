@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">School Finder</string>
 
-    <string name="button_notification">Notifications</string>
+    <string name="button_notification">Notification</string>
     <string name="button_settings">Settings</string>
     <string name="button_get_location">Location</string>
     <string name="button_sign_up">Sign up</string>
@@ -33,6 +33,7 @@
     <string name="title_done">Done</string>
     <string name="school_categories">Categories</string>
     <string name="add_class_hint_text">"Format (Class - variation,), Example:\nClass one - science,\nClass one - art,"</string>
+    <string name="postt_empty_list_text">No post yet, posts of schools you follow will appear here!</string>
 
 
 </resources>

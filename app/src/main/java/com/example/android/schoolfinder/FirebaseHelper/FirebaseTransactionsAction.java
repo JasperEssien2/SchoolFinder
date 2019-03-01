@@ -2,11 +2,14 @@ package com.example.android.schoolfinder.FirebaseHelper;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
+import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,12 +43,14 @@ public class FirebaseTransactionsAction {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             School school = dataSnapshot.getValue(School.class);
                             if (school != null && school.getFollowers() != null)
-                                uids = new ArrayList<>(school.getFollowers().keySet());
+                                Log.e(TAG, "Followers uid ------ " + school.getFollowers().keySet());
+                            uids = new ArrayList<>(school.getFollowers().keySet());
                         }
 
                         @Override
@@ -61,7 +66,7 @@ public class FirebaseTransactionsAction {
      * This method is called to write post to the database, it handles the firebase transaction
      * to the done
      *
-     * @param post the instance of the post
+     * @param post   the instance of the post
      */
     public void writeNewPost(final Post post) {
 //        DatabaseReference postMainRef = dbRef.child(FirebaseConstants.POSTS_NODE);
@@ -77,8 +82,11 @@ public class FirebaseTransactionsAction {
         //Add it to the school's post node, containing list of uids of post the school has posted
         childUpdates.put(FirebaseConstants.SCHOOLS_USERS_NODE + "/" + FirebaseAuth.getInstance()
                 .getCurrentUser().getUid() + "/" + FirebaseConstants.POSTS_NODE + "/" + key, true);
+
+
         for (String s : getAllFollowiersUid()) {
             childUpdates.put(FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key, true);
+            Log.e(TAG, "" + FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key);
         }
 
         dbRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
@@ -161,22 +169,43 @@ public class FirebaseTransactionsAction {
     /**
      * This method is called when a user follows or unfollows a school
      *
-     * @param school instance of school being followed or unfollowed
-     * @param userId the id of the user
+     * @param followButton
+     * @param school       instance of school being followed or unfollowed
+     * @param userId       the id of the user
      */
-    public void schoolFollowersAction(final School school, final String userId) {
+    public void schoolFollowersAction(final TextView textView, final FloatingActionButton followButton, final School school, final String userId) {
+        if (school.getFollowers() == null)
+            school.setFollowers(new HashMap<String, Boolean>());
+        if (school.getFollowers().containsKey(userId)) {
+            // Unstar the post and remove self from stars
+            school.setFollowersCount(school.getFollowersCount() - 1);
+            school.getFollowers().remove(userId);
+            isFollowing = false;
+        } else {
+            // Star the post and add self to stars
+            school.setFollowersCount(school.getFollowersCount() + 1);
+            school.getFollowers().put(userId, true);
+            isFollowing = true;
+        }
+        textView.setText(String.valueOf(school.getFollowersCount()));
+//                        followButton.setImageDrawable(isFollowing ? R.drawable.foll);
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())
+                .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
                 .runTransaction(new Transaction.Handler() {
                     @NonNull
                     @Override
                     public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
 //                        School school1 = school;
                         School school1 = mutableData.getValue(School.class);
+
+
                         if (school1 == null) {
                             return Transaction.success(mutableData);
                         }
-
+                        Log.e(TAG, "mutable data -- " + school1.toString());
+                        if (school1.getFollowers() == null)
+                            school1.setFollowers(new HashMap<String, Boolean>());
                         if (school1.getFollowers().containsKey(userId)) {
                             // Unstar the post and remove self from stars
                             school1.setFollowersCount(school1.getFollowersCount() - 1);
@@ -198,9 +227,10 @@ public class FirebaseTransactionsAction {
                                     .setValue(true);
                             isFollowing = true;
                         }
-
+                        school.setFollowers(school1.getFollowers());
+                        school.setFollowersCount(school1.getFollowersCount());
                         // Set value and report transaction success
-                        mutableData.setValue(school1);
+                        mutableData.setValue(school);
                         return Transaction.success(mutableData);
 //                        return null;
                     }
@@ -208,6 +238,12 @@ public class FirebaseTransactionsAction {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
                         Log.d(TAG, "following:onComplete:" + databaseError);
+                        if (dataSnapshot != null) {
+                            School school1 = dataSnapshot.getValue(School.class);
+                            if (school1 != null)
+                                textView.setText(String.valueOf(school1.getFollowersCount()));
+                        }
+//                        followButton.setImageDrawable(isFollowing ? R.drawable.foll);
                         if (databaseError == null && isFollowing) {
                             transferAllSchoolPostWhenUserFollows(school, userId);
                             mCallback.following(school, true);
@@ -219,6 +255,8 @@ public class FirebaseTransactionsAction {
                 });
     }
 
+//    TODO: Make sure to make the expression button as radio buttons, only 1 expression can be selected at a time
+
     /**
      * When a user clicks on the impressed smilley to express the impression the school gave
      * this method is called
@@ -226,9 +264,27 @@ public class FirebaseTransactionsAction {
      * @param school the instance of the school
      * @param userId the id of the user
      */
-    public void schoolImpressedAction(final School school, final String userId) {
+    public void schoolImpressedAction(final TextView textView, final FloatingActionButton impressedButton, final School school, final String userId) {
+        boolean isImpressed = false;
+
+        if (school.getImpressedExpressions() == null)
+            school.setImpressedExpressions(new HashMap<String, Boolean>());
+        if (school.getImpressedExpressions().containsKey(userId)) {
+            // Unstar the post and remove self from stars
+            school.setImpressedExpressionCount(school.getImpressedExpressionCount() - 1);
+            school.getImpressedExpressions().remove(userId);
+        } else {
+            // Star the post and add self to stars
+            school.setImpressedExpressionCount(school.getImpressedExpressionCount() + 1);
+            school.getImpressedExpressions().put(userId, true);
+
+            isImpressed = true;
+        }
+        impressedButton.setImageResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
+        textView.setText(String.valueOf(school.getImpressedExpressionCount()));
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())
+                .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
                 .runTransaction(new Transaction.Handler() {
                     @NonNull
                     @Override
@@ -238,6 +294,10 @@ public class FirebaseTransactionsAction {
                         if (school1 == null) {
                             return Transaction.success(mutableData);
                         }
+
+//                        boolean isImpressed = false;
+                        if (school1.getImpressedExpressions() == null)
+                            school1.setImpressedExpressions(new HashMap<String, Boolean>());
 
                         if (school1.getImpressedExpressions().containsKey(userId)) {
                             // Unstar the post and remove self from stars
@@ -281,10 +341,30 @@ public class FirebaseTransactionsAction {
      * @param school the instance of the school
      * @param userId the id of the user
      */
-    public void schoolNotImpressedAction(final School school, final String userId) {
+    public void schoolNotImpressedAction(final TextView textView, final FloatingActionButton notImpressedButton,
+                                         final School school, final String userId) {
         //TODO: Add it to the user impressed school node;
+
+        if (school.getNotImpressedExpressions() == null)
+            school.setNotImpressedExpressions(new HashMap<String, Boolean>());
+        boolean notImpressed = false;
+
+        if (school.getNotImpressedExpressions().containsKey(userId)) {
+            // Unstar the post and remove self from stars
+            school.setNotImpressedExpressionCount(school.getNotImpressedExpressionCount() - 1);
+            school.getNotImpressedExpressions().remove(userId);
+        } else {
+            // Star the post and add self to stars
+            school.setNotImpressedExpressionCount(school.getNotImpressedExpressionCount() + 1);
+            school.getNotImpressedExpressions().put(userId, true);
+            notImpressed = true;
+        }
+        notImpressedButton.setImageResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
+        textView.setText(String.valueOf(school.getNotImpressedExpressionCount()));
+
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())
+                .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
                 .runTransaction(new Transaction.Handler() {
                     @NonNull
                     @Override
@@ -294,7 +374,8 @@ public class FirebaseTransactionsAction {
                         if (school1 == null) {
                             return Transaction.success(mutableData);
                         }
-
+                        if (school1.getNotImpressedExpressions() == null)
+                            school1.setNotImpressedExpressions(new HashMap<String, Boolean>());
                         if (school1.getNotImpressedExpressions().containsKey(userId)) {
                             // Unstar the post and remove self from stars
                             school1.setNotImpressedExpressionCount(school1.getNotImpressedExpressionCount() - 1);
@@ -313,7 +394,10 @@ public class FirebaseTransactionsAction {
                                     .child(FirebaseConstants.NOT_IMPRESSED_EXPRESSION_NODE)
                                     .child(school.getId())
                                     .setValue(true);
+//                            notImpressed = true;
                         }
+//                        notImpressedButton.setImageResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
+//                        textView.setText(String.valueOf(school1.getNotImpressedExpressionCount()));
 
                         // Set value and report transaction success
                         mutableData.setValue(school1);
@@ -337,10 +421,28 @@ public class FirebaseTransactionsAction {
      * @param school the instance of the school
      * @param userId the id of the user
      */
-    public void schoolNormalImpressedAction(final School school, final String userId) {
+    public void schoolNormalImpressedAction(final TextView textView, final FloatingActionButton normalImpressButton, final School school, final String userId) {
         //TODO: Add it to the user impressed school node;
+        if (school.getNormalExpressions() == null)
+            school.setNormalExpressions(new HashMap<String, Boolean>());
+        boolean isNormalImpressed = false;
+        if (school.getNormalExpressions().containsKey(userId)) {
+            // Unstar the post and remove self from stars
+            school.setNormalExpressionCount(school.getNormalExpressionCount() - 1);
+            school.getNormalExpressions().remove(userId);
+//                            isNormalImpressed = false;
+        } else {
+            // Star the post and add self to stars
+            school.setNormalExpressionCount(school.getNormalExpressionCount() + 1);
+            school.getNormalExpressions().put(userId, true);
+
+            isNormalImpressed = true;
+        }
+        normalImpressButton.setImageResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
+        textView.setText(String.valueOf(school.getNormalExpressionCount()));
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())
+                .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
                 .runTransaction(new Transaction.Handler() {
                     @NonNull
                     @Override
@@ -350,7 +452,8 @@ public class FirebaseTransactionsAction {
                         if (school1 == null) {
                             return Transaction.success(mutableData);
                         }
-
+                        if (school1.getNormalExpressions() == null)
+                            school1.setNormalExpressions(new HashMap<String, Boolean>());
                         if (school1.getNormalExpressions().containsKey(userId)) {
                             // Unstar the post and remove self from stars
                             school1.setNormalExpressionCount(school1.getNormalExpressionCount() - 1);
@@ -360,6 +463,7 @@ public class FirebaseTransactionsAction {
                                     .child(FirebaseConstants.NORMAL_EXPRESSION_NODE)
                                     .child(school.getId())
                                     .setValue(null);
+//                            isNormalImpressed = false;
                         } else {
                             // Star the post and add self to stars
                             school1.setNormalExpressionCount(school1.getNormalExpressionCount() + 1);
@@ -370,7 +474,6 @@ public class FirebaseTransactionsAction {
                                     .child(school.getId())
                                     .setValue(true);
                         }
-
                         // Set value and report transaction success
                         mutableData.setValue(school1);
                         return Transaction.success(mutableData);

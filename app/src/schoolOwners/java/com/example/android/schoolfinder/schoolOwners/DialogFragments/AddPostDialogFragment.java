@@ -156,6 +156,7 @@ public class AddPostDialogFragment extends DialogFragment {
         Post post = null;
         if (!binding.addPostBody.getText().toString().isEmpty()) {
             post = new Post();
+
             post.setImageList(imageList);
             post.setSchoolLogo(schoolLogoImage);
             post.setBody(binding.addPostBody.getText().toString());

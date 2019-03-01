@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,6 +37,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private Activity activity;
     private boolean isSchool;
     private ItemPostBinding itemPostBinding;
+
 
     public PostAdapter(Activity activity, boolean isSchool) {
         super();
@@ -142,6 +144,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postViewHolder.starCount.setText(String.valueOf(post.getStarCount()));
         postViewHolder.body.setText(post.getBody());
         postViewHolder.star.setSupportImageTintList(colorStateList);
+        if (post.getStars() == null) post.setStars(new HashMap<String, Boolean>());
         if (post.getStars().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             postViewHolder.star.setPressed(true);
         } else {

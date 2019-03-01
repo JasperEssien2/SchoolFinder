@@ -31,12 +31,14 @@ public class CountryPickerDialogFragment extends DialogFragment {
         final RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), onCountrySelected,true);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        binding.progressbar.setVisibility(View.VISIBLE);
         GeoNamesViewModels.CountriesViewModel viewModel = new ViewModelProvider.NewInstanceFactory().create(GeoNamesViewModels.CountriesViewModel.class);
         viewModel.getCountryList().observe(this, new Observer<List<Country>>() {
             @Override
             public void onChanged(@Nullable List<Country> countries) {
 //                if(countries != null)
                     adapter.setCountryList(countries);
+                binding.progressbar.setVisibility(View.GONE);
             }
         });
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -17,6 +17,7 @@ public class PostQueryLivedata extends LiveData<DataSnapshot> {
     //    private Query query;
     private final PostValueListener listener = new PostValueListener();
     private Query query = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.POSTS_NODE);
+    //    private DatabaseReference userPostQuery = FirebaseDatabase.getInstance().getReference();
     private Handler handler = new Handler();
     private boolean listenerRemovePending = false;
     private final Runnable removeListener = new Runnable() {
@@ -26,11 +27,19 @@ public class PostQueryLivedata extends LiveData<DataSnapshot> {
             listenerRemovePending = false;
         }
     };
+
+
 //    private List<Post> mPostList;
 
-    public PostQueryLivedata() {
+    public PostQueryLivedata(boolean isSchool, String id) {
         super();
 //        mPostList = posts;
+    }
+
+    public PostQueryLivedata(Query query, boolean isSchool, String id) {
+        super();
+//        mPostList = posts;
+        this.query = query;
     }
 
     @Override

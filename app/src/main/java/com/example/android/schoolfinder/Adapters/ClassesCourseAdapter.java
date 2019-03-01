@@ -20,6 +20,7 @@ import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemClassBinding;
 import com.example.android.schoolfinder.databinding.ItemCourseClassBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -109,8 +110,11 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
 
     private void setCourseItemBackgroundImage(String name, CircleImageView background) {
         if (name.toLowerCase().startsWith("Computer".toLowerCase()) || name.toLowerCase().endsWith("Computer".toLowerCase()))
-            new PicassoImageLoader(mActivity, R.drawable.ic_computer_course,
-                    R.color.colorLightGrey, R.color.colorLightGrey, background);
+            Picasso.get()
+                    .load(R.drawable.ic_computer_course)
+                    .into(background);
+//            new PicassoImageLoader(mActivity, R.drawable.ic_computer_course,
+//                    R.color.colorLightGrey, R.color.colorLightGrey, background);
 
         else if (name.toLowerCase().startsWith("Mathematics".toLowerCase()) || name.toLowerCase().endsWith("Mathematics".toLowerCase()))
             new PicassoImageLoader(mActivity, R.drawable.ic_math,
@@ -191,13 +195,13 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
         else return mClassList == null ? 0 : mClassList.size();
     }
 
-//    public void itemChanged(Class aClass, int pos) {
-//        notifyItemChanged(pos);
-//    }
-//
-//    public void itemChanged(Course aCourse, int pos) {
-//        notifyItemChanged(pos);
-//    }
+    public void itemChanged(Class aClass, int pos) {
+        notifyItemChanged(pos);
+    }
+
+    public void itemChanged(Course aCourse, int pos) {
+        notifyItemChanged(pos);
+    }
 
     public class ClassCourseViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView backgroundImage;

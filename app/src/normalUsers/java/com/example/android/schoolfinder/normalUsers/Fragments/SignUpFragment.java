@@ -35,6 +35,8 @@ import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -53,6 +55,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -509,7 +512,13 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
     }
 
     @Override
-    public void schoolImageAdded(String imageUrl) {
+    public void schoolImageAdded(String imageUrl, String tag) {
 
     }
+
+    @Override
+    public void postImageAdded(Post post, List<Image> images) {
+
+    }
+
 }
