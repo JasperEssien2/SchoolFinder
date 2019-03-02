@@ -46,6 +46,7 @@ public class SearchSchoolQueryLiveData extends LiveData<DataSnapshot> {
 //        mStateRegionChoice = stateRegionChoice;
 //        dbRef = dbRef.child(countryChoice).child(stateRegionChoice);
         query = dbRef;
+
     }
 
 //    public void setValues(String countryChoice, String stateRegionChoice, String cityChoice, String searchQuery, List<String> schoolTypes) {

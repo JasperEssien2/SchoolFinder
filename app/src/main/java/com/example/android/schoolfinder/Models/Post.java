@@ -19,7 +19,7 @@ public class Post implements Parcelable {
         }
     };
     private String uid;
-    private long timeStamp;
+    private Object timeStamp;
     private String author;
     private List<Image> imageList;
     private Image schoolLogo;
@@ -45,7 +45,7 @@ public class Post implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(uid);
-        dest.writeLong(timeStamp);
+        dest.writeValue(timeStamp);
         dest.writeString(author);
         dest.writeTypedList(imageList);
         dest.writeParcelable(schoolLogo, flags);
@@ -67,11 +67,11 @@ public class Post implements Parcelable {
         this.uid = uid;
     }
 
-    public long getTimeStamp() {
+    public Object getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
+    public void setTimeStamp(Object timeStamp) {
         this.timeStamp = timeStamp;
     }
 

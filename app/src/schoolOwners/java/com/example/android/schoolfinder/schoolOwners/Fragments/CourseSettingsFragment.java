@@ -18,7 +18,6 @@ import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.Models.Class;
 import com.example.android.schoolfinder.Models.Course;
-import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
@@ -198,7 +197,7 @@ public class CourseSettingsFragment extends Fragment implements AuthenticationCa
     }
 
     @Override
-    public void postImageAdded(Post post, List<Image> images) {
+    public void postImageAdded(Post post, boolean isSuccessful) {
 
     }
 

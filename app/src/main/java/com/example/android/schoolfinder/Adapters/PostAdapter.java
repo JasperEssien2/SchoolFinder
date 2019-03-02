@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.R;
+import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemPostBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
@@ -136,14 +137,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         if (hasImages)
             setUpImagesRecycler(postViewHolder.images, post);
         if (post.getSchoolLogo() != null && post.getSchoolLogo().getImageUrl() != null)
-            Picasso.get()
-                    .load(post.getSchoolLogo().getImageUrl())
-                    .placeholder(R.color.colorLightGrey)
-                    .into(postViewHolder.logo);
+            new PicassoImageLoader(activity, post.getSchoolLogo().getImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, postViewHolder.logo);
+
         postViewHolder.name.setText(post.getAuthor());
         postViewHolder.starCount.setText(String.valueOf(post.getStarCount()));
         postViewHolder.body.setText(post.getBody());
         postViewHolder.star.setSupportImageTintList(colorStateList);
+        postViewHolder.time.setVisibility(View.VISIBLE);
+        postViewHolder.time.setText("1 min");
         if (post.getStars() == null) post.setStars(new HashMap<String, Boolean>());
         if (post.getStars().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             postViewHolder.star.setPressed(true);
@@ -167,7 +169,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
      */
     private void setUpImagesRecycler(RecyclerView imagesRecyclerView, Post post) {
         PostImagesAdapter postImagesAdapter = new PostImagesAdapter(post.getImageList(), activity);
-        imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, 4));
+        if (!(post.getImageList().size() > 4))
+            //This is so as to make the image item occupy all the width and height of the recycler view
+            imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, post.getImageList().size()));
+        else imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, 4));
         imagesRecyclerView.setAdapter(postImagesAdapter);
     }
 
@@ -216,9 +221,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public PostImagesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             ImageView imageView = new ImageView(activity);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setLayoutParams(new RecyclerView.LayoutParams(
-                    RecyclerView.LayoutParams.MATCH_PARENT,
-                    RecyclerView.LayoutParams.MATCH_PARENT));
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
             return new PostImagesViewHolder(imageView);
         }
 
@@ -259,7 +264,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public class PostViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView logo;
         private RecyclerView images;
-        private TextView body, name, starCount;
+        private TextView body, name, starCount, time;
         private AppCompatImageButton star;
         private ImageView promotedColor;
 
@@ -273,6 +278,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             starCount = itemPostBinding.postLikeCount;
             star = itemPostBinding.postLikeButton;
             promotedColor = itemPostBinding.promotedColor;
+            time = itemPostBinding.postTime;
         }
     }
 }

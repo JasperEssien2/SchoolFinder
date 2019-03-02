@@ -94,7 +94,7 @@ public class Authentication implements BaseAuthentication {
 
                             DatabaseReference categoryRef =
                                     reference.child(FirebaseConstants.SCHOOLS_USERS_NODE)
-                                            .child(FirebaseConstants.TYPE_NODE);
+                                            .child(FirebaseConstants.CATEGORIES_NODE);
                             for (String s : school.getSchoolCategory()) {
                                 map = new HashMap<>();
                                 map.put(school.getId(), true);

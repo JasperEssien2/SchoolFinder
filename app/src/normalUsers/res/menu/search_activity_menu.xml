@@ -6,7 +6,14 @@
         android:id="@+id/search"
         android:icon="@drawable/ic_search"
         android:title="@string/title_search"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/star_item"
+        android:icon="@drawable/ic_star_border_black_24dp"
+        android:title="@string/filter_by_starred"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/filter_by_country"
@@ -48,6 +55,11 @@
                 android:id="@+id/done"
                 android:title="@string/title_done" />
         </menu>
+
     </item>
+
+    <item
+        android:id="@+id/filter_by_starred"
+        android:title="@string/filter_by_starred" />
 
 </menu>

@@ -1,10 +1,7 @@
 package com.example.android.schoolfinder.interfaces;
 
 import com.example.android.schoolfinder.Models.Certificate;
-import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
-
-import java.util.List;
 
 public interface MediaStorageCallback{
 
@@ -18,5 +15,5 @@ public interface MediaStorageCallback{
 
     void schoolImageAdded(String imageUrl, String tag);
 
-    void postImageAdded(Post post, List<Image> images);
+    void postImageAdded(Post post, boolean isSuccessful);
 }

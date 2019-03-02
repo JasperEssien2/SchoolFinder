@@ -73,21 +73,28 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
         postAdapter = new PostAdapter(getActivity(), true);
         setUpRecyclerView();
-        postViewModel.getPostLiveData(true, FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .observe(this, new Observer<List<Post>>() {
+        postViewModel.getUserNodeLiveData(true, FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .observe(this, new Observer<List<String>>() {
                     @Override
-                    public void onChanged(@Nullable List<Post> posts) {
-                        if (posts != null && !posts.isEmpty()) {
-                            postListNotEmpty();
-                            postAdapter.setPostList(posts);
+                    public void onChanged(@Nullable List<String> postsUid) {
+
+                        postViewModel.getAllPostInUserNode(postsUid, new PostViewModels.AllPostInUserNodeCallback() {
+                            @Override
+                            public void postGotten(List<Post> posts) {
+                                if (posts != null && !posts.isEmpty()) {
+                                    postListNotEmpty();
+                                    postAdapter.setPostList(posts);
 //                            for (Post pos : posts) {
 //                                postAdapter.putPostItem(pos);
 //                                Log.e(TAG, "--- post list not empty and its looping right now -- " + pos.toString());
 //                            }
-                        } else {
-                            postListEmpty();
-                            Log.e(TAG, "--- post list IS EMPTY OR NULL ");
-                        }
+                                } else {
+                                    postListEmpty();
+                                    Log.e(TAG, "--- post list IS EMPTY OR NULL ");
+                                }
+                            }
+                        });
+
                     }
                 });
         binding.addPost.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +125,12 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
      * @param post instance to be added
      */
     public void addPost(Post post) {
+
         if (school != null && school.getSchoolName() != null)
             post.setAuthor(school.getSchoolName());
-        if (post.getImageList() != null && !post.getImageList().isEmpty())
-            mediaStorage.addPostImages(post.getImageList());
-        else transactionsAction.writeNewPost(post);
+//        if (post.getImageList() != null && !post.getImageList().isEmpty())
+//            mediaStorage.addPostImages(post.getImageList());
+        transactionsAction.writeNewPost(post);
     }
 
     private Bundle getBundle() {
@@ -207,9 +215,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
     }
 
     @Override
-    public void postImageAdded(Post post, List<Image> images) {
-        post.setImageList(images);
-        transactionsAction.writeNewPost(post);
+    public void postImageAdded(Post post, boolean isSuccessful) {
     }
 
     @Override

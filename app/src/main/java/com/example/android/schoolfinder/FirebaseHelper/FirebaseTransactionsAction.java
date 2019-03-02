@@ -7,16 +7,19 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
+import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
+import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
@@ -66,36 +69,101 @@ public class FirebaseTransactionsAction {
      * This method is called to write post to the database, it handles the firebase transaction
      * to the done
      *
-     * @param post   the instance of the post
+     * @param post the instance of the post
      */
     public void writeNewPost(final Post post) {
 //        DatabaseReference postMainRef = dbRef.child(FirebaseConstants.POSTS_NODE);
 //        DatabaseReference dbRefNormal = dbRef
 //        TODO: initialize the post timestamp ooh
         if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
-        String key = dbRef.push().getKey();
+        final String key = dbRef.push().getKey();
         post.setUid(key);
+        post.setTimeStamp(ServerValue.TIMESTAMP);
 
-        Map<String, Object> childUpdates = new HashMap<>();
+        final Map<String, Object> childUpdates = new HashMap<>();
         //Add it to the post node
         childUpdates.put(FirebaseConstants.POSTS_NODE + "/" + key, post);
         //Add it to the school's post node, containing list of uids of post the school has posted
         childUpdates.put(FirebaseConstants.SCHOOLS_USERS_NODE + "/" + FirebaseAuth.getInstance()
                 .getCurrentUser().getUid() + "/" + FirebaseConstants.POSTS_NODE + "/" + key, true);
 
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            School school = dataSnapshot.getValue(School.class);
+                            if (school != null && school.getFollowers() != null)
+                                Log.e(TAG, "Followers uid ------ " + school.getFollowers().keySet());
+                            uids = new ArrayList<>(school.getFollowers().keySet());
+                            for (String s : uids) {
+                                childUpdates.put(FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key, true);
+                                Log.e(TAG, "" + FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key);
+                            }
+                            MediaStorage mediaStorage = new MediaStorage(new MediaStorageCallback() {
+                                @Override
+                                public void profileImageStored(String imageUrl, boolean isSuccesful) {
 
-        for (String s : getAllFollowiersUid()) {
-            childUpdates.put(FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key, true);
-            Log.e(TAG, "" + FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key);
+                                }
+
+                                @Override
+                                public void certificateImageStored(Certificate certificate, String imageUrl, boolean isCert) {
+
+                                }
+
+                                @Override
+                                public void profileImageDeleted(boolean isSuccessful) {
+
+                                }
+
+                                @Override
+                                public void logoStored(String imageUrl) {
+
+                                }
+
+                                @Override
+                                public void schoolImageAdded(String imageUrl, String tag) {
+
+                                }
+
+                                @Override
+                                public void postImageAdded(final Post post, boolean isSuccessful) {
+                                    if (isSuccessful) {
+                                        dbRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                            @Override
+                                            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                                if (databaseError != null)
+                                                    mCallback.post(post, true);
+                                                else mCallback.post(post, false);
+                                            }
+                                        });
+                                    } else {
+                                        mCallback.post(post, false);
+                                    }
+                                }
+                            });
+                            if (post.getImageList() != null && !post.getImageList().isEmpty())
+                                mediaStorage.addPostImages(post, post.getImageList());
+
+                            else {
+                                dbRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                        if (databaseError != null) mCallback.post(post, true);
+                                        else mCallback.post(post, false);
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
         }
-
-        dbRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                if (databaseError != null) mCallback.post(post, true);
-                else mCallback.post(post, false);
-            }
-        });
     }
 
     public void likePost(Post post) {

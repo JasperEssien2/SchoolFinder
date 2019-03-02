@@ -72,4 +72,9 @@ public class Image implements Parcelable {
         parcel.writeString(imageUrl);
         parcel.writeString(imageTag);
     }
+
+    @Override
+    public String toString() {
+        return "image id --- " + id + ", imageUrl -- " + imageUrl + ", imageTag -- " + imageTag + "\n";
+    }
 }

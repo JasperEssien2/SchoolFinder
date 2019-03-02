@@ -6,12 +6,12 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
         android:clipToPadding="false"
         android:elevation="7dp"
-        app:cardCornerRadius="4dp"
+        app:cardCornerRadius="7dp"
         app:cardElevation="7dp">
 
         <android.support.constraint.ConstraintLayout
@@ -21,10 +21,10 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/post_school_logo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/place_holder"
                 app:civ_border_color="@color/colorCyan200"
@@ -37,29 +37,31 @@
                 android:id="@+id/post_school_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:gravity="start"
                 android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                app:layout_constraintBottom_toTopOf="@+id/post_school_logo"
-                app:layout_constraintEnd_toStartOf="@+id/post_time"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/post_school_logo"
-                app:layout_constraintTop_toBottomOf="@+id/post_school_logo"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Bright Hope" />
 
             <TextView
                 android:id="@+id/post_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:gravity="start"
                 android:maxLines="1"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/post_school_name"
+                android:textSize="18sp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/post_school_name"
                 app:layout_constraintTop_toBottomOf="@+id/post_school_name"
                 tools:text="1 min" />
 
@@ -67,7 +69,7 @@
                 android:id="@+id/post_images"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="#000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,14 +99,12 @@
                         android:id="@+id/post_messsge"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
                         android:ellipsize="end"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
+                        android:padding="4dp"
+                        android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -116,11 +116,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        app:layout_constraintBottom_toTopOf="@+id/post_like"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/post_like">
+                        app:layout_constraintBottom_toBottomOf="@+id/post_like"
+                        app:layout_constraintEnd_toEndOf="parent">
 
                         <ImageView
                             android:id="@+id/promoted_color"
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="4dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
 
@@ -156,12 +156,12 @@
 
                         <android.support.v7.widget.AppCompatImageButton
                             android:id="@+id/post_like_button"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_margin="4dp"
                             android:background="@null"
                             android:padding="4dp"
-                            android:src="@drawable/ic_star"
+                            android:src="@drawable/ic_like_button"
                             android:tint="@color/colorCyan200" />
 
                         <TextView

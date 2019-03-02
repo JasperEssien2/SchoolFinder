@@ -13,10 +13,12 @@
     <string name="edit_confirm_password">Confirm Password</string>
 
     <string name="button_add_photo">Add photo</string>
-    <string name="school_detail_motto_header">SCHOOL MOTTO</string>
-    <string name="school_achievements_header">SCHOOL ACHIEVEMENTS</string>
-    <string name="school_certificates_header">SCHOOL CERTIFICATES</string>
+    <string name="school_detail_motto_header">School motto</string>
+    <string name="school_achievements_header">School achievements</string>
+    <string name="school_certificates_header">School certificates</string>
     <string name="title_search">Search</string>
     <string name="filter_by_country">Filter by Country</string>
     <string name="filter_by_category">Filter by Category</string>
+
+    <string name="filter_by_starred">Filter by Starred</string>
 </resources>

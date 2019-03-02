@@ -26,7 +26,7 @@ public class FirebaseConstants {
     public static final String KINDERGARTEN_NURSERIES_NODE = "kindergarten";
     public static final String PRIMARY_MID_NODE = "primary_mid school";
     public static final String OTHERS_NODE = "Others";
-    public static final String TYPE_NODE = "categories";
+    public static final String CATEGORIES_NODE = "categories";
     public static final String COUNTRIES = "Country";
     public static final String STATES = "States";
 

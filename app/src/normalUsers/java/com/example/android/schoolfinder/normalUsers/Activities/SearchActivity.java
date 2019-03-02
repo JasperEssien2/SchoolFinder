@@ -2,6 +2,7 @@ package com.example.android.schoolfinder.normalUsers.Activities;
 
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.DataBindingUtil;
@@ -19,6 +20,7 @@ import android.view.View;
 import com.example.android.countryregioncitypicker.CountryPickerDialogFragment;
 import com.example.android.countryregioncitypicker.Models.Country;
 import com.example.android.countryregioncitypicker.OnCountrySelected;
+import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.FirebaseHelper.FirebaseTransactionsAction;
 import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
@@ -51,7 +53,11 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
     private SearchSchoolViewModels searchSchoolViewModels;
     private FirebaseTransactionsAction transactionsAction;
     private List<School> mSchools;
+    private List<String> categoryList = new ArrayList<>();
+
     private int position;
+    private Observer<List<School>> observer;
+    LiveData<List<School>> schoolListLiveData;
 
     public SearchActivity() {
         // Required empty public constructor
@@ -78,23 +84,31 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(cardAdapter);
 //        cardAdapter.addItems(getDummySchoolList());
-        searchSchoolViewModels.getSchoolsLivedata("United States", "California", null)
-                .observe(this, new Observer<List<School>>() {
+        observer = new Observer<List<School>>() {
 
-                    @Override
-                    public void onChanged(@Nullable List<School> schools) {
-                        mSchools = schools;
-                        if (schools != null) {
+            @Override
+            public void onChanged(@Nullable List<School> schools) {
+                mSchools = schools;
+                if (schools != null) {
 //                            mSchools.addAll(schools);
-                            Log.e(TAG, "School list --- " + schools.toString());
-                            cardAdapter.addItems(schools);
+                    Log.e(TAG, "School list --- " + schools.toString());
+                    cardAdapter.addItems(schools);
 //                            cardAdapter.notifyDataSetChanged();
 //                            cardAdapter.notifyItemInserted(schools.size() - 1);
-                        } else
-                            Snackbar.make(searchBinding.getRoot(), "No school found", Snackbar.LENGTH_SHORT);
-                    }
-                });
+                } else
+                    Snackbar.make(searchBinding.getRoot(), "No school found", Snackbar.LENGTH_SHORT);
+            }
+        };
+        schoolListLiveData = searchSchoolViewModels.getSchoolsLivedata("United States", "California", null);
 
+        schoolListLiveData.observe(this, observer);
+
+        setUpOnCLickListeners();
+
+
+    }
+
+    private void setUpOnCLickListeners() {
         searchBinding.followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +152,6 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
                 }
             }
         });
-
     }
 
     @Override
@@ -166,31 +179,87 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
                 return true;
             case R.id.category_tetiary:
                 item.setChecked(!item.isChecked());
+                categoryFilter(0, item);
                 Log.e(TAG, "Tertiary menu -- " + item.isChecked());
                 break;
 
             case R.id.category_high_school:
                 item.setChecked(!item.isChecked());
+                categoryFilter(1, item);
                 Log.e(TAG, "High school menu -- " + item.isChecked());
                 break;
             case R.id.category_mid_school:
                 item.setChecked(!item.isChecked());
+                categoryFilter(2, item);
                 Log.e(TAG, "MidSchool menu -- " + item.isChecked());
                 break;
             case R.id.category_kindergarten_nursery:
                 item.setChecked(!item.isChecked());
+                categoryFilter(3, item);
                 Log.e(TAG, "Kindergarten nursery menu -- " + item.isChecked());
                 break;
             case R.id.category_others:
                 item.setChecked(!item.isChecked());
+                categoryFilter(4, item);
                 Log.e(TAG, "Others menu -- " + item.isChecked());
                 break;
             case R.id.done:
 //                item.getSubMenu().
                 return true;
+            case R.id.star_item:
+                item.setChecked(!item.isChecked());
+                starButtonClicked(item);
             default:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This method helps update the icon and also saves or remove the item from the database
+     *
+     * @param item
+     */
+    private void starButtonClicked(MenuItem item) {
+        if (item.isChecked()) {
+            item.setIcon(R.drawable.ic_star_black_24dp);
+        } else {
+            item.setIcon(R.drawable.ic_star_border_black_24dp);
+        }
+    }
+
+    private void categoryFilter(int itemIndex, MenuItem item) {
+        switch (itemIndex) {
+            //Tertiary item
+            case 0:
+                if (item.isChecked()) categoryList.add(FirebaseConstants.TERTIARY_NODE);
+                else categoryList.remove(FirebaseConstants.TERTIARY_NODE);
+                break;
+            //High school item
+            case 1:
+                if (item.isChecked()) categoryList.add(FirebaseConstants.HIGH_SCHOOLS_NODE);
+                else categoryList.remove(FirebaseConstants.HIGH_SCHOOLS_NODE);
+                break;
+            //Mid school item
+            case 2:
+                if (item.isChecked()) categoryList.add(FirebaseConstants.PRIMARY_MID_NODE);
+                else categoryList.remove(FirebaseConstants.PRIMARY_MID_NODE);
+                break;
+            //Kindergarten /Nursery item
+            case 3:
+                if (item.isChecked())
+                    categoryList.add(FirebaseConstants.KINDERGARTEN_NURSERIES_NODE);
+                else categoryList.remove(FirebaseConstants.KINDERGARTEN_NURSERIES_NODE);
+                break;
+
+            //Others item
+            case 4:
+                if (item.isChecked()) categoryList.add(FirebaseConstants.OTHERS_NODE);
+                else categoryList.remove(FirebaseConstants.OTHERS_NODE);
+                break;
+        }
+        schoolListLiveData.removeObserver(observer);
+        schoolListLiveData = searchSchoolViewModels.filterByCategories(categoryList);
+        schoolListLiveData.observe(this, observer);
     }
 
     @Override
@@ -248,6 +317,26 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
         return list;
     }
 
+    /**
+     * Hides all the fab button when there are no item left
+     */
+    private void hideAllFabs() {
+        searchBinding.positiveFrame.setVisibility(View.GONE);
+        searchBinding.negativeFrame.setVisibility(View.GONE);
+        searchBinding.neutralFrame.setVisibility(View.GONE);
+        searchBinding.followFrame.setVisibility(View.GONE);
+    }
+
+    /**
+     * Show all the fab button when the list is not empty
+     */
+    private void showAllFabs() {
+        searchBinding.positiveFrame.setVisibility(View.VISIBLE);
+        searchBinding.negativeFrame.setVisibility(View.VISIBLE);
+        searchBinding.neutralFrame.setVisibility(View.VISIBLE);
+        searchBinding.followFrame.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void countrySelected(Country country) {
         showStateRegionDialog(country.getGeoNameId());
@@ -278,11 +367,13 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
         this.position = position;
         if (mSchools == null) return;
         if (mSchools.isEmpty()) return;
+        showAllFabs();
         School school = null;
         try {
             school = mSchools.get(position);
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
+            hideAllFabs();
         }
         if (school != null) {
             searchBinding.negativeCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));

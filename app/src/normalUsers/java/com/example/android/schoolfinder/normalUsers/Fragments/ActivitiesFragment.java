@@ -51,6 +51,10 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
     private PostAdapter postAdapter;
     private PostViewModels postViewModel;
 
+    public ActivitiesFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +64,6 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
 
     }
 
-    public ActivitiesFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,17 +71,28 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
         postAdapter = new PostAdapter(getActivity(), false);
         setUpRecyclerView();
-        postViewModel.getPostLiveData(false, FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .observe(this, new Observer<List<Post>>() {
+        postViewModel.getUserNodeLiveData(false, FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .observe(this, new Observer<List<String>>() {
                     @Override
-                    public void onChanged(@Nullable List<Post> posts) {
-                        if (posts != null && !posts.isEmpty()) {
-                            postListNotEmpty();
-                            postAdapter.setPostList(posts);
-                        } else {
-                            postListEmpty();
-                            Log.e(TAG, "--- post list IS EMPTY OR NULL ");
-                        }
+                    public void onChanged(@Nullable List<String> postsUid) {
+
+                        postViewModel.getAllPostInUserNode(postsUid, new PostViewModels.AllPostInUserNodeCallback() {
+                            @Override
+                            public void postGotten(List<Post> posts) {
+                                if (posts != null && !posts.isEmpty()) {
+                                    postListNotEmpty();
+                                    postAdapter.setPostList(posts);
+//                            for (Post pos : posts) {
+//                                postAdapter.putPostItem(pos);
+//                                Log.e(TAG, "--- post list not empty and its looping right now -- " + pos.toString());
+//                            }
+                                } else {
+                                    postListEmpty();
+                                    Log.e(TAG, "--- post list IS EMPTY OR NULL ");
+                                }
+                            }
+                        });
+
                     }
                 });
 

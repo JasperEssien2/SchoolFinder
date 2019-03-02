@@ -494,7 +494,7 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void postImageAdded(Post post, List<Image> images) {
+    public void postImageAdded(Post post, boolean isSuccessful) {
 
     }
 

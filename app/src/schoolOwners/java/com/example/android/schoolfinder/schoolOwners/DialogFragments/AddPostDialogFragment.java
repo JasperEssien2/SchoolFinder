@@ -27,6 +27,7 @@ import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.ItemAddPostBinding;
 import com.example.android.schoolfinder.schoolOwners.Fragments.ActivitiesFragment;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -205,6 +206,8 @@ public class AddPostDialogFragment extends DialogFragment {
                     if (imageUri != null) {
                         if (postImagesAdapter != null) {
                             Image image = new Image();
+                            String key = FirebaseDatabase.getInstance().getReference().push().getKey();
+                            image.setId(key);
                             image.setImageUrl(imageUri.toString());
                             imageList.add(image);
                             showRecyclerView();

@@ -9,6 +9,7 @@ import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -17,7 +18,7 @@ public class PostQueryLivedata extends LiveData<DataSnapshot> {
     //    private Query query;
     private final PostValueListener listener = new PostValueListener();
     private Query query = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.POSTS_NODE);
-    //    private DatabaseReference userPostQuery = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference userPostQuery = FirebaseDatabase.getInstance().getReference();
     private Handler handler = new Handler();
     private boolean listenerRemovePending = false;
     private final Runnable removeListener = new Runnable() {
@@ -39,7 +40,16 @@ public class PostQueryLivedata extends LiveData<DataSnapshot> {
     public PostQueryLivedata(Query query, boolean isSchool, String id) {
         super();
 //        mPostList = posts;
-        this.query = query;
+        if (isSchool) {
+            this.query = userPostQuery.child(FirebaseConstants.SCHOOLS_USERS_NODE)
+                    .child(id)
+                    .child(FirebaseConstants.POSTS_NODE);
+        } else {
+            this.query = userPostQuery.child(FirebaseConstants.NORMAL_USERS_NODE)
+                    .child(id)
+                    .child(FirebaseConstants.POSTS_NODE);
+        }
+//        this.query = query;
     }
 
     @Override
