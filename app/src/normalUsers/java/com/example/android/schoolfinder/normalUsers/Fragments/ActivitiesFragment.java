@@ -115,7 +115,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
      */
     public void addPost(Post post) {
         if (post.getImageList() != null && !post.getImageList().isEmpty())
-            mediaStorage.addPostImages(post.getImageList());
+            mediaStorage.addPostImages(post, post.getImageList());
         else transactionsAction.writeNewPost(post);
     }
 
@@ -201,8 +201,13 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
     }
 
     @Override
-    public void postImageAdded(Post post, List<Image> images) {
-        post.setImageList(images);
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void postImageAdded(Post post, boolean isSuccessful) {
+        post.setImageList(post.getImageList());
         transactionsAction.writeNewPost(post);
     }
 

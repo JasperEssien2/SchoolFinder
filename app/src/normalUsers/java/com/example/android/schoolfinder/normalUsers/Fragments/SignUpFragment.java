@@ -517,8 +517,12 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
     }
 
     @Override
-    public void postImageAdded(Post post, List<Image> images) {
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
 
     }
 
+    @Override
+    public void postImageAdded(Post post, boolean isSuccessful) {
+
+    }
 }

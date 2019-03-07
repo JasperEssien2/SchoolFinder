@@ -21,6 +21,7 @@ import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemSchoolCardBinding;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity;
+import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.yuyakaido.android.cardstackview.CardStackView;
 
@@ -35,6 +36,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
     private FirebaseTransactionsAction mTransactionsAction;
     private Activity mActivity;
     private List<School> mSchoolList;
+//    private final SearchSchoolViewModels viewModels;
     private ItemSchoolCardBinding mItemSchoolCardBinding;
 
     public SearchStackedCardAdapter(Activity activity, List<School> schoolList,
@@ -60,12 +62,16 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
     public void onBindViewHolder(@NonNull final SearchStackedCardViewHolder viewHolder, int i) {
         final School school = mSchoolList.get(viewHolder.getAdapterPosition());
         if(school == null) return;
-        new PicassoImageLoader(mActivity, "https://images.megapixl.com/3337/33377575.jpg", R.color.colorLightGrey,
-                R.color.colorLightGrey, viewHolder.backgroundImage);
+//        new PicassoImageLoader(mActivity, "https://images.megapixl.com/3337/33377575.jpg", R.color.colorLightGrey,
+//                R.color.colorLightGrey, viewHolder.backgroundImage);
 
         if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
             new PicassoImageLoader(mActivity, school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
                     R.color.colorLightGrey, viewHolder.schoolLogo);
+
+        if(school.getSchoolImages() != null && school.getSchoolImages().get(0) != null)
+            new PicassoImageLoader(mActivity, school.getSchoolImages().get(0).getImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, viewHolder.backgroundImage);
 //        if (school.getSchoolImages() != null && school.getSchoolImages().get(0) != null) {
 //            Log.e(TAG, "Image url --- " + school.getSchoolImages().get(0).getImageUrl());
 //            new PicassoImageLoader(mActivity, "https://jooinn.com/images/school-building-3.jpg", R.color.colorLightGrey,
@@ -127,6 +133,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
                 public void onClick(View view) {
                     Intent intent = new Intent(mActivity, SchoolDetailActivity.class);
                     intent.putExtra(BundleConstants.SCHOOL_BUNDLE, mSchoolList.get(getAdapterPosition()));
+                    intent.putExtra(BundleConstants.SCHOOL_ID_BUNDLE, mSchoolList.get(getAdapterPosition()).getId());
                     mActivity.startActivity(intent);
                 }
             });

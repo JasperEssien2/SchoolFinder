@@ -9,11 +9,11 @@
         app:showAsAction="ifRoom" />
 
 
-    <item
-        android:id="@+id/star_item"
-        android:icon="@drawable/ic_star_border_black_24dp"
-        android:title="@string/filter_by_starred"
-        app:showAsAction="ifRoom" />
+    <!--<item-->
+    <!--android:id="@+id/star_item"-->
+    <!--android:icon="@drawable/ic_star_border_black_24dp"-->
+    <!--android:title="@string/filter_by_starred"-->
+    <!--app:showAsAction="ifRoom" />-->
 
     <item
         android:id="@+id/filter_by_country"
@@ -61,5 +61,9 @@
     <item
         android:id="@+id/filter_by_starred"
         android:title="@string/filter_by_starred" />
+
+    <item
+        android:id="@+id/saved_school"
+        android:title="@string/saved" />
 
 </menu>

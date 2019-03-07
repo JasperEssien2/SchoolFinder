@@ -11,6 +11,7 @@ import com.example.android.schoolfinder.databinding.ActivitySchoolDetailBinding;
 import com.example.android.schoolfinder.normalUsers.Fragments.ApplyFragment;
 import com.example.android.schoolfinder.normalUsers.Fragments.SchoolDetailFragment;
 import com.example.android.schoolfinder.normalUsers.Fragments.SchoolPhotosFragment;
+import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,14 @@ public class SchoolDetailPagerAdapter extends FragmentPagerAdapter {
     private int NUM_OF_PAGE = 3;
 
     private List<String> pageTitles;
+    private final SearchSchoolViewModels viewModels;
     private Activity mActivity;
     private Bundle mSchool;
     private ActivitySchoolDetailBinding mSchoolDetailBinding;
 
-    public SchoolDetailPagerAdapter(FragmentManager fm, Activity activity, Bundle school) {
+    public SchoolDetailPagerAdapter(SearchSchoolViewModels viewModels, FragmentManager fm, Activity activity, Bundle school) {
         super(fm);
+        this.viewModels = viewModels;
         mActivity = activity;
         mSchool = school;
 //        mSchoolDetailBinding = schoolDetailBinding;
@@ -44,6 +47,7 @@ public class SchoolDetailPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 SchoolDetailFragment schoolDetailFragment = SchoolDetailFragment.newInstance(mSchool);
+                schoolDetailFragment.setViewModel(viewModels);
                 return schoolDetailFragment;
             case 1:
                 SchoolPhotosFragment photosFragment = new SchoolPhotosFragment();

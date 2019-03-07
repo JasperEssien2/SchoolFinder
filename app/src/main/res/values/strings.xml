@@ -34,6 +34,10 @@
     <string name="school_categories">Categories</string>
     <string name="add_class_hint_text">"Format (Class - variation,), Example:\nClass one - science,\nClass one - art,"</string>
     <string name="postt_empty_list_text">No post yet, posts of schools you follow will appear here!</string>
+    <string name="SCHOOL_BACKGROUND_IMAGE_TAG">backgroundImage</string>
+    <string name="logout">Sign out</string>
+    <string name="menu_delete_account">Delete Account</string>
+    <string name="saved">Saved Schools</string>
 
 
 </resources>

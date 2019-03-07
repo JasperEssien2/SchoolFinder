@@ -71,6 +71,13 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
+        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
         postAdapter = new PostAdapter(getActivity(), true);
         setUpRecyclerView();
         postViewModel.getUserNodeLiveData(true, FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -211,6 +218,11 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
 
     @Override
     public void schoolImageAdded(String imageUrl, String tag) {
+
+    }
+
+    @Override
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
 
     }
 

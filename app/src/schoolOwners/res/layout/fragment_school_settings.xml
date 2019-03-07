@@ -58,151 +58,151 @@
 
                 <!--</android.support.v7.widget.CardView>-->
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/school_details_social_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/colorGrey"
-                    app:cardElevation="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <!--<android.support.v7.widget.CardView-->
+                <!--android:id="@+id/school_details_social_card"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="16dp"-->
+                <!--android:layout_marginTop="32dp"-->
+                <!--android:layout_marginEnd="16dp"-->
+                <!--android:background="@color/colorGrey"-->
+                <!--app:cardElevation="10dp"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent">-->
 
 
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                <!--<GridLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_marginEnd="8dp"-->
 
-                        android:columnCount="2"
-                        android:gravity="center">
+                <!--android:columnCount="2"-->
+                <!--android:gravity="center">-->
 
-                        <LinearLayout
-                            android:id="@+id/school_website_frame"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
+                <!--<LinearLayout-->
+                <!--android:id="@+id/school_website_frame"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_rowWeight="1"-->
+                <!--android:layout_columnWeight="1"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:orientation="horizontal">-->
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/school_website"
-                                android:layout_width="@dimen/dimen_30dp"
-                                android:layout_height="@dimen/dimen_30dp"
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/school_website"-->
+                <!--android:layout_width="@dimen/dimen_30dp"-->
+                <!--android:layout_height="@dimen/dimen_30dp"-->
 
-                                android:src="@drawable/ic_internet"
-                                app:civ_border_color="@color/colorWhite"
-                                app:civ_border_width="2dp" />
+                <!--android:src="@drawable/ic_internet"-->
+                <!--app:civ_border_color="@color/colorWhite"-->
+                <!--app:civ_border_width="2dp" />-->
 
-                            <TextView
-                                android:id="@+id/school_website_link"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:singleLine="true"
-                                android:text="School's website" />
+                <!--<TextView-->
+                <!--android:id="@+id/school_website_link"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="School's website" />-->
 
-                        </LinearLayout>
+                <!--</LinearLayout>-->
 
-                        <LinearLayout
-                            android:id="@+id/school_email_frame"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
+                <!--<LinearLayout-->
+                <!--android:id="@+id/school_email_frame"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_rowWeight="1"-->
+                <!--android:layout_columnWeight="1"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:orientation="horizontal">-->
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/school_email"
-                                android:layout_width="@dimen/dimen_30dp"
-                                android:layout_height="@dimen/dimen_30dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_email"
-                                app:civ_border_color="@color/colorWhite"
-                                app:civ_border_width="2dp" />
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/school_email"-->
+                <!--android:layout_width="@dimen/dimen_30dp"-->
+                <!--android:layout_height="@dimen/dimen_30dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@drawable/ic_email"-->
+                <!--app:civ_border_color="@color/colorWhite"-->
+                <!--app:civ_border_width="2dp" />-->
 
-                            <TextView
-                                android:id="@+id/school_email_link"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:singleLine="true"
-                                android:text="School's email" />
+                <!--<TextView-->
+                <!--android:id="@+id/school_email_link"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="School's email" />-->
 
-                        </LinearLayout>
+                <!--</LinearLayout>-->
 
-                        <LinearLayout
-                            android:id="@+id/school_facebook_frame"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
-
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/school_facebook"
-                                android:layout_width="@dimen/dimen_30dp"
-                                android:layout_height="@dimen/dimen_30dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_facebook"
-                                app:civ_border_color="@color/colorWhite"
-                                app:civ_border_width="2dp" />
-
-                            <TextView
-                                android:id="@+id/school_facebook_link"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:singleLine="true"
-                                android:text="School's facebook" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/school_twitter_frame"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/school_twitter"
-                                android:layout_width="@dimen/dimen_30dp"
-                                android:layout_height="@dimen/dimen_30dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_facebook"
-                                app:civ_border_color="@color/colorWhite"
-                                app:civ_border_width="2dp" />
-
-                            <TextView
-                                android:id="@+id/school_twitter_link"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:singleLine="true"
-                                android:text="School's twitter" />
-
-                        </LinearLayout>
+                <!--<LinearLayout-->
+                <!--android:id="@+id/school_facebook_frame"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_rowWeight="1"-->
+                <!--android:layout_columnWeight="1"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:orientation="horizontal">-->
 
 
-                    </GridLayout>
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/school_facebook"-->
+                <!--android:layout_width="@dimen/dimen_30dp"-->
+                <!--android:layout_height="@dimen/dimen_30dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@drawable/ic_facebook"-->
+                <!--app:civ_border_color="@color/colorWhite"-->
+                <!--app:civ_border_width="2dp" />-->
 
-                </android.support.v7.widget.CardView>
+                <!--<TextView-->
+                <!--android:id="@+id/school_facebook_link"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="School's facebook" />-->
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                <!--android:id="@+id/school_twitter_frame"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_rowWeight="1"-->
+                <!--android:layout_columnWeight="1"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/school_twitter"-->
+                <!--android:layout_width="@dimen/dimen_30dp"-->
+                <!--android:layout_height="@dimen/dimen_30dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@drawable/ic_facebook"-->
+                <!--app:civ_border_color="@color/colorWhite"-->
+                <!--app:civ_border_width="2dp" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/school_twitter_link"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="School's twitter" />-->
+
+                <!--</LinearLayout>-->
+
+
+                <!--</GridLayout>-->
+
+                <!--</android.support.v7.widget.CardView>-->
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cardView"
@@ -215,7 +215,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/school_details_social_card"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:layout_editor_absoluteY="283dp">
 
                     <android.support.constraint.ConstraintLayout
@@ -223,14 +223,14 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:id="@+id/mottoImageview"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/ic_email"
+                            tools:src="@drawable/ic_email"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view"
                             app:layout_constraintStart_toStartOf="parent"
@@ -505,13 +505,13 @@
 
                         <ImageView
                             android:id="@+id/imageView_school_certificates"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/ic_email"
+                            android:src="@drawable/ic_achievement_header_icon"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view_school_certificate"
                             app:layout_constraintStart_toStartOf="parent"
@@ -594,13 +594,13 @@
 
                         <ImageView
                             android:id="@+id/imageView_school_achievements"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/ic_email"
+                            android:src="@drawable/ic_achievement_header_icon"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view_school_achievement"
                             app:layout_constraintStart_toStartOf="parent"

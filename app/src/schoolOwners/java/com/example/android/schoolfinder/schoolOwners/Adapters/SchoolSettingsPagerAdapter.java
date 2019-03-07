@@ -15,6 +15,7 @@ import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
 import com.example.android.schoolfinder.schoolOwners.Fragments.ClassCourseSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.Fragments.OwnerSettingsFragment;
+import com.example.android.schoolfinder.schoolOwners.Fragments.SchoolPhotosFragment;
 import com.example.android.schoolfinder.schoolOwners.Fragments.SchoolSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.interfaces.SchoolSettingsViewPagerCallback;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final String TAG = SchoolSettingsPagerAdapter.class.getSimpleName();
-    private int NUM_OF_PAGE = 4;
+    private int NUM_OF_PAGE = 5;
 
     private List<String> pageTitles;
     private Activity mActivity;
@@ -42,10 +43,11 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
         mSchool = school;
 //        mViewPagerCallback = viewPagerCallback;
         pageTitles = new ArrayList<>();
-        pageTitles.add("School Settings");
-        pageTitles.add("Owner Settings");
-        pageTitles.add("Classes Settings");
-        pageTitles.add("Courses Settings");
+        pageTitles.add("School");
+        pageTitles.add("Owner");
+        pageTitles.add("Classes");
+        pageTitles.add("Courses");
+        pageTitles.add("Gallery");
     }
 
 
@@ -100,6 +102,8 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
 ////                        classSettingsPageCallback.updateCourseClassSettingsPage(3);
 //                    return courseSettingsFragment;
 //                }
+            case 4:
+                return new SchoolPhotosFragment();
         }
 
 

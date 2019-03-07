@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.android.countryregioncitypicker.CountryPickerDialogFragment;
 import com.example.android.countryregioncitypicker.Models.Country;
@@ -29,6 +30,7 @@ import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.ActivitySearchBinding;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Adapters.SearchStackedCardAdapter;
+import com.example.android.schoolfinder.normalUsers.Interfaces.SearchSchoolOfflineDatabaseCallback;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 import com.google.firebase.auth.FirebaseAuth;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -46,7 +48,7 @@ import java.util.List;
  * A simple {@link Activity} subclass.
  */
 public class SearchActivity extends AppCompatActivity implements CardStackListener, OnCountrySelected,
-        FirebaseTransactionCallback {
+        FirebaseTransactionCallback, SearchSchoolOfflineDatabaseCallback {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
     ActivitySearchBinding searchBinding;
@@ -68,7 +70,9 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
         super.onCreate(savedInstanceState);
         searchBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         transactionsAction = new FirebaseTransactionsAction(this);
-        searchSchoolViewModels = new ViewModelProvider.NewInstanceFactory().create(SearchSchoolViewModels.class);
+        searchSchoolViewModels = new ViewModelProvider.AndroidViewModelFactory(getApplication())
+                .create(SearchSchoolViewModels.class);
+        searchSchoolViewModels.setOfflineCallback(this);
         setSupportActionBar(searchBinding.toolbar);
         final SearchStackedCardAdapter cardAdapter = new SearchStackedCardAdapter(this, new ArrayList<School>(), transactionsAction);
 //        getSupportActionBar()
@@ -206,9 +210,9 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
             case R.id.done:
 //                item.getSubMenu().
                 return true;
-            case R.id.star_item:
-                item.setChecked(!item.isChecked());
-                starButtonClicked(item);
+//            case R.id.star_item:
+//                item.setChecked(!item.isChecked());
+//                starButtonClicked(item);
             default:
         }
         return super.onOptionsItemSelected(item);
@@ -343,13 +347,42 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
     }
 
     @Override
+    public void schoolAdded() {
+        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void schoolDeleted() {
+        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void schoolGotten(School school) {
+
+    }
+
+    @Override
+    public void schoolsGotten(LiveData<List<School>> listLiveData) {
+
+    }
+
+    @Override
+    public void schoolsGotten(List<School> schools) {
+
+    }
+
+    @Override
     public void onCardDragging(Direction direction, float ratio) {
 
     }
 
     @Override
     public void onCardSwiped(Direction direction) {
-
+        if (direction.equals(Direction.Right)) {
+            searchSchoolViewModels.insertSchool(mSchools.get(position));
+        } else if (direction.equals(Direction.Left)) {
+            searchSchoolViewModels.deleteSchool(mSchools.get(position));
+        }
     }
 
     @Override

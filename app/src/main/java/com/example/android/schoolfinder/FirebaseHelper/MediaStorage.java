@@ -2,17 +2,20 @@ package com.example.android.schoolfinder.FirebaseHelper;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
+import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -27,7 +30,7 @@ public class MediaStorage {
     private static final String TAG = MediaStorage.class.getSimpleName();
     private MediaStorageCallback mStorageCallback;
     private StorageReference mStorageRef;
-
+    private int successCount = 0;
 
     public MediaStorage(MediaStorageCallback callback) {
 
@@ -157,7 +160,7 @@ public class MediaStorage {
      * @param uri the uri of the image
      * @param tag the image tag
      */
-    public void addSchoolImages(Uri uri, String tag, String newTag) {
+    public void addSchoolImages(@NotNull Uri uri, @Nullable String tag, @Nullable String newTag) {
         StorageReference ref = null;
 
         if (tag != null && newTag != null) {
@@ -196,43 +199,96 @@ public class MediaStorage {
         });
     }
 
+    public void addSchoolImages(School school, final List<Image> imageList) {
+        if (school == null) return;
+        if (imageList == null) return;
+        Log.e(TAG, "addSchoolImages() ---------------------- ");
+
+        StorageReference ref = mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(FirebaseConstants.STORAGE_SCHOOL_IMAGES);
+        final Map<String, String> imageUrlsMap = new HashMap<>();
+        final List<String> uploadTaskKeys = new ArrayList<>();
+        int i = 0;
+        for (Image image : imageList) {
+            final int finalI = i;
+            Log.e(TAG, "add school image ---- " + image.toString());
+            ref = ref.child(image.getId());
+
+
+            Log.e(TAG, "add school image ref --------- " + ref.toString());
+            uploadTaskKeys.add(image.getId());
+
+            final StorageReference finalRef = ref;
+            ref.putFile(Uri.parse(image.getImageUrl()))
+                    .continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) throw task.getException();
+                            return finalRef.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        successCount++;
+                        Log.e(TAG, "Add school image Final I count ----- " + finalI);
+                        imageUrlsMap.put(uploadTaskKeys.get(finalI), task.getResult().toString());
+                        Log.e(TAG, "Add school image ImageUrlsMap ----- " + imageUrlsMap.toString());
+                        if (successCount == imageList.size()) {
+                            for (int i = 0; i <= imageList.size() - 1; i++) {
+                                if (imageUrlsMap.containsKey(imageList.get(i).getId()))
+                                    imageList.get(i).setImageUrl(imageUrlsMap.get(imageList.get(i).getId()));
+                            }
+
+                            mStorageCallback.schoolImageAdded(imageList, true);
+                        } else {
+                            mStorageCallback.schoolImageAdded(imageList, false);
+                        }
+                    }
+
+                }
+            });
+            i++;
+        }
+    }
+
     public void addOtherImages() {
 
     }
 
-    private int successCount = 0;
-
     public void addPostImages(final Post p, final List<Image> imageList) {
-        final StorageReference ref = mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        StorageReference ref = mStorageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(FirebaseConstants.POSTS_NODE)
                 .child(p.getUid());
         final Map<String, String> imageUrlsMap = new HashMap<>();
-        Map<String, UploadTask> uploadTaskMap = new HashMap<>();
+        final List<String> uploadTaskKeys = new ArrayList<>();
+//        Map<String, UploadTask> uploadTaskMap = new HashMap<>();
 
+        int i = 0;
         for (Image image : imageList) {
-            Log.e(TAG, "image ---- " + image.toString());
-            uploadTaskMap.put(image.getId(), ref.putFile(Uri.parse(image.getImageUrl())));
-        }
-
-        List<UploadTask> uploads = new ArrayList<>(uploadTaskMap.values());
-        final List<String> keys = new ArrayList<>(uploadTaskMap.keySet());
-        Log.e(TAG, "upload task keys ---- " + keys.toString());
-        Log.e(TAG, "upload task values ---- " + uploads.toString());
-        for (int i = 0; i <= uploadTaskMap.keySet().size() - 1; i++) {
             final int finalI = i;
-            uploads.get(finalI).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) throw task.getException();
-                    return ref.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            Log.e(TAG, "image ---- " + image.toString());
+            ref = ref.child(image.getId());
+
+
+            Log.e(TAG, "image ref --------- " + ref.toString());
+            uploadTaskKeys.add(image.getId());
+
+            final StorageReference finalRef = ref;
+            ref.putFile(Uri.parse(image.getImageUrl()))
+                    .continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) throw task.getException();
+                            return finalRef.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         successCount++;
                         Log.e(TAG, "Final I count ----- " + finalI);
-                        imageUrlsMap.put(keys.get(finalI), task.getResult().toString());
+                        imageUrlsMap.put(uploadTaskKeys.get(finalI), task.getResult().toString());
                         Log.e(TAG, "ImageUrlsMap ----- " + imageUrlsMap.toString());
                         if (successCount == imageList.size()) {
                             for (int i = 0; i <= imageList.size() - 1; i++) {
@@ -249,7 +305,51 @@ public class MediaStorage {
 
                 }
             });
+            i++;
+//            uploadTaskMap.put(image.getId(), ref.getActiveUploadTasks().get(0));
         }
+
+//        List<UploadTask> uploads = new ArrayList<>(uploadTaskMap.values());
+//        final List<String> keys = new ArrayList<>(uploadTaskMap.keySet());
+//        Log.e(TAG, "upload task keys ---- " + keys.toString());
+//        Log.e(TAG, "upload task values ---- " + uploads.toString());
+//        int i = 0;
+//        for (UploadTask uploadTask : uploads) {
+//            final int finalI = i;
+//            UploadTask u = uploads.get(finalI);
+
+//            final StorageReference finalRef = ref;
+//            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+//                @Override
+//                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+//                    if (!task.isSuccessful()) throw task.getException();
+//                    return finalRef.getDownloadUrl();
+//                }
+//            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Uri> task) {
+//                    if (task.isSuccessful()) {
+//                        successCount++;
+//                        Log.e(TAG, "Final I count ----- " + finalI);
+//                        imageUrlsMap.put(keys.get(finalI), task.getResult().toString());
+//                        Log.e(TAG, "ImageUrlsMap ----- " + imageUrlsMap.toString());
+//                        if (successCount == imageList.size()) {
+//                            for (int i = 0; i <= imageList.size() - 1; i++) {
+//                                if (imageUrlsMap.containsKey(imageList.get(i).getId()))
+//                                    imageList.get(i).setImageUrl(imageUrlsMap.get(imageList.get(i).getId()));
+//                            }
+//
+//                            p.setImageList(imageList);
+//                            mStorageCallback.postImageAdded(p, true);
+//                        } else {
+//                            mStorageCallback.postImageAdded(p, false);
+//                        }
+//                    }
+//
+//                }
+//            });
+//            i++;
+//        }
     }
 
     /**

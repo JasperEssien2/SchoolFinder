@@ -4,10 +4,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
@@ -129,6 +131,11 @@ public class FirebaseTransactionsAction {
                                 }
 
                                 @Override
+                                public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
+
+                                }
+
+                                @Override
                                 public void postImageAdded(final Post post, boolean isSuccessful) {
                                     if (isSuccessful) {
                                         dbRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
@@ -241,7 +248,7 @@ public class FirebaseTransactionsAction {
      * @param school       instance of school being followed or unfollowed
      * @param userId       the id of the user
      */
-    public void schoolFollowersAction(final TextView textView, final FloatingActionButton followButton, final School school, final String userId) {
+    public void schoolFollowersAction(final TextView textView, final View followButton, final School school, final String userId) {
         if (school.getFollowers() == null)
             school.setFollowers(new HashMap<String, Boolean>());
         if (school.getFollowers().containsKey(userId)) {
@@ -332,7 +339,7 @@ public class FirebaseTransactionsAction {
      * @param school the instance of the school
      * @param userId the id of the user
      */
-    public void schoolImpressedAction(final TextView textView, final FloatingActionButton impressedButton, final School school, final String userId) {
+    public void schoolImpressedAction(final TextView textView, final View impressedButton, final School school, final String userId) {
         boolean isImpressed = false;
 
         if (school.getImpressedExpressions() == null)
@@ -348,7 +355,10 @@ public class FirebaseTransactionsAction {
 
             isImpressed = true;
         }
-        impressedButton.setImageResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
+        if (impressedButton instanceof FloatingActionButton)
+            ((FloatingActionButton) impressedButton).setImageResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
+        else
+            impressedButton.setBackgroundResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
         textView.setText(String.valueOf(school.getImpressedExpressionCount()));
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())
@@ -409,7 +419,7 @@ public class FirebaseTransactionsAction {
      * @param school the instance of the school
      * @param userId the id of the user
      */
-    public void schoolNotImpressedAction(final TextView textView, final FloatingActionButton notImpressedButton,
+    public void schoolNotImpressedAction(final TextView textView, final View notImpressedButton,
                                          final School school, final String userId) {
         //TODO: Add it to the user impressed school node;
 
@@ -427,7 +437,10 @@ public class FirebaseTransactionsAction {
             school.getNotImpressedExpressions().put(userId, true);
             notImpressed = true;
         }
-        notImpressedButton.setImageResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
+        if (notImpressedButton instanceof FloatingActionButton)
+            ((FloatingActionButton) notImpressedButton).setImageResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
+        else
+            notImpressedButton.setBackgroundResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
         textView.setText(String.valueOf(school.getNotImpressedExpressionCount()));
 
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
@@ -489,7 +502,7 @@ public class FirebaseTransactionsAction {
      * @param school the instance of the school
      * @param userId the id of the user
      */
-    public void schoolNormalImpressedAction(final TextView textView, final FloatingActionButton normalImpressButton, final School school, final String userId) {
+    public void schoolNormalImpressedAction(final TextView textView, final View normalImpressButton, final School school, final String userId) {
         //TODO: Add it to the user impressed school node;
         if (school.getNormalExpressions() == null)
             school.setNormalExpressions(new HashMap<String, Boolean>());
@@ -506,7 +519,10 @@ public class FirebaseTransactionsAction {
 
             isNormalImpressed = true;
         }
-        normalImpressButton.setImageResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
+        if (normalImpressButton instanceof FloatingActionButton)
+            ((FloatingActionButton) normalImpressButton).setImageResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
+        else
+            normalImpressButton.setBackgroundResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
         textView.setText(String.valueOf(school.getNormalExpressionCount()));
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())

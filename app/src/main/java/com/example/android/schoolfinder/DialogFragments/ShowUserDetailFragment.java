@@ -18,6 +18,7 @@ import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
@@ -28,6 +29,8 @@ import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -318,6 +321,11 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
                 authentication.putNewUserInDb(school);
             }
         }
+    }
+
+    @Override
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
+
     }
 
     @Override

@@ -1,13 +1,34 @@
 package com.example.android.schoolfinder.Models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.example.android.schoolfinder.Utility.SchoolTypeConverters;
 
 import java.util.List;
 import java.util.Map;
 
+@Entity(tableName = "schools")
 public class School implements Parcelable {
 
+    public static final Creator<School> CREATOR = new Creator<School>() {
+        @Override
+        public School createFromParcel(Parcel in) {
+            return new School(in);
+        }
+
+        @Override
+        public School[] newArray(int size) {
+            return new School[size];
+        }
+    };
+    //    @TypeConverters(SchoolTypeConverters.class)
+    @PrimaryKey(autoGenerate = true)
+    private int dbPrimaryKey;
     private String id;
     private String schoolName;
     private String schoolLocation;
@@ -21,39 +42,42 @@ public class School implements Parcelable {
     private double latitude;
     private double longitude;
     private String schoolFacebook, schoolTwitter, schoolEmail, schoolWebsite;
+    @TypeConverters(SchoolTypeConverters.class)
     private Users schoolOwnerDetails;
+    @TypeConverters(SchoolTypeConverters.class)
     private List<Certificate> certificates;
+    @TypeConverters(SchoolTypeConverters.class)
     private List<Image> schoolImages;
+    @TypeConverters(SchoolTypeConverters.class)
     private List<Class> classes;
+    @TypeConverters(SchoolTypeConverters.class)
     private List<Course> courses;
+    @TypeConverters(SchoolTypeConverters.class)
     private List<Certificate> achievements;
+    @TypeConverters(SchoolTypeConverters.class)
     private List<String> schoolCategory;
     private long followersCount;
     private long notImpressedExpressionCount;
     private long impressedExpressionCount;
     private long normalExpressionCount;
     private long postsCount;
-    public static final Creator<School> CREATOR = new Creator<School>() {
-        @Override
-        public School createFromParcel(Parcel in) {
-            return new School(in);
-        }
-
-        @Override
-        public School[] newArray(int size) {
-            return new School[size];
-        }
-    };
+    @TypeConverters(SchoolTypeConverters.class)
     private Map<String, Boolean> notImpressedExpressions;
+    @TypeConverters(SchoolTypeConverters.class)
     private Map<String, Boolean> impressedExpressions;
+    @TypeConverters(SchoolTypeConverters.class)
     private Map<String, Boolean> normalExpressions;
+    @TypeConverters(SchoolTypeConverters.class)
     private Map<String, Boolean> posts;
+    @TypeConverters(SchoolTypeConverters.class)
+    private Map<String, Boolean> followers;
+
 
     public School() {
 
     }
 
-
+    @Ignore
     public School(String id, String schoolName, String schoolLocation, String schoolBiography,
                   String schoolMotto, String schoolContact, String schoolLogoImageUrl, String schoolFacebook, String schoolTwitter, String schoolEmail,
                   String schoolWebsite, Users schoolOwnerDetails, long followersCount, long notImpressedExpressionCount,
@@ -86,8 +110,7 @@ public class School implements Parcelable {
         this.courses = courses;
     }
 
-    private Map<String, Boolean> followers;
-
+    @Ignore
     protected School(Parcel in) {
         id = in.readString();
         schoolName = in.readString();
@@ -433,5 +456,13 @@ public class School implements Parcelable {
 
     public void setPostsCount(long postsCount) {
         this.postsCount = postsCount;
+    }
+
+    public int getDbPrimaryKey() {
+        return dbPrimaryKey;
+    }
+
+    public void setDbPrimaryKey(int dbPrimaryKey) {
+        this.dbPrimaryKey = dbPrimaryKey;
     }
 }

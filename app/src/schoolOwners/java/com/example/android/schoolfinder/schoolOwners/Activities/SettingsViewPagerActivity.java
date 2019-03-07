@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.DialogFragments.DialogFragmentImagePreview;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
@@ -31,10 +35,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SettingsViewPagerActivity extends AppCompatActivity implements AuthenticationCallbacks,
         SchoolSettingsViewPagerCallback, MediaStorageCallback {
 
     private static final int SELECT_PHOTO_DP = 355;
+    private static final int SELECT_BACKGROUND_PHOTO = 555;
     private ActivitySettingsViewPagerBinding settingsViewPagerBinding;
     private School school;
     private Authentication authentication;
@@ -46,12 +54,17 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
      */
     private TabLayout.Tab mTab;
     private SchoolSettingsPagerAdapter viewpagerAdapter;
+    private AddImagesFabClicked fabClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settingsViewPagerBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings_view_pager);
         setSupportActionBar(settingsViewPagerBinding.toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         authentication = new Authentication(this);
         authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
         if (school == null) {
@@ -90,6 +103,9 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                         showFab();
                         showLogoHideOwnerPic();
                         break;
+                    case 4:
+                        showFab();
+                        break;
                 }
             }
 
@@ -103,7 +119,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
 
             }
         });
-        settingsViewPagerBinding.schoolSettingsEditSchoolChangeLogo.setOnClickListener(new View.OnClickListener() {
+        settingsViewPagerBinding.schoolSettingsLogoImgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e(TAG, "Owner settings image picker button clicked oh");
@@ -165,9 +181,65 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                             Log.e(TAG, "Fragment IS NULL ---- ");
                         }
                     }
+                } else if (mTab.getPosition() == 4) {
+                    if (fabClicked != null)
+                        fabClicked.fabClicked();
                 }
             }
         });
+    }
+
+    public void initFabCallback(AddImagesFabClicked fabClicked) {
+
+        this.fabClicked = fabClicked;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_school_settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add_background_image:
+                addBackgroundImageAction();
+                return true;
+            case R.id.menu_setup_class_with_sheet:
+                return true;
+            case R.id.menu_setup_course_with_sheet:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called when add background image option menu is selected
+     */
+    private void addBackgroundImageAction() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, SELECT_BACKGROUND_PHOTO);
+    }
+
+    private void setUpViewWithData(School school) {
+        if (school.getSchoolLogoImageUrl() != null)
+            new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
+                    settingsViewPagerBinding.schoolSettingsLogoImgview);
+        if (school.getSchoolImages() != null)
+            if (school.getSchoolImages().get(0) != null)
+                new PicassoImageLoader(this, school.getSchoolImages().get(0).getImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
+                        settingsViewPagerBinding.appbarImage);
+
+        if (school.getSchoolOwnerDetails().getProfileImageUrl() != null)
+            new PicassoImageLoader(this, school.getSchoolOwnerDetails().getProfileImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
+                    settingsViewPagerBinding.ownerSettingsImage);
+        settingsViewPagerBinding.schoolName.setText(school.getSchoolName() != null ? school.getSchoolName() :
+                "");
+        settingsViewPagerBinding.schoolAddress.setText(school.getSchoolLocation() != null ? school.getSchoolLocation() :
+                "");
     }
 
     private Bundle getBundle() {
@@ -186,27 +258,52 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         return null;
     }
 
-    private void setUpViewWithData(School school) {
-        if (school.getSchoolLogoImageUrl() != null)
-            new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
-                    settingsViewPagerBinding.schoolSettingsLogoImgview);
-        if (school.getSchoolOwnerDetails().getProfileImageUrl() != null)
-            new PicassoImageLoader(this, school.getSchoolOwnerDetails().getProfileImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
-                    settingsViewPagerBinding.ownerSettingsImage);
-    }
-
     @Override
     public void hideLogoShowOwnerPic() {
         settingsViewPagerBinding.frameLayout.setVisibility(View.VISIBLE);
-        settingsViewPagerBinding.schoolDetailsExpresionCard.setVisibility(View.GONE);
+        settingsViewPagerBinding.schoolAddress.setVisibility(View.GONE);
+        settingsViewPagerBinding.schoolName.setVisibility(View.GONE);
+        settingsViewPagerBinding.schoolSettingsLogoImgview.setVisibility(View.GONE);
+        settingsViewPagerBinding.facebook.setVisibility(View.GONE);
+        settingsViewPagerBinding.twitter.setVisibility(View.GONE);
+        settingsViewPagerBinding.mail.setVisibility(View.GONE);
+//        settingsViewPagerBinding.schoolSettingsEditName.setVisibility(View.GONE);
         Log.e(TAG, "hideLogoShowOwnerPic() _______________________");
     }
 
     @Override
     public void showLogoHideOwnerPic() {
         settingsViewPagerBinding.frameLayout.setVisibility(View.GONE);
-        settingsViewPagerBinding.schoolDetailsExpresionCard.setVisibility(View.VISIBLE);
+        settingsViewPagerBinding.schoolAddress.setVisibility(View.VISIBLE);
+        settingsViewPagerBinding.schoolName.setVisibility(View.VISIBLE);
+        settingsViewPagerBinding.schoolSettingsLogoImgview.setVisibility(View.VISIBLE);
+        settingsViewPagerBinding.facebook.setVisibility(View.VISIBLE);
+        settingsViewPagerBinding.twitter.setVisibility(View.VISIBLE);
+        settingsViewPagerBinding.mail.setVisibility(View.VISIBLE);
+//        settingsViewPagerBinding.schoolSettingsEditName.setVisibility(View.VISIBLE);
         Log.e(TAG, "showLogoHideOwnerPic() _______________________");
+    }
+
+    @Override
+    public void schoolImageAdded(String imageUrl, String tag) {
+        if (school == null) return;
+        if (tag.equals(getString(R.string.SCHOOL_BACKGROUND_IMAGE_TAG))) {
+            List<Image> imageList;
+            if (school.getSchoolImages() == null) {
+                imageList = new ArrayList<>();
+                school.setSchoolImages(new ArrayList<Image>());
+            } else imageList = school.getSchoolImages();
+
+            Image img = new Image(null, imageUrl, tag);
+            if (!(imageList.size() > 0))
+                imageList.add(0, img);
+            else imageList.set(0, img);
+            Log.e(TAG, "images ---- " + school.getSchoolImages().toString());
+            school.setSchoolImages(imageList);
+            new PicassoImageLoader(this, imageUrl, R.color.colorLightGrey,
+                    R.color.colorLightGrey, settingsViewPagerBinding.appbarImage);
+            authentication.putNewUserInDb(school);
+        }
     }
 
     private void hideFab() {
@@ -299,12 +396,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     }
 
     @Override
-    public void schoolImageAdded(String imageUrl, String tag) {
-
-    }
-
-    @Override
-    public void postImageAdded(Post post, boolean isSuccessful) {
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
 
     }
 
@@ -347,6 +439,34 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                         Toast.makeText(this, "Error getting image", Toast.LENGTH_SHORT).show();
 
                 }
+                break;
+            case SELECT_BACKGROUND_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    if (data == null) return;
+                    final Uri imageUri = data.getData();
+//                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+//                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//                        imageView.setImageBitmap(selectedImage);
+                    if (imageUri != null) {
+                        imagePreview = DialogFragmentImagePreview
+                                .newInstance(this, imageUri, BundleConstants.ACTION_STORE_SCHOOL_BACKGROUND_IMAGES);
+//                        imagePreview.initMediaStorageCallback(this);
+                        imagePreview.show(getSupportFragmentManager(),
+                                null);
+                    } else
+                        Toast.makeText(this, "Error getting image", Toast.LENGTH_SHORT).show();
+
+                }
         }
+
+    }
+
+    @Override
+    public void postImageAdded(Post post, boolean isSuccessful) {
+
+    }
+
+    public interface AddImagesFabClicked {
+        void fabClicked();
     }
 }

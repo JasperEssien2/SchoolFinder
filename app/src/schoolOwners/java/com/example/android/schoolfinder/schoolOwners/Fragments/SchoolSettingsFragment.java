@@ -27,6 +27,7 @@ import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.AppLocationService;
+import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.FragmentSchoolSettingsBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
@@ -184,15 +185,19 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                         startActivityForResult(photoPickerIntent, SELECT_PHOTO_ACHIEVE);
                     }
                 });
-        setUpMap();
+
         return schoolSettingsBinding.getRoot();
     }
 
     private void setUpViewWithData(School school) {
         if (school == null) return;
+        setUpMap();
         schoolSettingsBinding.schoolDetailDescriptionText.setText(school.getSchoolBiography());
         schoolSettingsBinding.schoolDetailMottoText.setText(school.getSchoolMotto());
-//        if (school.getSchoolLogoImageUrl() != null)
+
+        if (school.getSchoolLogoImageUrl() != null)
+            new PicassoImageLoader(getActivity(), school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, schoolSettingsBinding.mottoImageview);
 //            Picasso.get()
 //                    .load(school.getSchoolLogoImageUrl())
 //                    .into(schoolSettingsBinding.schoolSettingsLogoImgview);
@@ -222,7 +227,10 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                     public void onMapReady(GoogleMap googleMap) {
                         Log.e(TAG, "map ready  ooooooooh");
                         // Add a marker in Sydney and move the camera
-                        LatLng sydney = new LatLng(-34, 151);
+                        LatLng sydney = null;
+                        if (school != null)
+                            sydney = new LatLng(school.getLatitude(), school.getLongitude());
+                        else sydney = new LatLng(-34, 151);
                         googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //                        googleMap.setLocationSource(new LocationSource() {
@@ -302,9 +310,9 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
                     schoolSettingsBinding.schoolDetailMottoText.requestFocus();
                 }
                 break;
-            case R.id.school_settings_edit_school_change_logo:
-
-                break;
+//            case R.id.school_settings_edit_school_change_logo:
+//
+//                break;
             case R.id.school_settings_edit_school_achievement:
                 view.requestFocus();
                 break;
@@ -490,6 +498,11 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void schoolImageAdded(String imageUrl, String tag) {
+
+    }
+
+    @Override
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
 
     }
 

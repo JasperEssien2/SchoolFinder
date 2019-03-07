@@ -15,8 +15,9 @@ import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.DialogFragmentImagePreviewBinding;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
-//import com.example.android.schoolfinder.schoolOwners.Activities.SettingsViewPagerActivity;
 import com.squareup.picasso.Picasso;
+
+//import com.example.android.schoolfinder.schoolOwners.Activities.SettingsViewPagerActivity;
 
 public class DialogFragmentImagePreview extends DialogFragment {
     private DialogFragmentImagePreviewBinding mImagePreviewBinding;
@@ -71,6 +72,9 @@ public class DialogFragmentImagePreview extends DialogFragment {
                         case BundleConstants
                                 .ACTION_STORE_LOGO:
                             mMediaStorage.addSchoolLogo(uri);
+                            break;
+                        case BundleConstants.ACTION_STORE_SCHOOL_BACKGROUND_IMAGES:
+                            mMediaStorage.addSchoolImages(uri, getString(R.string.SCHOOL_BACKGROUND_IMAGE_TAG), null);
                             break;
 
                     }

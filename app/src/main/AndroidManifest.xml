@@ -36,6 +36,7 @@
         <!--<activity android:name=".schoolOwners.HomeActivity" />-->
         <!--<activity android:name=".schoolOwners.Activities.AuthenticationViewPagerActivity" />-->
         <service android:name=".Utility.AppLocationService" />
+        <service android:name=".normalUsers.WidgetsUtils.ListViewWidgetService" />
     </application>
 
 </manifest>

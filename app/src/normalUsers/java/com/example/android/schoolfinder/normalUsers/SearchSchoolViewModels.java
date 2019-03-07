@@ -1,13 +1,19 @@
 package com.example.android.schoolfinder.normalUsers;
 
+import android.app.Application;
 import android.arch.core.util.Function;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.School;
+import com.example.android.schoolfinder.normalUsers.Interfaces.SearchSchoolOfflineDatabaseCallback;
+import com.example.android.schoolfinder.normalUsers.Utility.AppDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
@@ -16,21 +22,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchSchoolViewModels extends ViewModel {
+public class SearchSchoolViewModels extends AndroidViewModel {
     private DatabaseReference dbRef;
     private String mCountryChoice;
     private String mStateRegionChoice;
     private String mCityChoice;
     private String mSearchQuery;
     private List<String> mSchoolCategories;
+    private MutableLiveData<School> schoolMutableLiveData = new MutableLiveData<>();
+    private AppDatabase appDatabase;
 
     private List<School> schoolList = new ArrayList<>();
+    private SearchSchoolOfflineDatabaseCallback offlineCallback;
 
-    public SearchSchoolViewModels() {
-        super();
+    public SearchSchoolViewModels(@NonNull Application application) {
+        super(application);
+        appDatabase = AppDatabase.getDatabase(this.getApplication());
     }
 
 //    private Deserializer deserializer = new Deserializer();
+
+    /**
+     * This is used to initialize a mutable live data of the school item depending on the pos
+     * to be used in the detail fragmnet
+     *
+     * @param pos position to get
+     */
+    public void initMasterDetailViewModel(int pos) {
+        schoolMutableLiveData.setValue(schoolList.get(pos));
+    }
+
+    /**
+     * This is to get a single school livedata object usinf the id
+     * @param schoolId a string of the school id
+     * @return livedata object of school
+     */
+    public LiveData<School> getSchoolLiveData(String schoolId) {
+
+        SearchSchoolQueryLiveData.SingleSchoolQueryLiveData liveData =
+                new SearchSchoolQueryLiveData.SingleSchoolQueryLiveData(schoolId);
+        LiveData<School> schoolLiveData = Transformations.map(liveData, new SingleDeserializer());
+        return schoolLiveData;
+    }
 
     public LiveData<List<School>> getSchoolsLivedata(String country, String stateRegion, List<String> categories) {
         mCountryChoice = country;
@@ -67,6 +100,45 @@ public class SearchSchoolViewModels extends ViewModel {
         LiveData<List<School>> schoolLiveData =
                 Transformations.map(mLiveData, new Deserializer());
         return schoolLiveData;
+    }
+
+
+    public void setOfflineCallback(SearchSchoolOfflineDatabaseCallback offlineCallback) {
+
+        this.offlineCallback = offlineCallback;
+    }
+
+    public LiveData<List<School>> getAllSchoolsOffline() {
+        schoolList.clear();
+        return appDatabase.schoolDao().getAllSchool();
+    }
+
+    public void insertSchool(School school) {
+        new AddSchoolAsyncTask(appDatabase, offlineCallback)
+                .execute(school);
+    }
+
+    public void deleteSchool(School school) {
+        new DeleteSchoolAsyncTask(appDatabase, offlineCallback)
+                .execute(school);
+    }
+
+    /**
+     * To check if database exist
+     *
+     * @param id
+     */
+    public void getSchool(String id) {
+        new GetSchoolByIdAsyncTask(appDatabase, offlineCallback)
+                .execute(id);
+    }
+
+    private class SingleDeserializer implements Function<DataSnapshot, School> {
+        @Override
+        public School apply(DataSnapshot input) {
+            School school = input.getValue(School.class);
+            return school;
+        }
     }
 
     private class Deserializer implements Function<DataSnapshot, List<School>> {
@@ -213,6 +285,103 @@ public class SearchSchoolViewModels extends ViewModel {
             }
             //Return the map containing all the uids of school in the category of schools provided
             return schoolsIdInCategories;
+        }
+    }
+
+        public static class GetAllSchoolAsyncTask extends AsyncTask<Void, Void, List<School>>{
+            private final AppDatabase appDatabase;
+            private final SearchSchoolOfflineDatabaseCallback databaseCallback;
+
+            public GetAllSchoolAsyncTask(AppDatabase appDatabase, SearchSchoolOfflineDatabaseCallback databaseCallback) {
+
+                this.appDatabase = appDatabase;
+                this.databaseCallback = databaseCallback;
+            }
+
+            @Override
+            protected void onPostExecute(List<School> schools) {
+                super.onPostExecute(schools);
+                databaseCallback.schoolsGotten(schools);
+            }
+
+            @Override
+            protected List<School> doInBackground(Void... voids) {
+
+                return appDatabase.schoolDao().getAllSchoolNoLiveData();
+            }
+        }
+    private static class GetSchoolByIdAsyncTask extends AsyncTask<String, Void, School> {
+
+        private final AppDatabase appDatabase;
+        private final SearchSchoolOfflineDatabaseCallback databaseCallback;
+
+        public GetSchoolByIdAsyncTask(AppDatabase appDatabase, SearchSchoolOfflineDatabaseCallback databaseCallback) {
+
+            this.appDatabase = appDatabase;
+            this.databaseCallback = databaseCallback;
+        }
+
+        @Override
+        protected void onPostExecute(School school) {
+            super.onPostExecute(school);
+            databaseCallback.schoolGotten(school);
+        }
+
+        @Override
+        protected School doInBackground(String... strings) {
+            return appDatabase.schoolDao().getSchoolById(strings[0]);
+        }
+    }
+
+    static class DeleteSchoolAsyncTask extends AsyncTask<School, Void, Void> {
+        private AppDatabase database;
+        private SearchSchoolOfflineDatabaseCallback callback;
+
+        public DeleteSchoolAsyncTask(AppDatabase database, SearchSchoolOfflineDatabaseCallback callback) {
+            super();
+            this.database = database;
+            this.callback = callback;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            callback.schoolDeleted();
+        }
+
+        @Override
+        protected Void doInBackground(School... schools) {
+            database.schoolDao().deleteSchool(schools[0]);
+            return null;
+        }
+    }
+
+    private static class AddSchoolAsyncTask extends AsyncTask<School, Void, Void> {
+
+        private final AppDatabase appDatabase;
+        private final SearchSchoolOfflineDatabaseCallback callback;
+
+        public AddSchoolAsyncTask(AppDatabase appDatabase, SearchSchoolOfflineDatabaseCallback callback) {
+
+            this.appDatabase = appDatabase;
+            this.callback = callback;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            callback.schoolAdded();
+        }
+
+        @Override
+        protected Void doInBackground(School... schools) {
+            appDatabase.schoolDao().insertSchool(schools[0]);
+            return null;
         }
     }
 }

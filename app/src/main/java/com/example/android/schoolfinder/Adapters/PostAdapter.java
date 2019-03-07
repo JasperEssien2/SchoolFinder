@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.R;
@@ -95,7 +96,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Post post = postList.get(postViewHolder.getAdapterPosition());
         if (isSchool)
             bindViewsForSchool(postViewHolder, post, viewType == HAS_IMAGES);
-        else bindViewsForNormalUsers(postViewHolder, post, viewType == NO_IMAGES);
+        else bindViewsForNormalUsers(postViewHolder, post, viewType == HAS_IMAGES);
 
 
     }
@@ -169,11 +170,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
      */
     private void setUpImagesRecycler(RecyclerView imagesRecyclerView, Post post) {
         PostImagesAdapter postImagesAdapter = new PostImagesAdapter(post.getImageList(), activity);
-        if (!(post.getImageList().size() > 4))
-            //This is so as to make the image item occupy all the width and height of the recycler view
-            imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, post.getImageList().size()));
-        else imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, 4));
-        imagesRecyclerView.setAdapter(postImagesAdapter);
+        if (post.getImageList() != null) {
+            if (!(post.getImageList().size() > 4))
+                //This is so as to make the image item occupy all the width and height of the recycler view
+                imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, post.getImageList().size()));
+            else imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, 4));
+            imagesRecyclerView.setAdapter(postImagesAdapter);
+        }
     }
 
     @Override
@@ -209,6 +212,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         List<Image> imageList;
         private Activity activity;
+        private boolean isGallery;
 
         public PostImagesAdapter(List<Image> imageList, Activity activity) {
             super();
@@ -216,14 +220,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             this.activity = activity;
         }
 
+        public PostImagesAdapter(List<Image> imageList, Activity activity, boolean isGallery) {
+            this.imageList = imageList;
+            this.activity = activity;
+            this.isGallery = isGallery;
+        }
+
         @NonNull
         @Override
         public PostImagesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             ImageView imageView = new ImageView(activity);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
+            if (!isGallery) {
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                imageView.setLayoutParams(new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+            } else {
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setLayoutParams(new RecyclerView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        200));
+            }
             return new PostImagesViewHolder(imageView);
         }
 
@@ -232,9 +250,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             Log.e(TAG, "Image size --- " + imageList.size() + ", position -- " + position);
             if (imageList.get(postImagesViewHolder.getAdapterPosition()).getImageUrl() != null &&
                     !imageList.get(postImagesViewHolder.getAdapterPosition()).getImageUrl().isEmpty())
-                Picasso.get()
+                if (!isGallery)
+                    Picasso.get()
+                            .load(imageList.get(postImagesViewHolder.getAdapterPosition()).getImageUrl())
+                            .placeholder(R.color.colorLightGrey)
+                            .into((ImageView) postImagesViewHolder.itemView);
+                else Glide
+                        .with(activity)
                         .load(imageList.get(postImagesViewHolder.getAdapterPosition()).getImageUrl())
-                        .placeholder(R.color.colorLightGrey)
                         .into((ImageView) postImagesViewHolder.itemView);
 
         }

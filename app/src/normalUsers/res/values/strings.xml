@@ -17,8 +17,11 @@
     <string name="school_achievements_header">School achievements</string>
     <string name="school_certificates_header">School certificates</string>
     <string name="title_search">Search</string>
+    <string name="title_saved_school">saved school</string>
     <string name="filter_by_country">Filter by Country</string>
     <string name="filter_by_category">Filter by Category</string>
 
     <string name="filter_by_starred">Filter by Starred</string>
+    <string name="appwidget_text">School</string>
+    <string name="add_widget">Add widget</string>
 </resources>
