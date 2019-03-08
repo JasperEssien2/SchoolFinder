@@ -1,1 +1,1 @@
-include ':app', ':dialogboxes', ':dummyData', ':primeSoftTest2', ':primesoftteachable', ':countryregioncitypicker', ':HashCodeCompetition'
+include ':app', ':dialogboxes', ':dummyData', ':primeSoftTest2', ':primesoftteachable', ':countryregioncitypicker', ':HashCodeCompetition', ':customtrapezuimcardview'

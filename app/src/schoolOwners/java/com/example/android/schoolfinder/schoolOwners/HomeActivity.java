@@ -3,6 +3,7 @@ package com.example.android.schoolfinder.schoolOwners;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
+import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ActivityHomeBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.schoolOwners.Activities.AuthenticationViewPagerActivity;
@@ -41,6 +43,8 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         setSupportActionBar(homeBinding.toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setElevation(8.0f);
+        ViewCompat.setElevation(homeBinding.userDetailsView, 8.0f);
+        ViewCompat.setElevation(homeBinding.homeUserImage, 8.0f);
 
         authentication = new Authentication(this);
 //        FlowTextView flowTextView;
@@ -85,6 +89,20 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         return super.onOptionsItemSelected(item);
     }
 
+    private void setUpViewWithData(){
+        if(mSchool == null) return;
+        if(mSchool.getSchoolLogoImageUrl() != null)
+        new PicassoImageLoader(this, mSchool.getSchoolLogoImageUrl(), R.color.colorLightGrey,
+                R.color.colorLightGrey, homeBinding.homeUserImage);
+        homeBinding.schoolName.setText(mSchool.getSchoolName() != null ? mSchool.getSchoolName() : "");
+        homeBinding.schoolMotto.setText(mSchool.getSchoolMotto() != null ? mSchool.getSchoolMotto() : "");
+        homeBinding.schoolLocation.setText(mSchool.getSchoolLocation() != null ? mSchool.getSchoolLocation() : "");
+        homeBinding.followingCount.setText(String.valueOf(mSchool.getFollowersCount()));
+        homeBinding.positiveCount.setText(String.valueOf(mSchool.getImpressedExpressionCount()));
+        homeBinding.neutralCount.setText(String.valueOf(mSchool.getNormalExpressionCount()));
+        homeBinding.negativeCount.setText(String.valueOf(mSchool.getNotImpressedExpressionCount()));
+    }
+
     @Override
     public void login(boolean loggedInSuccessful, FirebaseUser user) {
 
@@ -115,6 +133,7 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
     @Override
     public void userGotten(School school) {
         mSchool = school;
+        setUpViewWithData();
         Log.e(TAG, "userGotten from database");
     }
 

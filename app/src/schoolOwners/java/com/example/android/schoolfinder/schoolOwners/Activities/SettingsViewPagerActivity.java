@@ -59,6 +59,8 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         settingsViewPagerBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings_view_pager);
         setSupportActionBar(settingsViewPagerBinding.toolbar);
         getSupportActionBar().setTitle("");
