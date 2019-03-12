@@ -73,6 +73,13 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home_activity, menu);
@@ -89,11 +96,17 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         return super.onOptionsItemSelected(item);
     }
 
-    private void setUpViewWithData(){
-        if(mSchool == null) return;
-        if(mSchool.getSchoolLogoImageUrl() != null)
-        new PicassoImageLoader(this, mSchool.getSchoolLogoImageUrl(), R.color.colorLightGrey,
-                R.color.colorLightGrey, homeBinding.homeUserImage);
+    private void setUpViewWithData() {
+        if (mSchool == null) return;
+        if (mSchool.getSchoolLogoImageUrl() != null && !mSchool.getSchoolLogoImageUrl().isEmpty())
+            new PicassoImageLoader(this, mSchool.getSchoolLogoImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, homeBinding.homeUserImage);
+        if (mSchool.getSchoolImages() != null && !mSchool.getSchoolImages().isEmpty()) {
+            if (mSchool.getSchoolImages().get(0) != null && mSchool.getSchoolImages().get(0).getImageUrl() != null
+                    && !mSchool.getSchoolImages().get(0).getImageUrl().isEmpty())
+                new PicassoImageLoader(this, mSchool.getSchoolImages().get(0).getImageUrl(), R.color.colorLightGrey,
+                        R.color.colorLightGrey, homeBinding.backgroundImage);
+        }
         homeBinding.schoolName.setText(mSchool.getSchoolName() != null ? mSchool.getSchoolName() : "");
         homeBinding.schoolMotto.setText(mSchool.getSchoolMotto() != null ? mSchool.getSchoolMotto() : "");
         homeBinding.schoolLocation.setText(mSchool.getSchoolLocation() != null ? mSchool.getSchoolLocation() : "");

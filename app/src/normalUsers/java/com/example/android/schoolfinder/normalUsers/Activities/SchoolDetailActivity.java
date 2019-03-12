@@ -16,28 +16,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
+import com.example.android.schoolfinder.FirebaseHelper.FirebaseTransactionsAction;
 import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
+import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ActivitySchoolDetailBinding;
+import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Adapters.SchoolDetailPagerAdapter;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
+import com.google.firebase.auth.FirebaseAuth;
 import com.smarteist.autoimageslider.DefaultSliderView;
-import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-public class SchoolDetailActivity extends AppCompatActivity {
+import java.util.Map;
+
+public class SchoolDetailActivity extends AppCompatActivity implements FirebaseTransactionCallback {
 
     private static final String TAG = SchoolDetailActivity.class.getSimpleName();
     private ActivitySchoolDetailBinding schoolDetailBinding;
     private SearchSchoolViewModels viewModels;
+    private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
     private School school;
 
     @Override
@@ -46,7 +53,7 @@ public class SchoolDetailActivity extends AppCompatActivity {
         schoolDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_school_detail);
         viewModels = new ViewModelProvider.AndroidViewModelFactory(getApplication())
                 .create(SearchSchoolViewModels.class);
-
+        setUpOnCLickListeners();
         setSupportActionBar(schoolDetailBinding.toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
@@ -102,10 +109,56 @@ public class SchoolDetailActivity extends AppCompatActivity {
                 new SchoolDetailPagerAdapter(viewModels, getSupportFragmentManager(), this, getIntent().getExtras()));
     }
 
+    private void setUpOnCLickListeners() {
+        schoolDetailBinding.follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolFollowersAction(schoolDetailBinding.followCount,
+                            schoolDetailBinding.followIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+
+        schoolDetailBinding.satisfied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolImpressedAction(schoolDetailBinding.satisfiedCount,
+                            schoolDetailBinding.satisfiedIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+
+        schoolDetailBinding.neutral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolNormalImpressedAction(schoolDetailBinding.neutralCount,
+                            schoolDetailBinding.neutralIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+
+        schoolDetailBinding.dissatisfied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolNotImpressedAction(schoolDetailBinding.dissatisfiedCount,
+                            schoolDetailBinding.dissatisfiedIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+    }
+
     private void setSliderViews() {
         if (school.getSchoolImages() == null) return;
         if (school.getSchoolImages().isEmpty()) return;
-
+        setUpViewsWithData();
         for (Image images : school.getSchoolImages()) {
 
             SliderView sliderView = new DefaultSliderView(this);
@@ -116,6 +169,39 @@ public class SchoolDetailActivity extends AppCompatActivity {
             //at last add this view in your layout :
             schoolDetailBinding.imageSlider.addSliderView(sliderView);
         }
+    }
+
+    /**
+     * This method is called to set up the views with the data
+     */
+    private void setUpViewsWithData() {
+        schoolDetailBinding.satisfiedCount.setText(String.valueOf(school.getImpressedExpressionCount()));
+        schoolDetailBinding.followCount.setText(String.valueOf(school.getFollowersCount()));
+        schoolDetailBinding.dissatisfiedCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
+        schoolDetailBinding.neutralCount.setText(String.valueOf(school.getNormalExpressionCount()));
+        schoolDetailBinding.schoolAddress.setText(school.getSchoolLocation());
+        schoolDetailBinding.schoolName.setText(school.getSchoolName());
+        hideOrShowIndicator(school.getFollowers(), schoolDetailBinding.followIndicator);
+        hideOrShowIndicator(school.getImpressedExpressions(), schoolDetailBinding.satisfiedIndicator);
+        hideOrShowIndicator(school.getNormalExpressions(), schoolDetailBinding.neutralIndicator);
+        hideOrShowIndicator(school.getNotImpressedExpressions(), schoolDetailBinding.dissatisfiedIndicator);
+        if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
+            new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, schoolDetailBinding.schoolLogoImgview);
+    }
+
+    /**
+     * This method is to check if the users id id in the map of either follow, satisfied, neutral or
+     * dissatisfied. if it is it sets the indicator that the user follows etc else it hides the indicator
+     *
+     * @param map       map
+     * @param indicator a view that indicates
+     */
+    private void hideOrShowIndicator(Map<String, Boolean> map, View indicator) {
+        if (map == null) return;
+        if (map.containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+            indicator.setVisibility(View.VISIBLE);
+        else indicator.setVisibility(View.GONE);
     }
 
     private void setColorPrimary() {
@@ -221,4 +307,33 @@ public class SchoolDetailActivity extends AppCompatActivity {
         return null;
     }
 
+    @Override
+    public void post(Post post, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void following(School school, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void impressedExpression(School school, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void notImpressedExpression(School school, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void neutralExpression(School school, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void postLike(Post post, boolean isSuccessful) {
+
+    }
 }

@@ -14,23 +14,19 @@ import android.view.ViewGroup;
 
 import com.example.android.schoolfinder.Adapters.CertificateAdapter;
 import com.example.android.schoolfinder.Constants.BundleConstants;
-import com.example.android.schoolfinder.FirebaseHelper.FirebaseTransactionsAction;
 import com.example.android.schoolfinder.Models.Certificate;
-import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.AppLocationService;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.FragmentSchoolDetailBinding;
-import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 //import com.example.android.schoolfinder.normalUsers.R;
@@ -38,7 +34,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SchoolDetailFragment extends Fragment implements FirebaseTransactionCallback {
+public class SchoolDetailFragment extends Fragment {
 
 
     private static final String TAG = SchoolDetailFragment.class.getSimpleName();
@@ -47,7 +43,7 @@ public class SchoolDetailFragment extends Fragment implements FirebaseTransactio
     private double latitude, longitude;
     private School school;
     private SearchSchoolViewModels viewModels;
-    private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
+    //    private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
     private CertificateAdapter achievementAdapter, certificateAdapter;
 
 
@@ -131,7 +127,6 @@ public class SchoolDetailFragment extends Fragment implements FirebaseTransactio
                     }
                 });
 
-        setUpOnCLickListeners();
 
         return detailBinding.getRoot();
     }
@@ -140,10 +135,10 @@ public class SchoolDetailFragment extends Fragment implements FirebaseTransactio
         detailBinding.schoolDetailDescriptionText.setText(school.getSchoolBiography());
         detailBinding.schoolDetailMottoText.setText(school.getSchoolMotto());
         detailBinding.schoolLocationMap.onCreate(savedInstanceState);
-        detailBinding.smileCountTextview.setText(String.valueOf(school.getImpressedExpressionCount()));
-        detailBinding.followersCount.setText(String.valueOf(school.getFollowersCount()));
-        detailBinding.sadCountTextview.setText(String.valueOf(school.getNotImpressedExpressionCount()));
-        detailBinding.neutralCountTextview.setText(String.valueOf(school.getNormalExpressionCount()));
+//        detailBinding.smileCountTextview.setText(String.valueOf(school.getImpressedExpressionCount()));
+//        detailBinding.followersCount.setText(String.valueOf(school.getFollowersCount()));
+//        detailBinding.sadCountTextview.setText(String.valueOf(school.getNotImpressedExpressionCount()));
+//        detailBinding.neutralCountTextview.setText(String.valueOf(school.getNormalExpressionCount()));
         if (mGoogleMap != null) {
             LatLng sydney = new LatLng(school.getLatitude(), school.getLongitude());
             mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("Marker"));
@@ -176,51 +171,51 @@ public class SchoolDetailFragment extends Fragment implements FirebaseTransactio
         }
     }
 
-    private void setUpOnCLickListeners() {
-        detailBinding.followFrame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolFollowersAction(detailBinding.followersCount,
-                            detailBinding.followFrame, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        detailBinding.positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolImpressedAction(detailBinding.smileCountTextview,
-                            detailBinding.positiveButton, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        detailBinding.neutralButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolNormalImpressedAction(detailBinding.neutralCountTextview,
-                            detailBinding.neutralButton, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        detailBinding.negativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolNotImpressedAction(detailBinding.sadCountTextview,
-                            detailBinding.negativeButton, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-    }
+//    private void setUpOnCLickListeners() {
+//        detailBinding.followFrame.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolFollowersAction(detailBinding.followersCount,
+//                            detailBinding.followFrame, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                }
+//            }
+//        });
+//
+//        detailBinding.positiveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolImpressedAction(detailBinding.smileCountTextview,
+//                            detailBinding.positiveButton, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                }
+//            }
+//        });
+//
+//        detailBinding.neutralButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolNormalImpressedAction(detailBinding.neutralCountTextview,
+//                            detailBinding.neutralButton, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                }
+//            }
+//        });
+//
+//        detailBinding.negativeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolNotImpressedAction(detailBinding.sadCountTextview,
+//                            detailBinding.negativeButton, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                }
+//            }
+//        });
+//    }
 
     private GoogleMap mGoogleMap;
 
@@ -287,33 +282,4 @@ public class SchoolDetailFragment extends Fragment implements FirebaseTransactio
         this.viewModels = viewModels;
     }
 
-    @Override
-    public void post(Post post, boolean isSuccessful) {
-
-    }
-
-    @Override
-    public void following(School school, boolean isSuccessful) {
-
-    }
-
-    @Override
-    public void impressedExpression(School school, boolean isSuccessful) {
-
-    }
-
-    @Override
-    public void notImpressedExpression(School school, boolean isSuccessful) {
-
-    }
-
-    @Override
-    public void neutralExpression(School school, boolean isSuccessful) {
-
-    }
-
-    @Override
-    public void postLike(Post post, boolean isSuccessful) {
-
-    }
 }

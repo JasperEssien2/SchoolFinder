@@ -232,6 +232,9 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
         this.authenticationViewPagerCallbacks = authenticationViewPagerCallbacks;
     }
 
+    /**
+     * This method is called to open up the image image picker intent
+     */
     private void imagePicker() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
@@ -245,9 +248,6 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
             case SELECT_PHOTO:
                 if (resultCode == RESULT_OK) {
                     imageUri = data.getData();
-//                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-//                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-//                        imageView.setImageBitmap(selectedImage);
                     if (imageUri != null) {
                         Picasso
                                 .get()

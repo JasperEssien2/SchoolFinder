@@ -12,11 +12,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-public class CustomDiagonalCardView extends ViewGroup {
+public class CustomDiagonalCardView extends FrameLayout {
 
     Path path = new Path();
     RectF ovalRect = new RectF();
@@ -36,84 +35,43 @@ public class CustomDiagonalCardView extends ViewGroup {
         typedArray.recycle();
     }
 
-    @Override
-    protected void onLayout(boolean b, int i, int i1, int i2, int i3) {
-//        int parentWidth = MeasureSpec.getSize(getWidth());
-//        int parentHeight = MeasureSpec.getSize(getHeight());
-//        this.setMeasuredDimension(parentWidth/2, parentHeight);
-//        this.setLayoutParams(new *ParentLayoutType*.LayoutParams(parentWidth/2,parentHeight));
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-
-//        if (getChildCount() != 0)
-//            getChildAt(0).measure(getWidth(), getHeight());
-//        getChildAt(0).onDrawForeground();
-    }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
+
         mCardPaint.setColor(ContextCompat.getColor(this.getContext(), R.color.colorwhite));
         drawTrapezium(canvas, mCardPaint, getWidth());
+        super.dispatchDraw(canvas);
 //        getBackground().draw(canvas);
 //        canvas.clipP
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // 1. Setup initial constraints.
-        int widthConstraints = getPaddingLeft() + getPaddingRight();
-        int heightConstraints = getPaddingTop() + getPaddingBottom();
-        int width = getWidth();
-        int height = getHeight();
 
-        imageView.setImageResource(R.color.colorBlue);
-        // 2. Measure the ProfilePhoto
-        measureChildWithMargins(
-                imageView,
-                widthMeasureSpec,
-                widthConstraints,
-                heightMeasureSpec,
-                heightConstraints);
-
-//        getChildAt(0).setLayoutParams(new CustomDiagonalCardView.LayoutParams(getWidth()/2,getHeight()));
-//        measureChildren(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
-//                MeasureSpec.makeMeasureSpec(getMeasuredWidth() / 2, MeasureSpec.EXACTLY));
+//    @Override
+//    protected void measureChildWithMargins(
+//            View child,
+//            int parentWidthMeasureSpec,
+//            int widthUsed,
+//            int parentHeightMeasureSpec,
+//            int heightUsed) {
+//        imageView.setImageResource(R.color.colorBlue);
+//        imageView.setBackgroundResource(R.color.colorBlue);
+//        imageView.setLayoutParams(new CustomDiagonalCardView.MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//        child = imageView;
+//        MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 //
-////        measureChild(getChildAt(0), getWidth(), getHeight());
-//        Log.e("onLayout", "child id ---- " + getChildAt(0).getId());
-//        setMeasuredDimension(width, height);
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(
-                resolveSize(width, widthMeasureSpec),
-                resolveSize(height, heightMeasureSpec));
-    }
-
-    @Override
-    protected void measureChildWithMargins(
-            View child,
-            int parentWidthMeasureSpec,
-            int widthUsed,
-            int parentHeightMeasureSpec,
-            int heightUsed) {
-        imageView.setImageResource(R.color.colorBlue);
-        imageView.setBackgroundResource(R.color.colorBlue);
-        imageView.setLayoutParams(new CustomDiagonalCardView.MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        child = imageView;
-        MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
-
-        int childWidthMeasureSpec = getChildMeasureSpec(
-                parentWidthMeasureSpec,
-                lp != null ? widthUsed + lp.leftMargin + lp.rightMargin : 8,
-                lp != null ? lp.width : getWidth());
-
-        int childHeightMeasureSpec = getChildMeasureSpec(
-                parentHeightMeasureSpec,
-                lp != null ? heightUsed + lp.topMargin + lp.bottomMargin : 8,
-                lp != null ? lp.height : getHeight());
-
-        child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
-    }
+//        int childWidthMeasureSpec = getChildMeasureSpec(
+//                parentWidthMeasureSpec,
+//                lp != null ? widthUsed + lp.leftMargin + lp.rightMargin : 8,
+//                lp != null ? lp.width : getWidth());
+//
+//        int childHeightMeasureSpec = getChildMeasureSpec(
+//                parentHeightMeasureSpec,
+//                lp != null ? heightUsed + lp.topMargin + lp.bottomMargin : 8,
+//                lp != null ? lp.height : getHeight());
+//
+//        child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+//    }
 
     private void drawTriangle(Canvas canvas, Paint paint, int x, int y, int width) {
         int halfWidth = width / 2;
@@ -133,19 +91,22 @@ public class CustomDiagonalCardView extends ViewGroup {
 
     public void drawTrapezium(Canvas canvas, Paint paint, int width) {
         int halfWidth = width / 2;
-        paint.setShadowLayer(20, 20, 10, Color.GRAY);
+        int halfHeight = getHeight() / 2;
+
+        paint.setShadowLayer(7, 7, 7, Color.GRAY);
 //        paint.setS
         setLayerType(LAYER_TYPE_SOFTWARE, paint);
 
         Path path = new Path();
         path.moveTo(getWidth(), -width); // Top
-        path.lineTo(getWidth(), (getY() + width) / 2);
-        path.lineTo(-getWidth(), width);
+        path.lineTo(getWidth(), halfHeight * 1.2f);
+        path.lineTo(-getWidth(), halfHeight * 2);
         path.lineTo(-getWidth(), -width);
         path.close();
 
 
         canvas.drawPath(path, paint);
+        canvas.clipPath(path);
     }
 
     public void drawRhombus(Canvas canvas, Paint paint, int x, int y, int width) {

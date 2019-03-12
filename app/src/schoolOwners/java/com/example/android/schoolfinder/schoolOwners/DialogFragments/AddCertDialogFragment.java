@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
 import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.R;
@@ -55,8 +56,8 @@ public class AddCertDialogFragment extends DialogFragment {
             final int action = getArguments().getInt("action");
             final boolean isCert = getArguments().getBoolean("isCert");
             Log.e("AddCertDialogFragment", "image uri ---- " + uri.toString());
-            Picasso
-                    .get()
+            Glide
+                    .with(getActivity())
                     .load(uri)
 //                    .centerCrop()
                     .into(mAddCertBinding.imageView);

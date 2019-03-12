@@ -261,7 +261,12 @@ public class FirebaseTransactionsAction {
             school.setFollowersCount(school.getFollowersCount() + 1);
             school.getFollowers().put(userId, true);
             isFollowing = true;
+
         }
+        if (followButton instanceof FloatingActionButton)
+            ((FloatingActionButton) followButton).setImageResource(isFollowing ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
+        else
+            followButton.setVisibility(isFollowing ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getFollowersCount()));
 //                        followButton.setImageDrawable(isFollowing ? R.drawable.foll);
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
@@ -358,7 +363,7 @@ public class FirebaseTransactionsAction {
         if (impressedButton instanceof FloatingActionButton)
             ((FloatingActionButton) impressedButton).setImageResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
         else
-            impressedButton.setBackgroundResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
+            impressedButton.setVisibility(isImpressed ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getImpressedExpressionCount()));
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())
@@ -440,7 +445,7 @@ public class FirebaseTransactionsAction {
         if (notImpressedButton instanceof FloatingActionButton)
             ((FloatingActionButton) notImpressedButton).setImageResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
         else
-            notImpressedButton.setBackgroundResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
+            notImpressedButton.setVisibility(notImpressed ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getNotImpressedExpressionCount()));
 
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
@@ -522,7 +527,7 @@ public class FirebaseTransactionsAction {
         if (normalImpressButton instanceof FloatingActionButton)
             ((FloatingActionButton) normalImpressButton).setImageResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
         else
-            normalImpressButton.setBackgroundResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
+            normalImpressButton.setVisibility(isNormalImpressed ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getNormalExpressionCount()));
         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                 .child(school.getId())

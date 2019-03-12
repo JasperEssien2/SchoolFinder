@@ -38,6 +38,7 @@
     <string name="logout">Sign out</string>
     <string name="menu_delete_account">Delete Account</string>
     <string name="saved">Saved Schools</string>
+    <string name="title_edit">edit</string>
 
 
 </resources>

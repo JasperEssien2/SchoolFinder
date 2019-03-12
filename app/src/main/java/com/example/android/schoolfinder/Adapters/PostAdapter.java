@@ -22,6 +22,7 @@ import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemPostBinding;
+import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -107,8 +108,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postViewHolder.body.setText(post.getBody());
         if (hasImages)
             setUpImagesRecycler(postViewHolder.images, post);
-//        postViewHolder.
-
+        if (post.getSchoolLogo() != null && post.getSchoolLogo().getImageUrl() != null)
+            new PicassoImageLoader(activity, post.getSchoolLogo().getImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, postViewHolder.logo);
+        postViewHolder.time.setReferenceTime((Long) post.getTimeStamp());
     }
 
     @SuppressLint("RestrictedApi")
@@ -146,7 +149,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postViewHolder.body.setText(post.getBody());
         postViewHolder.star.setSupportImageTintList(colorStateList);
         postViewHolder.time.setVisibility(View.VISIBLE);
-        postViewHolder.time.setText("1 min");
+        postViewHolder.time.setReferenceTime((Long) post.getTimeStamp());
         if (post.getStars() == null) post.setStars(new HashMap<String, Boolean>());
         if (post.getStars().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             postViewHolder.star.setPressed(true);
@@ -177,6 +180,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             else imagesRecyclerView.setLayoutManager(new GridLayoutManager(activity, 4));
             imagesRecyclerView.setAdapter(postImagesAdapter);
         }
+
     }
 
     @Override
@@ -231,15 +235,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public PostImagesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             ImageView imageView = new ImageView(activity);
             if (!isGallery) {
+                Log.e(TAG, "onCreateViewHolder --- isGallery, " + isGallery);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                imageView.setLayoutParams(new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT));
+                imageView.setLayoutParams(new RecyclerView.LayoutParams(
+                        RecyclerView.LayoutParams.MATCH_PARENT,
+                        RecyclerView.LayoutParams.MATCH_PARENT));
             } else {
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setLayoutParams(new RecyclerView.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        RecyclerView.LayoutParams.MATCH_PARENT,
                         200));
             }
             return new PostImagesViewHolder(imageView);
@@ -251,7 +256,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             if (imageList.get(postImagesViewHolder.getAdapterPosition()).getImageUrl() != null &&
                     !imageList.get(postImagesViewHolder.getAdapterPosition()).getImageUrl().isEmpty())
                 if (!isGallery)
-                    Picasso.get()
+                    Picasso
+                            .get()
                             .load(imageList.get(postImagesViewHolder.getAdapterPosition()).getImageUrl())
                             .placeholder(R.color.colorLightGrey)
                             .into((ImageView) postImagesViewHolder.itemView);
@@ -287,7 +293,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public class PostViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView logo;
         private RecyclerView images;
-        private TextView body, name, starCount, time;
+        private TextView body, name, starCount;
+        private RelativeTimeTextView time;
         private AppCompatImageButton star;
         private ImageView promotedColor;
 
