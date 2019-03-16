@@ -1,0 +1,19 @@
+[
+  {
+    "outputType": {
+      "type": "APK"
+    },
+    "apkInfo": {
+      "type": "MAIN",
+      "splits": [],
+      "versionCode": 1,
+      "versionName": "1.0-normalUsers",
+      "enabled": true,
+      "outputFile": "app-normalUsers-release.apk",
+      "fullName": "normalUsersRelease",
+      "baseName": "normalUsers-release"
+    },
+    "path": "app-normalUsers-release.apk",
+    "properties": {}
+  }
+]

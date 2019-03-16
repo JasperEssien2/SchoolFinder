@@ -155,6 +155,9 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
         });
     }
 
+    /**
+     * This method sets up the slider images that is displayed in the collapsible toolbar
+     */
     private void setSliderViews() {
         if (school.getSchoolImages() == null) return;
         if (school.getSchoolImages().isEmpty()) return;

@@ -4,7 +4,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <FrameLayout
@@ -38,7 +38,7 @@
             android:background="#EEEEEE"
             android:gravity="top"
             android:hint="@string/add_class_hint_text"
-            android:minHeight="300dp"
+            android:minHeight="190dp"
             android:padding="8dp"
             app:layout_constraintBottom_toTopOf="@+id/edit_done_button"
             app:layout_constraintEnd_toEndOf="parent"

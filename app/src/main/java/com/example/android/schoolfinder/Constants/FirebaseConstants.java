@@ -34,5 +34,6 @@ public class FirebaseConstants {
      * All constants relating to posts node
      */
     public static final String POSTS_NODE = "posts";
+    public static final String TOKEN = "token";
 //    public static final String OTHERS_NODE = "None";
 }

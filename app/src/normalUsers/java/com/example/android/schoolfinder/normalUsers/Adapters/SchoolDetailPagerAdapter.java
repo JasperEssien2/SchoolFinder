@@ -54,7 +54,8 @@ public class SchoolDetailPagerAdapter extends FragmentPagerAdapter {
                 return photosFragment;
 
             case 2:
-                ApplyFragment applyFragment = new ApplyFragment();
+                ApplyFragment applyFragment = ApplyFragment.newInstance(mSchool);
+                applyFragment.setViewModel(viewModels);
                 return applyFragment;
         }
 

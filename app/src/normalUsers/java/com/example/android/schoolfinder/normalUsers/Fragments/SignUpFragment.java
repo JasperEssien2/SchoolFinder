@@ -393,7 +393,7 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
         }
 
         if (!getTextFromEditText(mConfirmPasswordE).equals(getTextFromEditText(mPasswordE))) {
-            mPasswordL.setError(Validation.PASSWORD_NOT_EQUAL);
+            mConfirmPasswordL.setError(Validation.PASSWORD_NOT_EQUAL);
             errorCount++;
         }
 

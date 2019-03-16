@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/item_course_class_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginStart="16dp"
@@ -41,7 +41,16 @@
                 android:textStyle="bold"
                 tools:text="Physics" />
 
+
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:background="@null"
+            android:src="@drawable/ic_option_menu" />
 
     </android.support.v7.widget.CardView>
 </layout>

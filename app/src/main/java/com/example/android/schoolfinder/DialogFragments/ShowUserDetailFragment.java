@@ -45,6 +45,7 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
     private Uri imageUri;
     private boolean isClass = false;
     private boolean isEditButton = false;
+    private boolean isNormalUser = false;
     private Users head = new Users();
 
     public static ShowUserDetailFragment newInstance(Bundle bundle) {
@@ -66,9 +67,11 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_show_teacher_detail, container, false);
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.rounded_corners_dialog_background_7dp);
         if (getArguments() != null && getArguments().containsKey(BundleConstants.IS_CLASS_SEETTING)) {
             isClass = getArguments().getBoolean(BundleConstants.IS_CLASS_SEETTING);
         }
+        if (isNormalUser) binding.editDoneButton.setVisibility(View.GONE);
         binding.teacherDetailUsername.setEnabled(false);
         binding.teacherDetailBiography.setEnabled(false);
         binding.editDoneButton.setOnClickListener(new View.OnClickListener() {
@@ -331,5 +334,9 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
     @Override
     public void postImageAdded(Post post, boolean isSuccessful) {
 
+    }
+
+    public void setNormalUser(boolean normalUser) {
+        isNormalUser = normalUser;
     }
 }

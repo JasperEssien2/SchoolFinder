@@ -7,14 +7,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.android.schoolfinder.BuildConfig;
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
+import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
+import com.example.android.schoolfinder.notifications.ApiClient;
+import com.example.android.schoolfinder.notifications.ApiInterface;
+import com.example.android.schoolfinder.notifications.Config;
+import com.example.android.schoolfinder.notifications.RequestNotification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +35,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FirebaseTransactionsAction {
 
@@ -97,9 +108,10 @@ public class FirebaseTransactionsAction {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             School school = dataSnapshot.getValue(School.class);
-                            if (school != null && school.getFollowers() != null)
+                            if (school != null && school.getFollowers() != null) {
                                 Log.e(TAG, "Followers uid ------ " + school.getFollowers().keySet());
-                            uids = new ArrayList<>(school.getFollowers().keySet());
+                                uids = new ArrayList<>(school.getFollowers().keySet());
+                            }
                             for (String s : uids) {
                                 childUpdates.put(FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key, true);
                                 Log.e(TAG, "" + FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key);
@@ -264,7 +276,7 @@ public class FirebaseTransactionsAction {
 
         }
         if (followButton instanceof FloatingActionButton)
-            ((FloatingActionButton) followButton).setImageResource(isFollowing ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
+            ((FloatingActionButton) followButton).setImageResource(isFollowing ? R.drawable.ic_follow : R.drawable.ic_follow);
         else
             followButton.setVisibility(isFollowing ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getFollowersCount()));
@@ -327,6 +339,7 @@ public class FirebaseTransactionsAction {
                         if (databaseError == null && isFollowing) {
                             transferAllSchoolPostWhenUserFollows(school, userId);
                             mCallback.following(school, true);
+                            sendNotification0(school, "follow");
                         } else if (databaseError == null && !isFollowing) {
                             removeAllSchoolPostWhenUserUnFollows(school, userId);
                             mCallback.following(school, false);
@@ -578,4 +591,72 @@ public class FirebaseTransactionsAction {
                 });
     }
 
+    private void sendNotification0(final School school, final String notifType) {
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child(FirebaseConstants.NORMAL_USERS_NODE)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(FirebaseConstants.USER_DETAIL_NODE)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Users users = dataSnapshot.getValue(Users.class);
+
+                        if (users == null) return;
+                        sendNotification(users, school, notifType);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void sendNotification(final Users users, final School school, final String notifType) {
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child(BuildConfig.FLAVOR.equals("normalUsers") ? FirebaseConstants.NORMAL_USERS_NODE
+                        : FirebaseConstants.SCHOOLS_USERS_NODE)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(FirebaseConstants.TOKEN)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        final String token = dataSnapshot.getValue(String.class);
+                        Config config = new Config();
+                        RequestNotification requestNotification = new RequestNotification();
+                        requestNotification.setToken(token);
+                        switch (notifType) {
+                            case "follow":
+                                config.title = "New Follower";
+                                config.content = users.getName() + "followed you";
+                                config.imageUrl = users.getProfileImageUrl();
+                                requestNotification.setSendNotificationModel(config);
+                                ApiClient.getClient()
+                                        .create(ApiInterface.class)
+                                        .sendNotification(requestNotification)
+                                        .enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                Log.e(TAG, "notification url ------- " + response.raw().toString());
+
+                                                Log.e(TAG, "token url ------- " + token);
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                            }
+                                        });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
 }

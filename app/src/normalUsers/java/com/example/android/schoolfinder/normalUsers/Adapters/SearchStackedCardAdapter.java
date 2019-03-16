@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +20,11 @@ import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemSchoolCardBinding;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity;
-import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
+import com.google.firebase.auth.FirebaseAuth;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.yuyakaido.android.cardstackview.CardStackView;
 
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,10 +32,10 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         implements FirebaseTransactionCallback {
 
     private static final String TAG = SearchStackedCardAdapter.class.getSimpleName();
-    private FirebaseTransactionsAction mTransactionsAction;
+    private FirebaseTransactionsAction transactionsAction;
     private Activity mActivity;
     private List<School> mSchoolList;
-//    private final SearchSchoolViewModels viewModels;
+    //    private final SearchSchoolViewModels viewModels;
     private ItemSchoolCardBinding mItemSchoolCardBinding;
 
     public SearchStackedCardAdapter(Activity activity, List<School> schoolList,
@@ -44,7 +43,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         super();
         mActivity = activity;
         mSchoolList = schoolList;
-        transactionsAction = new FirebaseTransactionsAction(this);
+        this.transactionsAction = transactionsAction;
 //        mTransactionsAction = transactionsAction;
     }
 
@@ -61,7 +60,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
     @Override
     public void onBindViewHolder(@NonNull final SearchStackedCardViewHolder viewHolder, int i) {
         final School school = mSchoolList.get(viewHolder.getAdapterPosition());
-        if(school == null) return;
+        if (school == null) return;
 //        new PicassoImageLoader(mActivity, "https://images.megapixl.com/3337/33377575.jpg", R.color.colorLightGrey,
 //                R.color.colorLightGrey, viewHolder.backgroundImage);
 
@@ -69,7 +68,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
             new PicassoImageLoader(mActivity, school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
                     R.color.colorLightGrey, viewHolder.schoolLogo);
 
-        if(school.getSchoolImages() != null && school.getSchoolImages().get(0) != null)
+        if (school.getSchoolImages() != null && school.getSchoolImages().get(0) != null)
             new PicassoImageLoader(mActivity, school.getSchoolImages().get(0).getImageUrl(), R.color.colorLightGrey,
                     R.color.colorLightGrey, viewHolder.backgroundImage);
 //        if (school.getSchoolImages() != null && school.getSchoolImages().get(0) != null) {
@@ -89,6 +88,17 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         viewHolder.schoolName.setText(school.getSchoolName() != null ? school.getSchoolName() : "");
         viewHolder.schoolMotto.setText(school.getSchoolMotto() != null ? school.getSchoolMotto() : "");
         viewHolder.schoolLocation.setText(school.getSchoolLocation() != null ? school.getSchoolLocation() : "");
+        setUpOnCLickListeners(school);
+        viewHolder.satisfiedCount.setText(String.valueOf(school.getImpressedExpressionCount()));
+        viewHolder.followCount.setText(String.valueOf(school.getFollowersCount()));
+        viewHolder.dissatisfiedCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
+        viewHolder.neutralCount.setText(String.valueOf(school.getNormalExpressionCount()));
+//        viewHolder.schoolAddress.setText(school.getSchoolLocation());
+        viewHolder.schoolName.setText(school.getSchoolName());
+        hideOrShowIndicator(school.getFollowers(), viewHolder.followIndicator);
+        hideOrShowIndicator(school.getImpressedExpressions(), viewHolder.satisfiedIndicator);
+        hideOrShowIndicator(school.getNormalExpressions(), viewHolder.neutralIndicator);
+        hideOrShowIndicator(school.getNotImpressedExpressions(), viewHolder.dissatisfiedIndicator);
 //        viewHolder.schoolNotImpressedExpressionCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
 //        viewHolder.schoolNormalExpressionCount.setText(String.valueOf(school.getNormalExpressionCount()));
 //        viewHolder.schoolInterestedCount.setText(String.valueOf(school.getImpressedExpressionCount()));
@@ -100,6 +110,20 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 //                        FirebaseAuth.getInstance().getCurrentUser().getUid());
 //            }
 //        });
+    }
+
+    /**
+     * This method is to check if the users id id in the map of either follow, satisfied, neutral or
+     * dissatisfied. if it is it sets the indicator that the user follows etc else it hides the indicator
+     *
+     * @param map       map
+     * @param indicator a view that indicates
+     */
+    private void hideOrShowIndicator(Map<String, Boolean> map, View indicator) {
+        if (map == null) return;
+        if (map.containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+            indicator.setVisibility(View.VISIBLE);
+        else indicator.setVisibility(View.GONE);
     }
 
     @Override
@@ -120,7 +144,55 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 //        notifyDataSetChanged();
     }
 
-    public class SearchStackedCardViewHolder extends CardStackView.ViewHolder {
+    private void setUpOnCLickListeners(final School school) {
+        mItemSchoolCardBinding.follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolFollowersAction(mItemSchoolCardBinding.followCount,
+                            mItemSchoolCardBinding.followIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+
+        mItemSchoolCardBinding.satisfied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolImpressedAction(mItemSchoolCardBinding.satisfiedCount,
+                            mItemSchoolCardBinding.satisfiedIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+
+        mItemSchoolCardBinding.neutral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolNormalImpressedAction(mItemSchoolCardBinding.neutralCount,
+                            mItemSchoolCardBinding.neutralIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+
+        mItemSchoolCardBinding.dissatisfied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school != null) {
+                    transactionsAction.schoolNotImpressedAction(mItemSchoolCardBinding.dissatisfiedCount,
+                            mItemSchoolCardBinding.dissatisfiedIndicator, school,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
+            }
+        });
+    }
+
+    public class SearchStackedCardViewHolder extends RecyclerView.ViewHolder {
+        public TextView satisfiedCount, followCount, neutralCount, dissatisfiedCount;
+        public CircleImageView followIndicator, satisfiedIndicator, neutralIndicator, dissatisfiedIndicator;
         RoundedImageView backgroundImage;
         TextView schoolName, schoolLocation, schoolMotto, schoolFbLink, schoolEmailLink, schoolWebsiteLink,
                 shoolEmailLink, schoolTwitterLink;
@@ -141,6 +213,14 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
             schoolName = mItemSchoolCardBinding.itemSchoolName;
             schoolLocation = mItemSchoolCardBinding.itemSchoolLocation;
             schoolMotto = mItemSchoolCardBinding.itemSchoolMotto;
+            satisfiedCount = mItemSchoolCardBinding.satisfiedCount;
+            followCount = mItemSchoolCardBinding.followCount;
+            neutralCount = mItemSchoolCardBinding.neutralCount;
+            dissatisfiedCount = mItemSchoolCardBinding.dissatisfiedCount;
+            followIndicator = mItemSchoolCardBinding.followIndicator;
+            satisfiedIndicator = mItemSchoolCardBinding.satisfiedIndicator;
+            neutralIndicator = mItemSchoolCardBinding.neutralIndicator;
+            dissatisfiedIndicator = mItemSchoolCardBinding.dissatisfiedIndicator;
 //            schoolFollowersCount = mItemSchoolCardBinding.followersCount;
 //            schoolInterestedCount = mItemSchoolCardBinding.smileCountTextview;
 //            schoolNormalExpressionCount = mItemSchoolCardBinding.neutralCountTextview;
@@ -149,6 +229,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         }
 
     }
+
 
     @Override
     public void post(Post post, boolean isSuccessful) {

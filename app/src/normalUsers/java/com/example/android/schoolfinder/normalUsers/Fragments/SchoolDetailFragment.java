@@ -74,7 +74,11 @@ public class SchoolDetailFragment extends Fragment {
     @Override
     public void onPause() {
         if (detailBinding.schoolLocationMap != null) {
-            detailBinding.schoolLocationMap.onPause();
+            try {
+                detailBinding.schoolLocationMap.onPause();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
         super.onPause();
     }
@@ -115,17 +119,18 @@ public class SchoolDetailFragment extends Fragment {
         certificateAdapter = new CertificateAdapter(getActivity());
         achievementAdapter = new CertificateAdapter(getActivity());
         school = getSchool();
-        viewModels.getSchoolLiveData(getSchoolId())
-                .observe(this, new Observer<School>() {
-                    @Override
-                    public void onChanged(@Nullable School schol) {
-                        school = schol;
-                        if (school != null) {
-                            setUpViewWithData(savedInstanceState);
-                            onLocationEdittextClicked();
+        if (viewModels != null)
+            viewModels.getSchoolLiveData(getSchoolId())
+                    .observe(this, new Observer<School>() {
+                        @Override
+                        public void onChanged(@Nullable School schol) {
+                            school = schol;
+                            if (school != null) {
+                                setUpViewWithData(savedInstanceState);
+                                onLocationEdittextClicked();
+                            }
                         }
-                    }
-                });
+                    });
 
 
         return detailBinding.getRoot();
@@ -144,7 +149,7 @@ public class SchoolDetailFragment extends Fragment {
             mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("Marker"));
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         }
-        if (school.getSchoolImages() != null && !school.getSchoolLogoImageUrl().isEmpty())
+        if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
             new PicassoImageLoader(getActivity(), school.getSchoolLogoImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey, detailBinding.mottoImageView);
         certificateAdapter.setCertificateList(school.getCertificates() != null ?
                 school.getCertificates() : new ArrayList<Certificate>());

@@ -126,19 +126,19 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
         disableAllEditView();
         if (mUser == null) return;
 
-        if (mUser.getName().toLowerCase().equals(binding.settingsName.getText().toString().toLowerCase())) {
+        if (!mUser.getName().toLowerCase().equals(binding.settingsName.getText().toString().toLowerCase())) {
             changeCount++;
             mUser.setName(binding.settingsName.getText().toString());
         }
-        if (mUser.getContact().toLowerCase().equals(binding.settingsContact.getText().toString().toLowerCase())) {
+        if (!mUser.getContact().toLowerCase().equals(binding.settingsContact.getText().toString().toLowerCase())) {
             changeCount++;
             mUser.setContact(binding.settingsContact.getText().toString());
         }
-        if (mUser.getEmail().toLowerCase().equals(binding.settingsEmail.getText().toString().toLowerCase())) {
+        if (!mUser.getEmail().toLowerCase().equals(binding.settingsEmail.getText().toString().toLowerCase())) {
             changeCount++;
             mUser.setEmail(binding.settingsEmail.getText().toString());
         }
-        if (mUser.getLocation().toLowerCase().equals(binding.settingsLocation.getText().toString().toLowerCase())) {
+        if (!mUser.getLocation().toLowerCase().equals(binding.settingsLocation.getText().toString().toLowerCase())) {
             changeCount++;
             mUser.setLocation(binding.settingsLocation.getText().toString());
         }

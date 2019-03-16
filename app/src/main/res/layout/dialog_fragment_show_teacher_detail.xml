@@ -3,92 +3,105 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="10dp"
+        app:cardCornerRadius="7dp">
 
-
-        <android.support.constraint.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_diagonal_slashed_background">
+            android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/teacher_detail_image_view"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="32dp"
-                android:src="@drawable/place_holder"
-                app:civ_border_color="@color/colorCyan200"
-                app:civ_border_width="2dp"
-                app:civ_circle_background_color="@color/colorGrey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/teacher_detail_username"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:background="@android:color/transparent"
-                android:gravity="end"
-                android:padding="6dp"
-                android:text="Name"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/teacher_detail_image_view"
-                tools:text="Jasper Essien" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/teacher_detail_biography"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@android:color/transparent"
-                android:padding="4dp"
-                android:text="Biography"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorCyan200"
+                    android:orientation="horizontal">
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/teacher_detail_username"
-                tools:text="Jasper Essien is 100 yrs old, has a degree in stupidness, qualified to teach, both theory and pratical, he has received various awardsfor stupidness!." />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/teacher_detail_image_view"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/place_holder"
+                        app:civ_border_color="@color/colorCyan200"
+                        app:civ_border_width="2dp" />
 
-            <Button
-                android:id="@+id/edit_done_button"
-                android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/teacher_detail_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="32dp"
+                        android:background="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:text="name"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="24sp"
+                        tools:text="Jasper Essien" />
+
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/teacher_detail_biography"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@android:color/transparent"
+                    android:padding="4dp"
+                    android:text="Biography"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    tools:text="Jasper Essien is 100 yrs old, has a degree in stupidness, qualified to teach, both theory and pratical, he has received various awardsfor stupidness!." />
+
+                <Button
+                    android:id="@+id/edit_done_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/curved_rectangle_cyan_200"
+                    android:text="@string/dialog_button_edit"
+                    android:textColor="#FFFFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/teacher_detail_biography" />
+
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/curved_rectangle_cyan_200"
-                android:text="@string/dialog_button_edit"
-                android:textColor="#FFFFFFFF"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/teacher_detail_biography" />
-
-        </android.support.constraint.ConstraintLayout>
-
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:elevation="7dp"
-            android:progressTint="@color/colorCyan200"
-            android:visibility="gone" />
-    </android.support.design.widget.CoordinatorLayout>
+                android:layout_gravity="center"
+                android:elevation="7dp"
+                android:progressTint="@color/colorCyan200"
+                android:visibility="gone" />
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
 </layout>

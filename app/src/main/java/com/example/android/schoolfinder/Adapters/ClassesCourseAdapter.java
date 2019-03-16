@@ -1,14 +1,18 @@
 package com.example.android.schoolfinder.Adapters;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
@@ -20,26 +24,40 @@ import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemClassBinding;
 import com.example.android.schoolfinder.databinding.ItemCourseClassBinding;
+import com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity;
+import com.example.android.schoolfinder.normalUsers.Fragments.ClassCoursesFragment;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdapter.ClassCourseViewHolder> {
-    private List<Course> mCourseList;
-    private List<Class> mClassList;
+    private List<Course> mCourseList = new ArrayList<>();
+    private List<Class> mClassList = new ArrayList<>();
     private boolean isCourseViewType;
     private Activity mActivity;
     private ItemCourseClassBinding itemCourseClassBinding;
     private ItemClassBinding itemClassBinding;
     private School school;
+    private boolean isNormalUser = false;
 
     public ClassesCourseAdapter(boolean isCourseViewType, Activity activity, School school) {
         super();
         this.isCourseViewType = isCourseViewType;
         mActivity = activity;
         this.school = school;
+    }
+
+    /**
+     * Sets which flavour its calling this adapter
+     *
+     * @param isNormalUser
+     */
+    public void isNormalUser(boolean isNormalUser) {
+
+        this.isNormalUser = isNormalUser;
     }
 
     @NonNull
@@ -68,6 +86,7 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
                         b.putBoolean(BundleConstants.IS_CLASS_SEETTING, false);
                         ShowUserDetailFragment detailFragment = ShowUserDetailFragment.newInstance(b);
                         detailFragment.initSchool(ClassesCourseAdapter.this, school, holder.getAdapterPosition());
+                        if (isNormalUser) detailFragment.setNormalUser(true);
                         detailFragment.show(((AppCompatActivity) mActivity).getSupportFragmentManager(), null);
 //                }
                     }
@@ -83,6 +102,7 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
                         b.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
                         ShowUserDetailFragment detailFragment = ShowUserDetailFragment.newInstance(b);
                         detailFragment.initSchool(ClassesCourseAdapter.this, school, holder.getAdapterPosition());
+                        if (isNormalUser) detailFragment.setNormalUser(true);
                         detailFragment.show(((AppCompatActivity) mActivity).getSupportFragmentManager(), null);
 //                }
                     }
@@ -100,12 +120,44 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
      * @param holder
      */
     private void bindViewsForClass(ClassCourseViewHolder holder) {
-        Class clas = mClassList.get(holder.getAdapterPosition());
+        final Class clas = mClassList.get(holder.getAdapterPosition());
         holder.courseClassText.setText(clas.getNameOfClass());
         if (clas.getHeadOfClass() != null && clas.getHeadOfClass().getProfileImageUrl() != null)
             new PicassoImageLoader(mActivity, clas.getHeadOfClass().getProfileImageUrl(),
                     R.color.colorLightGrey, R.color.colorLightGrey, holder.headImage);
+        holder.more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isNormalUser) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                    builder.setTitle("Select")
+                            .setItems(new String[]{"View Courses", "Apply"}, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // The 'which' argument contains the index position
+                                    // of the selected item
+                                    if (which == 0) {
+                                        openCoursesOfferedFragment((ArrayList<Course>) clas.getCoursesOffered());
+                                    } else {
+//                                        TODO: Action for applying to school
+                                    }
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+        });
 //        else holder.headImage.setSo
+    }
+
+    private void openCoursesOfferedFragment(ArrayList<Course> courses) {
+        Bundle bundle = new Bundle();
+        if (school != null) //TODO: passing in the school courses offered is for test purpose, pass class courses instead
+            bundle.putParcelableArrayList(BundleConstants.COURSES_BUNDLE, (ArrayList<? extends Parcelable>) school.getCourses());
+        ((SchoolDetailActivity) mActivity).getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.school_detail_parent, ClassCoursesFragment.newInstance(bundle), "")
+                .addToBackStack(null)
+                .commit();
     }
 
     private void setCourseItemBackgroundImage(String name, CircleImageView background) {
@@ -168,7 +220,8 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
      * @param courses
      */
     public void setCourseList(List<Course> courses) {
-        this.mCourseList = courses;
+        if (courses != null)
+            this.mCourseList = courses;
 
         notifyDataSetChanged();
     }
@@ -179,7 +232,8 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
      * @param classes
      */
     public void setClassList(List<Class> classes) {
-        this.mClassList = classes;
+        if (classes != null)
+            this.mClassList = classes;
         notifyDataSetChanged();
     }
 
@@ -207,6 +261,7 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
         private CircleImageView backgroundImage;
         private CircleImageView headImage;
         private TextView courseClassText;
+        private ImageButton more;
 
         public ClassCourseViewHolder(View itemView) {
             super(itemView);
@@ -217,6 +272,7 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
             } else {
                 headImage = itemClassBinding.itemCourseClassTeacherProfile;
                 courseClassText = itemClassBinding.itemCourseClassName;
+                more = itemClassBinding.more;
             }
         }
     }

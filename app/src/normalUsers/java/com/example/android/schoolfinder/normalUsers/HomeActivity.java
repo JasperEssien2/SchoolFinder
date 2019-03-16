@@ -44,6 +44,7 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         ViewCompat.setElevation(homeBinding.homeUserImage, 8.0f);
 
         authentication = new Authentication(this);
+        authentication.updateToken();
 //        FlowTextView flowTextView;
         if (FirebaseAuth.getInstance().getCurrentUser() != null)
             authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), false);

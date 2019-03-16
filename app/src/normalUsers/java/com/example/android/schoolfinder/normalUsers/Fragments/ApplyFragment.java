@@ -1,14 +1,22 @@
 package com.example.android.schoolfinder.normalUsers.Fragments;
 
 
+import android.arch.lifecycle.Observer;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.schoolfinder.Adapters.ClassesCourseAdapter;
+import com.example.android.schoolfinder.Constants.BundleConstants;
+import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
+import com.example.android.schoolfinder.databinding.FragmentApplyBinding;
+import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 //import com.example.android.schoolfinder.normalUsers.R;
 
 /**
@@ -16,16 +24,70 @@ import com.example.android.schoolfinder.R;
  */
 public class ApplyFragment extends Fragment {
 
+    private FragmentApplyBinding binding;
+    private ClassesCourseAdapter adapter;
+    private School school;
+    private SearchSchoolViewModels viewModels;
 
     public ApplyFragment() {
         // Required empty public constructor
+    }
+
+    public static ApplyFragment newInstance(Bundle bundle) {
+        ApplyFragment applyFragment = new ApplyFragment();
+        applyFragment.setArguments(bundle);
+        return applyFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_apply, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_apply, container, false);
+        if (viewModels != null)
+            viewModels.getSchoolLiveData(getSchoolId())
+                    .observe(this, new Observer<School>() {
+                        @Override
+                        public void onChanged(@Nullable School schol) {
+                            school = schol;
+                            if (school != null) {
+                                adapter = new ClassesCourseAdapter(false, getActivity(), school);
+                                adapter.isNormalUser(true);
+                                setUpRecyclerView();
+                            }
+                        }
+                    });
+
+        return binding.getRoot();
     }
 
+    /**
+     * This sets up the recycler view to be used in this fragment
+     */
+    private void setUpRecyclerView() {
+        binding.classesRecyclerView
+                .setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        binding.classesRecyclerView
+                .setAdapter(adapter);
+        adapter.setClassList(school.getClasses());
+    }
+
+    /**
+     * This method gets the school id from the bundle passed to this fragment
+     *
+     * @return a string of the school id
+     */
+    private String getSchoolId() {
+        if (getArguments() != null) {
+            if (getArguments().containsKey(BundleConstants.SCHOOL_ID_BUNDLE)) {
+                return getArguments().getString(BundleConstants.SCHOOL_ID_BUNDLE);
+            }
+        }
+        return null;
+    }
+
+    public void setViewModel(SearchSchoolViewModels viewModels) {
+
+        this.viewModels = viewModels;
+    }
 }

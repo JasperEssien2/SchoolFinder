@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.android.schoolfinder.BuildConfig;
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -119,6 +122,33 @@ public class Authentication implements BaseAuthentication {
                         if (task.isSuccessful())
                             mCallbacks.userInsertedToDatabase(user);
                         else mCallbacks.userInsertedToDatabase((Users) null);
+                    }
+                });
+    }
+
+    public void updateToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        Log.e(TAG, "updateToken() ----------------------- " + token);
+                        reference
+                                .child(BuildConfig.FLAVOR.equals("normalUsers") ? FirebaseConstants.NORMAL_USERS_NODE
+                                        : FirebaseConstants.SCHOOLS_USERS_NODE)
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .child(FirebaseConstants.TOKEN)
+                                .setValue(token);
+//                        // Log and toast
+//                        String msg = getString(R.string.msg_token_fmt, token);
+
                     }
                 });
     }

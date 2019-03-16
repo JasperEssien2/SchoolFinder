@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <android.support.v7.widget.SearchView
-                android:id="@+id/search_view"
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:focusedByDefault="true">
+                android:layout_gravity="center"
+                android:visibility="gone" />
 
-
-            </android.support.v7.widget.SearchView>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:focusedByDefault="true">
 
 
-            </android.support.v7.widget.RecyclerView>
+                </android.support.v7.widget.SearchView>
 
-        </LinearLayout>
-    </FrameLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
+
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 </layout>

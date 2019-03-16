@@ -94,7 +94,11 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
     @Override
     public void onPause() {
         if (schoolSettingsBinding.schoolMapView != null) {
-            schoolSettingsBinding.schoolMapView.onPause();
+            try {
+                schoolSettingsBinding.schoolMapView.onPause();
+            } catch (NullPointerException e){
+                 e.printStackTrace();
+            }
         }
         super.onPause();
     }

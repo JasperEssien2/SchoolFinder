@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".Activities.SchoolDetailActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorLightGrey"
+                android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:minHeight="@dimen/school_details_appbar_height"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                    app:titleEnabled="false">
+
+                    <FrameLayout
+                        android:id="@+id/collapsing_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fitsSystemWindows="true"
+                        app:layout_collapseMode="parallax">
+
+                        <!--<ImageView-->
+                        <!--android:id="@+id/appbar_image"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:scaleType="centerCrop">-->
+
+                        <!--</ImageView>-->
+                        <com.smarteist.autoimageslider.SliderLayout
+                            android:id="@+id/image_slider"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.smarteist.autoimageslider.SliderLayout>
+
+
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/scrim_gradient2_color_cyan_200"
+                        android:fitsSystemWindows="true" />
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:fitsSystemWindows="true"
+                        android:paddingBottom="32dp">
+
+                        <!--TODO: This library sometimes crashes the app with an inflater exception-->
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/school_logo_imgview"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/place_holder"
+                            app:layout_constraintBottom_toTopOf="@+id/guideline7"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/guideline7"
+                            app:riv_corner_radius="16dp" />
+
+                        <!--<ImageView-->
+                        <!--android:id="@+id/school_settings_edit_school_change_logo"-->
+                        <!--android:layout_width="35dp"-->
+                        <!--android:layout_height="35dp"-->
+                        <!--android:layout_gravity="bottom|end"-->
+                        <!--android:layout_margin="4dp"-->
+                        <!--android:layout_marginStart="8dp"-->
+                        <!--android:layout_marginTop="8dp"-->
+                        <!--android:layout_marginEnd="8dp"-->
+                        <!--android:background="@drawable/circle_background"-->
+                        <!--android:src="@drawable/ic_add_photo"-->
+                        <!--app:backgroundTint="@color/colorCyan200"-->
+                        <!--app:layout_constraintBottom_toTopOf="@+id/school_settings_logo_imgview"-->
+                        <!--app:layout_constraintEnd_toStartOf="@+id/school_settings_logo_imgview"-->
+                        <!--app:layout_constraintStart_toStartOf="parent"-->
+                        <!--app:layout_constraintTop_toBottomOf="@+id/school_settings_logo_imgview" />-->
+
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/guideline7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintGuide_percent="0.33" />
+
+                        <TextView
+                            android:id="@+id/school_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@android:color/transparent"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:singleLine="true"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@+id/school_logo_imgview"
+                            app:layout_constraintStart_toStartOf="@+id/school_logo_imgview"
+                            app:layout_constraintTop_toBottomOf="@+id/school_logo_imgview"
+                            tools:text="Bright Hope Standart" />
+
+                        <TextView
+                            android:id="@+id/school_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="@android:color/transparent"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:singleLine="true"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="@+id/school_name"
+                            app:layout_constraintStart_toStartOf="@+id/school_name"
+                            app:layout_constraintTop_toBottomOf="@+id/school_name"
+                            tools:text="11 Ndia street, Egbeluu" />
+
+                        <LinearLayout
+                            android:id="@+id/social_networks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/school_address">
+
+                            <ImageButton
+                                android:id="@+id/facebook"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@null"
+                                android:src="@drawable/ic_facebook_full" />
+
+                            <ImageButton
+                                android:id="@+id/mail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:background="@null"
+                                android:src="@drawable/ic_email_full" />
+
+                            <ImageButton
+                                android:id="@+id/twitter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:background="@null"
+                                android:src="@drawable/ic_twitter_full" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/reactions"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/social_networks">
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageButton
+                                        android:id="@+id/follow"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_follow_" />
+
+                                    <TextView
+                                        android:id="@+id/follow_count"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="100"
+
+                                        android:textColor="@color/colorWhite"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/follow_indicator"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:src="#ffffff"
+                                    android:visibility="gone" />
+                            </FrameLayout>
+
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageButton
+                                        android:id="@+id/satisfied"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_sentiment_satisfied" />
+
+                                    <TextView
+                                        android:id="@+id/satisfied_count"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="10"
+                                        android:textColor="@color/colorWhite"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/satisfied_indicator"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:src="#ffffff"
+                                    android:visibility="gone" />
+                            </FrameLayout>
+
+                            <!--TODO: Use a small white circle to indicate when d user follow or express-->
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageButton
+                                        android:id="@+id/neutral"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_sentiment_neutral" />
+
+                                    <TextView
+                                        android:id="@+id/neutral_count"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="100"
+                                        android:textColor="@color/colorWhite"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/neutral_indicator"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:src="#ffffff"
+                                    android:visibility="gone" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageButton
+                                        android:id="@+id/dissatisfied"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_sentiment_dissatisfied" />
+
+                                    <TextView
+                                        android:id="@+id/dissatisfied_count"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="100"
+                                        android:textColor="@color/colorWhite"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/dissatisfied_indicator"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:src="#ffffff"
+                                    android:visibility="gone" />
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                        <!--<ImageView-->
+                        <!--android:id="@+id/school_settings_edit_name"-->
+                        <!--android:layout_width="35dp"-->
+                        <!--android:layout_height="35dp"-->
+                        <!--android:layout_gravity="bottom|end"-->
+                        <!--android:layout_marginStart="8dp"-->
+                        <!--android:layout_marginEnd="8dp"-->
+                        <!--android:background="@drawable/circle_background"-->
+                        <!--android:padding="4dp"-->
+                        <!--android:src="@drawable/ic_edit_white"-->
+                        <!--app:backgroundTint="@color/colorWhite"-->
+                        <!--app:layout_constraintBottom_toTopOf="@+id/school_settings_logo_imgview"-->
+                        <!--app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--app:layout_constraintStart_toEndOf="@+id/school_settings_logo_imgview"-->
+                        <!--app:layout_constraintTop_toBottomOf="@+id/school_settings_logo_imgview"-->
+                        <!--app:tint="@color/colorLightGrey" />-->
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_gravity="top"
+                        android:layout_marginBottom="48dp"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+                    </android.support.v7.widget.Toolbar>
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/school_details_tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        app:tabGravity="fill"
+                        app:tabMode="fixed"
+                        app:tabTextColor="#FFFFFF" />
+
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/school_details_viewpager"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </LinearLayout>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/comment_on_school_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_edit_white"
+            app:fabSize="normal" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

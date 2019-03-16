@@ -14,13 +14,14 @@ public class PicassoImageLoader {
 
     public PicassoImageLoader(Activity activity, final String imageUrl,
                               final int placeholder, final int errorImage, final ImageView imageView) {
-        Glide
-                .with(activity)
-                .load(imageUrl)
-                .centerCrop()
-                .placeholder(placeholder)
-                .error(errorImage)
-                .into(imageView);
+        if (activity != null)
+            Glide
+                    .with(activity)
+                    .load(imageUrl)
+                    .centerCrop()
+                    .placeholder(placeholder)
+                    .error(errorImage)
+                    .into(imageView);
 
 //        Picasso.get()
 //                .load(imageUrl)
@@ -54,13 +55,14 @@ public class PicassoImageLoader {
 
     public PicassoImageLoader(Context context, final String imageUrl,
                               final int placeholder, final int errorImage, final ImageView imageView) {
-        Glide
-                .with(context)
-                .load(imageUrl)
-                .centerCrop()
-                .placeholder(placeholder)
-                .error(errorImage)
-                .into(imageView);
+        if (context != null)
+            Glide
+                    .with(context)
+                    .load(imageUrl)
+                    .centerCrop()
+                    .placeholder(placeholder)
+                    .error(errorImage)
+                    .into(imageView);
 
 //        Picasso.get()
 //                .load(imageUrl)
