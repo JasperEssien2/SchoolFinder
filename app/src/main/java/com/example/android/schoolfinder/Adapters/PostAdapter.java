@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.android.schoolfinder.FirebaseHelper.FirebaseTransactionsAction;
 import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.R;
@@ -40,12 +41,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private Activity activity;
     private boolean isSchool;
     private ItemPostBinding itemPostBinding;
+    private FirebaseTransactionsAction transactionsAction;
 
 
     public PostAdapter(Activity activity, boolean isSchool) {
         super();
         this.activity = activity;
         this.isSchool = isSchool;
+    }
+
+    public void initTransactionsObject(FirebaseTransactionsAction transactionsAction) {
+
+        this.transactionsAction = transactionsAction;
     }
 
     @NonNull
@@ -115,7 +122,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     @SuppressLint("RestrictedApi")
-    private void bindViewsForNormalUsers(final PostViewHolder postViewHolder, Post post,
+    private void bindViewsForNormalUsers(final PostViewHolder postViewHolder, final Post post,
                                          boolean hasImages) {
 
         int[][] states = new int[][]{
@@ -159,7 +166,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postViewHolder.star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postViewHolder.star.setPressed(!postViewHolder.star.isPressed());
+//                postViewHolder.star.setPressed(!postViewHolder.star.isPressed());
+                if (transactionsAction != null)
+                    transactionsAction.likePost(post, postViewHolder.starCount, postViewHolder.star,
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
             }
         });
 

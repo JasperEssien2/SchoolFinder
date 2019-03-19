@@ -70,6 +70,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
         postAdapter = new PostAdapter(getActivity(), false);
+        postAdapter.initTransactionsObject(transactionsAction);
         setUpRecyclerView();
         postViewModel.getUserNodeLiveData(false, FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .observe(this, new Observer<List<String>>() {
@@ -238,6 +239,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
 
     @Override
     public void postLike(Post post, boolean isSuccessful) {
-
+        if (isSuccessful)
+            Toast.makeText(getActivity(), "liked", Toast.LENGTH_SHORT).show();
     }
 }

@@ -65,7 +65,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
         // Required empty public constructor
     }
 
-
+    AddPostDialogFragment postDialogFragment = AddPostDialogFragment.newInstance(getBundle());
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,7 +108,6 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
             @Override
             public void onClick(View view) {
 //                if (getBundle() != null) {
-                AddPostDialogFragment postDialogFragment = AddPostDialogFragment.newInstance(getBundle());
                 postDialogFragment.initActivityFragment(ActivitiesFragment.this);
                 postDialogFragment.show(getActivity().getSupportFragmentManager(), null);
 //                }
@@ -233,6 +232,9 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
     @Override
     public void post(Post post, boolean isSuccessful) {
         Toast.makeText(getActivity(), isSuccessful ? "Post upload successful" : "Post upload failed", Toast.LENGTH_SHORT).show();
+        if(isSuccessful)
+            postDialogFragment.dismiss();
+        else postDialogFragment.enablePostButton();
     }
 
     @Override

@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class ClassCoursesFragment extends Fragment {
 
+    private static final String TAG = ClassCoursesFragment.class.getSimpleName();
     private FragmentClassCoursesBinding binding;
     private ClassesCourseAdapter adapter;
     private School school;
@@ -60,12 +61,19 @@ public class ClassCoursesFragment extends Fragment {
      * This sets up the recycler view to be used in this fragment
      */
     private void setUpRecyclerView() {
-        adapter = new ClassesCourseAdapter(false, getActivity(), school);
+        adapter = new ClassesCourseAdapter(true, getActivity(), school);
         adapter.isNormalUser(true);
         binding.coursesRecyclerView
-                .setLayoutManager(new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false));
-        binding.coursesRecyclerView
                 .setAdapter(adapter);
+//        adapter.setCallback(new ClassCourseAdapterCallback() {
+//            @Override
+//            public void openCoursesFragment(ArrayList<Course> coursesOffered) {
+//                openCoursesOfferedFragment(coursesOffered);
+//            }
+//        });
+        binding.coursesRecyclerView
+                .setLayoutManager(new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false));
+
         if (getCourses() != null) {
             adapter.setCourseList(getCourses());
         }
@@ -85,5 +93,18 @@ public class ClassCoursesFragment extends Fragment {
         }
         return null;
     }
+
+//    private void openCoursesOfferedFragment(ArrayList<Course> courses) {
+//        Bundle bundle = new Bundle();
+//        Log.e(TAG, "openCoursesOfferedFragment() ------------------ ");
+//        if (school != null) //TODO: passing in the school courses offered is for test purpose, pass class courses instead
+//            bundle.putParcelableArrayList(BundleConstants.COURSES_BUNDLE, (ArrayList<? extends Parcelable>) school.getCourses());
+//        ((SchoolDetailActivity) getActivity()).getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.school_detail_parent, ClassCoursesFragment.newInstance(bundle), null)
+//                .addToBackStack(null)
+//                .commit();
+//    }
+
 
 }

@@ -21,6 +21,7 @@ public class Post implements Parcelable {
     private String uid;
     private Object timeStamp;
     private String author;
+    private String senderUid;
     private List<Image> imageList;
     private Image schoolLogo;
     private String body;
@@ -35,6 +36,7 @@ public class Post implements Parcelable {
         uid = in.readString();
         timeStamp = in.readLong();
         author = in.readString();
+        senderUid = in.readString();
         imageList = in.createTypedArrayList(Image.CREATOR);
         schoolLogo = in.readParcelable(Image.class.getClassLoader());
         body = in.readString();
@@ -47,6 +49,7 @@ public class Post implements Parcelable {
         dest.writeString(uid);
         dest.writeValue(timeStamp);
         dest.writeString(author);
+        dest.writeString(senderUid);
         dest.writeTypedList(imageList);
         dest.writeParcelable(schoolLogo, flags);
         dest.writeString(body);
@@ -134,5 +137,13 @@ public class Post implements Parcelable {
     @Override
     public String toString() {
         return "post Body - " + body + "\nPromoted: " + isPromoted;
+    }
+
+    public String getSenderUid() {
+        return senderUid;
+    }
+
+    public void setSenderUid(String senderUid) {
+        this.senderUid = senderUid;
     }
 }

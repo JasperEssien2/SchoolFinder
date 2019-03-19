@@ -7,16 +7,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.schoolfinder.Adapters.ClassesCourseAdapter;
 import com.example.android.schoolfinder.Constants.BundleConstants;
+import com.example.android.schoolfinder.Models.Course;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.databinding.FragmentApplyBinding;
+import com.example.android.schoolfinder.interfaces.ClassCourseAdapterCallback;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
+
+import java.util.ArrayList;
 //import com.example.android.schoolfinder.normalUsers.R;
 
 /**
@@ -24,6 +29,7 @@ import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
  */
 public class ApplyFragment extends Fragment {
 
+    private static final String TAG = ApplyFragment.class.getSimpleName();
     private FragmentApplyBinding binding;
     private ClassesCourseAdapter adapter;
     private School school;
@@ -70,6 +76,25 @@ public class ApplyFragment extends Fragment {
         binding.classesRecyclerView
                 .setAdapter(adapter);
         adapter.setClassList(school.getClasses());
+        adapter.setCallback(new ClassCourseAdapterCallback() {
+            @Override
+            public void openCoursesFragment(ArrayList<Course> coursesOffered) {
+                openCoursesOfferedFragment(coursesOffered);
+            }
+        });
+    }
+
+    private void openCoursesOfferedFragment(ArrayList<Course> courses) {
+        Bundle bundle = new Bundle();
+        Log.e(TAG, "openCoursesOfferedFragment() ------------------ ");
+        if (school != null) { //TODO: passing in the school courses offered is for test purpose, pass class courses instead
+            bundle.putParcelableArrayList(BundleConstants.COURSES_BUNDLE, courses);
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.school_detail_parent, ClassCoursesFragment.newInstance(bundle), null)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     /**

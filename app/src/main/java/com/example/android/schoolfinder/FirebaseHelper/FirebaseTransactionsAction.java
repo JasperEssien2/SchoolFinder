@@ -3,6 +3,7 @@ package com.example.android.schoolfinder.FirebaseHelper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -111,6 +112,7 @@ public class FirebaseTransactionsAction {
                             if (school != null && school.getFollowers() != null) {
                                 Log.e(TAG, "Followers uid ------ " + school.getFollowers().keySet());
                                 uids = new ArrayList<>(school.getFollowers().keySet());
+                                post.setSenderUid(school.getId());
                             }
                             for (String s : uids) {
                                 childUpdates.put(FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + key, true);
@@ -185,9 +187,6 @@ public class FirebaseTransactionsAction {
         }
     }
 
-    public void likePost(Post post) {
-
-    }
 
     /**
      * This method is called When a user follows a school, all the ids of post the school has posted will be transfered
@@ -507,8 +506,86 @@ public class FirebaseTransactionsAction {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
                         Log.d(TAG, "notImpressedTransaction:onComplete:" + databaseError);
-                        if (databaseError == null) mCallback.notImpressedExpression(school, true);
+                        if (b) mCallback.notImpressedExpression(school, true);
                         else mCallback.notImpressedExpression(school, false);
+                    }
+                });
+    }
+
+    public void likePost(final Post post, final TextView startCount, AppCompatImageButton likeButton, final String userId) {
+        if (post.getStars() == null)
+            post.setStars(new HashMap<String, Boolean>());
+        boolean isLiked = false;
+//        post.get
+        if (post.getStars().containsKey(userId)) {
+            post.setStarCount(post.getStarCount() - 1);
+            post.getStars().remove(userId);
+        } else {
+            post.setStarCount(post.getStarCount() + 1);
+            post.getStars().put(userId, true);
+            isLiked = true;
+        }
+
+        likeButton.setImageResource(isLiked ? R.drawable.ic_like_button_activated : R.drawable.ic_like_button);
+        startCount.setText(String.valueOf(post.getStarCount()));
+        dbRef.child(FirebaseConstants.POSTS_NODE)
+                .child(post.getUid())
+                .runTransaction(new Transaction.Handler() {
+                    @NonNull
+                    @Override
+                    public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                        final Post post1 = mutableData.getValue(Post.class);
+
+                        if (post1 == null)
+                            return Transaction.success(mutableData);
+
+                        final Map<String, Object> childUpdates = new HashMap<>();
+                        //Add it to the post node
+                        childUpdates.put(FirebaseConstants.POSTS_NODE + "/" + post1.getUid(), post1);
+                        //Add it to the school's post node, containing list of uids of post the school has posted
+                        childUpdates.put(FirebaseConstants.SCHOOLS_USERS_NODE + "/" + FirebaseAuth.getInstance()
+                                .getCurrentUser().getUid() + "/" + FirebaseConstants.POSTS_NODE + "/" + post1.getUid(), true);
+
+                        if (post1.getSenderUid() != null) {
+                            dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
+                                    .child(post1.getSenderUid())
+                                    .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            School school = dataSnapshot.getValue(School.class);
+                                            if (school != null && school.getFollowers() != null) {
+                                                Log.e(TAG, "Followers uid ------ " + school.getFollowers().keySet());
+                                                uids = new ArrayList<>(school.getFollowers().keySet());
+                                            }
+                                            for (String s : uids) {
+                                                childUpdates.put(FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + post1.getUid(), true);
+                                                Log.e(TAG, "" + FirebaseConstants.NORMAL_USERS_NODE + "/" + s + "/" + FirebaseConstants.POSTS_NODE + "/" + post1.getUid());
+                                            }
+
+                                            dbRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                                @Override
+                                                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                        }
+                        mutableData.setValue(post1);
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+                        if (b)
+                            mCallback.postLike(null, true);
+                        else mCallback.postLike(null, false);
                     }
                 });
     }

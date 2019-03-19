@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import com.example.android.countryregioncitypicker.CountryPickerDialogFragment;
 import com.example.android.countryregioncitypicker.Models.Country;
+import com.example.android.countryregioncitypicker.Models.StateRegion;
 import com.example.android.countryregioncitypicker.OnCountrySelected;
+import com.example.android.countryregioncitypicker.OnStateSelected;
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.FirebaseHelper.FirebaseTransactionsAction;
 import com.example.android.schoolfinder.Models.Image;
@@ -48,18 +50,20 @@ import java.util.List;
  * A simple {@link Activity} subclass.
  */
 public class SearchActivity extends AppCompatActivity implements CardStackListener, OnCountrySelected,
-        FirebaseTransactionCallback, SearchSchoolOfflineDatabaseCallback {
+        FirebaseTransactionCallback, SearchSchoolOfflineDatabaseCallback, OnStateSelected {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
     ActivitySearchBinding searchBinding;
+    LiveData<List<School>> schoolListLiveData;
+    CountryPickerDialogFragment dialogFragment = new CountryPickerDialogFragment();
     private SearchSchoolViewModels searchSchoolViewModels;
     private FirebaseTransactionsAction transactionsAction;
     private List<School> mSchools;
     private List<String> categoryList = new ArrayList<>();
-
     private int position;
     private Observer<List<School>> observer;
-    LiveData<List<School>> schoolListLiveData;
+    private Country countrySelected;
+    private StateRegion stateRegionSelected;
 
     public SearchActivity() {
         // Required empty public constructor
@@ -88,6 +92,7 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(cardAdapter);
 //        cardAdapter.addItems(getDummySchoolList());
+
         observer = new Observer<List<School>>() {
 
             @Override
@@ -275,50 +280,31 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
 
     }
 
+    /**
+     * This  method is responsible for showing the dialog fragment for selected country to sort by
+     */
     private void showCountryDialog() {
-        CountryPickerDialogFragment dialogFragment = new CountryPickerDialogFragment();
         dialogFragment.initCountrySelectedListener(this);
+        dialogFragment.isState(false, 0);
         dialogFragment.show(getSupportFragmentManager(), null);
     }
 
+    /**
+     * This method is responsible for showing the dialog fragment for selecting stateRegion to sort
+     *
+     * @param geoNameId the id of the country
+     */
     private void showStateRegionDialog(int geoNameId) {
-
+        dialogFragment.initStateRegionSelectedListener(this);
+        dialogFragment.isState(true, geoNameId);
+        dialogFragment.show(getSupportFragmentManager(), null);
     }
+
 
     List<Image> getImages(String url) {
         List<Image> images = new ArrayList<>();
         images.add(new Image(null, url, null));
         return images;
-    }
-
-    List<School> getDummySchoolList() {
-        ArrayList<School> list = new ArrayList<>();
-        list.add(new School("", "Bright Hope", "11 Ndia Street",
-                "", "Securing knowledge", "", "", "", "", "",
-                "", null, 10, 2, 200,
-                2000, 0, 0, null, null,
-                getImages("http://www.stpetersschools.org/images/inner/St-Peter's-School-Building.jpg"), null, null));
-        list.add(new School("", "Ask your father", "Oyigbo, Canada",
-                "", "Asking fathers since 1990", "", "", "", "", "",
-                "", null, 10, 2, 200,
-                2000, 0, 0, null, null,
-                getImages("http://media.oregonlive.com/portland_impact/photo/portland-french-school-2e61d93176c0b95c.jpg"), null, null));
-        list.add(new School("", "Stupid Hope", "11 Ndia Street",
-                "", "Securing stupidness", "", "", "", "", "",
-                "", null, 10, 2, 200,
-                2000, 0, 0, null, null,
-                getImages("https://alsoc.in/wp-content/themes/alsoc/images/2.jpg"), null, null));
-        list.add(new School("", "Bright Hope", "11 Ndia Street",
-                "", "Securing knowledge", "", "", "", "", "",
-                "", null, 10, 2, 200,
-                2000, 0, 0, null, null,
-                getImages("http://media.oregonlive.com/portland_impact/photo/portland-french-school-2e61d93176c0b95c.jpg"), null, null));
-        list.add(new School("", "Bright Hope", "11 Ndia Street",
-                "", "Securing knowledge", "", "", "", "", "",
-                "", null, 10, 2, 200,
-                2000, 0, 0, null, null,
-                getImages("https://www.wbps.org/cms/lib/NJ01911727/Centricity/ModuleInstance/98/large/school%20front.jpg"), null, null));
-        return list;
     }
 
     /**
@@ -343,7 +329,22 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
 
     @Override
     public void countrySelected(Country country) {
+        countrySelected = country;
+        dialogFragment.dismiss();
+        Log.e(TAG, "Country selected details ---- " + country.toString());
         showStateRegionDialog(country.getGeoNameId());
+    }
+
+    @Override
+    public void stateSelected(StateRegion region) {
+
+        stateRegionSelected = region;
+        dialogFragment.dismiss();
+        if (countrySelected != null && stateRegionSelected != null) {
+            schoolListLiveData.removeObserver(observer);
+            schoolListLiveData = searchSchoolViewModels.filterByCountryStateRegion(countrySelected.getCountryName(), stateRegionSelected.getName());
+            schoolListLiveData.observe(this, observer);
+        }
     }
 
     @Override

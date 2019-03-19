@@ -26,13 +26,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<StateRegion> stateRegionList = new ArrayList<>();
     private Activity activity;
     private OnCountrySelected onCountrySelected;
+    private OnStateSelected onStateSelected;
     private boolean isCountry;
     private ItemRecycleBinding binding;
 
-    public RecyclerViewAdapter(Activity activity, OnCountrySelected onCountrySelected, boolean isCountry) {
+    public RecyclerViewAdapter(Activity activity, OnCountrySelected onCountrySelected, OnStateSelected onStateSelected, boolean isCountry) {
         super();
         this.activity = activity;
         this.onCountrySelected = onCountrySelected;
+        this.onStateSelected = onStateSelected;
         this.isCountry = isCountry;
     }
 
@@ -51,6 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder viewHolder, int i) {
+        Log.e(TAG, "isCountry -----  " + isCountry);
         if (isCountry) {
             final Country country = countryList.get(viewHolder.getAdapterPosition());
 //            viewHolder.countryFlag.
@@ -58,12 +61,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onCountrySelected.countrySelected(country);
+                    if (onCountrySelected != null)
+                        onCountrySelected.countrySelected(country);
                 }
             });
         } else {
-            StateRegion stateRegion = stateRegionList.get(viewHolder.getAdapterPosition());
+
+            final StateRegion stateRegion = stateRegionList.get(viewHolder.getAdapterPosition());
             viewHolder.name.setText(stateRegion.getToponymName());
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onStateSelected != null)
+                        onStateSelected.stateSelected(stateRegion);
+                }
+            });
         }
     }
 

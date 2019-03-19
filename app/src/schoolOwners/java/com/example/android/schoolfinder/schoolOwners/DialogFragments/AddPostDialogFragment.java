@@ -91,9 +91,11 @@ public class AddPostDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
 //                binding.addPostPostButton.setEnabled();
-                if (getPost() != null)
+                if (getPost() != null) {
                     mActivitiesFragment.addPost(getPost());
-                dismiss();
+                    binding.addPostPostButton.setEnabled(false);
+                }
+//                dismiss();
             }
         });
         binding.addPostAddImage.setOnClickListener(new View.OnClickListener() {
@@ -219,5 +221,12 @@ public class AddPostDialogFragment extends DialogFragment {
 
                 }
         }
+    }
+
+    /**
+     * This method enables the post button so the user can resend the post just incase it fails
+     */
+    public void enablePostButton() {
+        binding.addPostPostButton.setEnabled(true);
     }
 }

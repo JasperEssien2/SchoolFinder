@@ -84,6 +84,7 @@ public class GeoNamesViewModels {
     }
 
     public static class StatesRegionViewModel extends ViewModel {
+        private static final String TAG = StatesRegionViewModel.class.getSimpleName();
         private MutableLiveData<List<StateRegion>> stateRegionList;
 
 
@@ -108,13 +109,14 @@ public class GeoNamesViewModels {
             call.enqueue(new Callback<StatesRegionsResponse>() {
                 @Override
                 public void onResponse(Call<StatesRegionsResponse> call, Response<StatesRegionsResponse> response) {
+                    Log.e(TAG, response.raw().toString());
                     if (response.body() != null)
                         stateRegionList.setValue(response.body().getGeonames());
                 }
 
                 @Override
                 public void onFailure(Call<StatesRegionsResponse> call, Throwable t) {
-
+                    Log.e(TAG, "onFailure() ---- " + t.getMessage());
                 }
             });
         }

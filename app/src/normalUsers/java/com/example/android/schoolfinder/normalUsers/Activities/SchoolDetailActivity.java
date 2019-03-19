@@ -37,6 +37,8 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SchoolDetailActivity extends AppCompatActivity implements FirebaseTransactionCallback {
@@ -46,6 +48,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
     private SearchSchoolViewModels viewModels;
     private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
     private School school;
+    List<Image> schoolImages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,8 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
                         school = schol;
                         Image image = null;
                         if (school != null && school.getSchoolImages() != null) {
-                            image = school.getSchoolImages().get(0);
+                            schoolImages = school.getSchoolImages();
+                            image = schoolImages.get(0);
                             loadImage(image.getImageUrl());
                             setSliderViews();
 //                            if(fomerSchoolObject != null) {
@@ -162,7 +166,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
         if (school.getSchoolImages() == null) return;
         if (school.getSchoolImages().isEmpty()) return;
         setUpViewsWithData();
-        for (Image images : school.getSchoolImages()) {
+        for (Image images : schoolImages) {
 
             SliderView sliderView = new DefaultSliderView(this);
             sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);

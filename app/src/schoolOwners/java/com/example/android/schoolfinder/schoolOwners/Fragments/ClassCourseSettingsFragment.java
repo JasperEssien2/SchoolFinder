@@ -74,7 +74,7 @@ public class ClassCourseSettingsFragment extends Fragment implements Authenticat
         classCourseSettingsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_course_settings, container, false);
         if (getArguments() != null && getArguments().containsKey(BundleConstants.IS_CLASS_SEETTING)) {
 //            isClass = getArguments().getBoolean(BundleConstants.IS_CLASS_SEETTING);
-            adapter = new ClassesCourseAdapter(!isClass, getActivity(), school);
+            adapter = new ClassesCourseAdapter(!isClass, getActivity(), school, authentication);
             setUpRecyclerView();
 //            if(isClass)
 //                setUpViewsForClass(school);

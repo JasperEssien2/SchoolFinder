@@ -109,5 +109,10 @@ public class Country {
     public void setAdminCode1(String adminCode1) {
         this.adminCode1 = adminCode1;
     }
+
+    @Override
+    public String toString() {
+        return "countryName : " + countryName + "\nCountry Code: " + countryCode + "/geoNameId: " + geoNameId;
+    }
 }
 

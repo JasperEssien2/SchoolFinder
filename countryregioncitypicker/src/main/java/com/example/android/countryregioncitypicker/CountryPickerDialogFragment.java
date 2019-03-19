@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.android.countryregioncitypicker.Models.Country;
 import com.example.android.countryregioncitypicker.Models.GeoNamesViewModels;
+import com.example.android.countryregioncitypicker.Models.StateRegion;
 import com.example.android.countryregioncitypicker.databinding.DialogFragmentCountryPickerBinding;
 
 import java.util.List;
@@ -23,24 +24,38 @@ public class CountryPickerDialogFragment extends DialogFragment {
 
     private DialogFragmentCountryPickerBinding binding;
     private OnCountrySelected onCountrySelected;
+    private OnStateSelected onStateSelected;
+    private boolean isState;
+    private int countryId;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_country_picker, container, false);
-        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), onCountrySelected,true);
+        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), onCountrySelected, onStateSelected, !isState);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         binding.progressbar.setVisibility(View.VISIBLE);
-        GeoNamesViewModels.CountriesViewModel viewModel = new ViewModelProvider.NewInstanceFactory().create(GeoNamesViewModels.CountriesViewModel.class);
-        viewModel.getCountryList().observe(this, new Observer<List<Country>>() {
-            @Override
-            public void onChanged(@Nullable List<Country> countries) {
+        if (!isState) {
+            GeoNamesViewModels.CountriesViewModel viewModel = new ViewModelProvider.NewInstanceFactory().create(GeoNamesViewModels.CountriesViewModel.class);
+            viewModel.getCountryList().observe(this, new Observer<List<Country>>() {
+                @Override
+                public void onChanged(@Nullable List<Country> countries) {
 //                if(countries != null)
                     adapter.setCountryList(countries);
-                binding.progressbar.setVisibility(View.GONE);
-            }
-        });
+                    binding.progressbar.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            GeoNamesViewModels.StatesRegionViewModel viewModel = new ViewModelProvider.NewInstanceFactory().create(GeoNamesViewModels.StatesRegionViewModel.class);
+            viewModel.getStateRegionList(countryId).observe(this, new Observer<List<StateRegion>>() {
+                @Override
+                public void onChanged(@Nullable List<StateRegion> stateRegions) {
+                    adapter.setStateRegionList(stateRegions);
+                    binding.progressbar.setVisibility(View.GONE);
+                }
+            });
+        }
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -58,8 +73,19 @@ public class CountryPickerDialogFragment extends DialogFragment {
         return binding.getRoot();
     }
 
-    public void initCountrySelectedListener(OnCountrySelected onCountrySelected){
+    public void initCountrySelectedListener(OnCountrySelected onCountrySelected) {
 
         this.onCountrySelected = onCountrySelected;
+    }
+
+    public void initStateRegionSelectedListener(OnStateSelected onStateSelected) {
+
+        this.onStateSelected = onStateSelected;
+    }
+
+    public void isState(boolean isState, int countryId) {
+
+        this.isState = isState;
+        this.countryId = countryId;
     }
 }

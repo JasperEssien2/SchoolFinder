@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.DialogFragments.ShowUserDetailFragment;
+import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.Class;
 import com.example.android.schoolfinder.Models.Course;
 import com.example.android.schoolfinder.Models.School;
@@ -24,8 +25,7 @@ import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemClassBinding;
 import com.example.android.schoolfinder.databinding.ItemCourseClassBinding;
-import com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity;
-import com.example.android.schoolfinder.normalUsers.Fragments.ClassCoursesFragment;
+import com.example.android.schoolfinder.interfaces.ClassCourseAdapterCallback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,7 +33,11 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//import com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity;
+//import com.example.android.schoolfinder.normalUsers.Fragments.ClassCoursesFragment;
+
 public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdapter.ClassCourseViewHolder> {
+    private static final String TAG = ClassesCourseAdapter.class.getSimpleName();
     private List<Course> mCourseList = new ArrayList<>();
     private List<Class> mClassList = new ArrayList<>();
     private boolean isCourseViewType;
@@ -41,7 +45,9 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
     private ItemCourseClassBinding itemCourseClassBinding;
     private ItemClassBinding itemClassBinding;
     private School school;
+    List<Course> schoolCourseList = new ArrayList<>();
     private boolean isNormalUser = false;
+    private Authentication authentication;
 
     public ClassesCourseAdapter(boolean isCourseViewType, Activity activity, School school) {
         super();
@@ -49,6 +55,8 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
         mActivity = activity;
         this.school = school;
     }
+
+    private ClassCourseAdapterCallback callback;
 
     /**
      * Sets which flavour its calling this adapter
@@ -58,6 +66,14 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
     public void isNormalUser(boolean isNormalUser) {
 
         this.isNormalUser = isNormalUser;
+    }
+
+    public ClassesCourseAdapter(boolean isCourseViewType, Activity activity, School school, Authentication authentication) {
+        super();
+        this.isCourseViewType = isCourseViewType;
+        mActivity = activity;
+        this.school = school;
+        this.authentication = authentication;
     }
 
     @NonNull
@@ -114,12 +130,16 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
         else bindViewsForClass(holder);
     }
 
+    public void setCallback(ClassCourseAdapterCallback callback) {
+        this.callback = callback;
+    }
+
     /**
      * This method binds view if the fragment is for class
      *
      * @param holder
      */
-    private void bindViewsForClass(ClassCourseViewHolder holder) {
+    private void bindViewsForClass(final ClassCourseViewHolder holder) {
         final Class clas = mClassList.get(holder.getAdapterPosition());
         holder.courseClassText.setText(clas.getNameOfClass());
         if (clas.getHeadOfClass() != null && clas.getHeadOfClass().getProfileImageUrl() != null)
@@ -136,31 +156,86 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
                                     // The 'which' argument contains the index position
                                     // of the selected item
                                     if (which == 0) {
-                                        openCoursesOfferedFragment((ArrayList<Course>) clas.getCoursesOffered());
+                                        if (callback != null) {
+                                            if (clas.getCoursesOffered() != null)
+                                                callback.openCoursesFragment((ArrayList<Course>) clas.getCoursesOffered());
+//                                            Log.e(TAG, "Class course offered " + clas.getCoursesOffered().toString());
+                                        }
                                     } else {
 //                                        TODO: Action for applying to school
                                     }
                                 }
                             });
                     builder.create().show();
+                } else {
+
+                    final List<Course> classSelectedCourses = new ArrayList<>();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                    final AlertDialog.Builder selectCourseBuilder = new AlertDialog.Builder(mActivity);
+
+                    builder.setTitle("Select")
+                            .setItems(new String[]{"Add Courses", "Add Exam Courses"}, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // The 'which' argument contains the index position
+                                    // of the selected item
+                                    if (which == 0) {
+                                        schoolCourseList = school.getCourses();
+                                        //TODO: open a dialog box where courses can be selected
+                                        selectCourseBuilder.setTitle("Select Courses")
+                                                .setMultiChoiceItems(getCoursesNameArray(), null, new DialogInterface.OnMultiChoiceClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                                                        Log.e("onItemSelected", "selected ---- " + schoolCourseList.get(i).toString());
+                                                        if (!classSelectedCourses.contains(schoolCourseList.get(i)))
+                                                            classSelectedCourses.add(schoolCourseList.get(i));
+                                                        else
+                                                            classSelectedCourses.remove(schoolCourseList.get(i));
+
+                                                    }
+                                                })
+                                                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        clas.setCoursesOffered(classSelectedCourses);
+                                                        mClassList.set(holder.getAdapterPosition(), clas);
+                                                        school.setClasses(mClassList);
+                                                        authentication.putNewUserInDb(school);
+                                                    }
+                                                });
+                                        selectCourseBuilder.create().show();
+                                    } else {
+//                                        TODO: open a dialog box where courses can be selected for exam
+                                    }
+                                }
+                            });
+                    builder.create().show();
                 }
+
             }
         });
 //        else holder.headImage.setSo
     }
 
-    private void openCoursesOfferedFragment(ArrayList<Course> courses) {
-        Bundle bundle = new Bundle();
-        if (school != null) //TODO: passing in the school courses offered is for test purpose, pass class courses instead
-            bundle.putParcelableArrayList(BundleConstants.COURSES_BUNDLE, (ArrayList<? extends Parcelable>) school.getCourses());
-        ((SchoolDetailActivity) mActivity).getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.school_detail_parent, ClassCoursesFragment.newInstance(bundle), "")
-                .addToBackStack(null)
-                .commit();
+    private String[] getCoursesNameArray() {
+        if (schoolCourseList != null) {
+            String[] coursesString = new String[schoolCourseList.size()];
+
+            for (int i = 0; i < schoolCourseList.size(); i++)
+                coursesString[i] = schoolCourseList.get(i).getCourseName();
+            return coursesString;
+        }
+        return new String[]{};
     }
 
+    /**
+     * For courses this sets the background image of the course depending on the name of the course
+     *
+     * @param name       a string of the course name
+     * @param background and the background image view
+     */
     private void setCourseItemBackgroundImage(String name, CircleImageView background) {
+
         if (name.toLowerCase().startsWith("Computer".toLowerCase()) || name.toLowerCase().endsWith("Computer".toLowerCase()))
             Picasso.get()
                     .load(R.drawable.ic_computer_course)
