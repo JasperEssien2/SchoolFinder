@@ -29,6 +29,7 @@ import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ActivitySchoolDetailBinding;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Adapters.SchoolDetailPagerAdapter;
+import com.example.android.schoolfinder.normalUsers.DialogFragments.RatingDialogFragment;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 import com.google.firebase.auth.FirebaseAuth;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -61,7 +62,8 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+        RatingDialogFragment ratingDialogFragment = new RatingDialogFragment();
+        ratingDialogFragment.show(getSupportFragmentManager(), null);
 
 //        setColorPrimary();
 

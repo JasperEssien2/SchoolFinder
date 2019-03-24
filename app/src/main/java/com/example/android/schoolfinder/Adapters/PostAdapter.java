@@ -2,15 +2,17 @@ package com.example.android.schoolfinder.Adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -42,6 +44,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private boolean isSchool;
     private ItemPostBinding itemPostBinding;
     private FirebaseTransactionsAction transactionsAction;
+    private boolean multiSelect = false;
+    private ArrayList<Integer> selectedItems = new ArrayList<Integer>();
+    private ActionMode.Callback actionModeCallbacks = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            multiSelect = true;
+            menu.add("Save");
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+//            for (Integer intItem : selectedItems) {
+//                postList.remove(intItem);
+//            }
+//            mode.finish();
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+        }
+    };
 
 
     public PostAdapter(Activity activity, boolean isSchool) {
@@ -113,6 +144,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                     boolean hasImages) {
         postViewHolder.starCount.setText(String.valueOf(post.getStarCount()));
         postViewHolder.body.setText(post.getBody());
+        postViewHolder.star.setImageResource(R.drawable.ic_like_button_activated);
         if (hasImages)
             setUpImagesRecycler(postViewHolder.images, post);
         if (post.getSchoolLogo() != null && post.getSchoolLogo().getImageUrl() != null)
@@ -125,26 +157,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private void bindViewsForNormalUsers(final PostViewHolder postViewHolder, final Post post,
                                          boolean hasImages) {
 
-        int[][] states = new int[][]{
-                new int[]{android.R.attr.state_enabled}, // enabled
-                new int[]{-android.R.attr.state_enabled}, // disabled
-                new int[]{-android.R.attr.state_checked}, // unchecked
-                new int[]{android.R.attr.state_checked}, // checked
-                new int[]{android.R.attr.state_pressed},  // pressed
-                new int[]{-android.R.attr.state_pressed}  // not pressed
-        };
-
-        int[] colors = new int[]{
-                Color.GRAY,
-                Color.GRAY,
-                Color.GRAY,
-                R.color.colorCyan200,
-                R.color.colorCyan200,
-                Color.GRAY
-        };
-
-        ColorStateList colorStateList = new ColorStateList(
-                states, colors);
+//        int[][] states = new int[][]{
+//                new int[]{android.R.attr.state_enabled}, // enabled
+//                new int[]{-android.R.attr.state_enabled}, // disabled
+//                new int[]{-android.R.attr.state_checked}, // unchecked
+//                new int[]{android.R.attr.state_checked}, // checked
+//                new int[]{android.R.attr.state_pressed},  // pressed
+//                new int[]{-android.R.attr.state_pressed}  // not pressed
+//        };
+//
+//        int[] colors = new int[]{
+//                Color.GRAY,
+//                Color.GRAY,
+//                Color.GRAY,
+//                R.color.colorCyan200,
+//                R.color.colorCyan200,
+//                Color.GRAY
+//        };
+//
+//        ColorStateList colorStateList = new ColorStateList(
+//                states, colors);
         if (hasImages)
             setUpImagesRecycler(postViewHolder.images, post);
         if (post.getSchoolLogo() != null && post.getSchoolLogo().getImageUrl() != null)
@@ -154,14 +186,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postViewHolder.name.setText(post.getAuthor());
         postViewHolder.starCount.setText(String.valueOf(post.getStarCount()));
         postViewHolder.body.setText(post.getBody());
-        postViewHolder.star.setSupportImageTintList(colorStateList);
+//        postViewHolder.star.setSupportImageTintList(colorStateList);
         postViewHolder.time.setVisibility(View.VISIBLE);
         postViewHolder.time.setReferenceTime((Long) post.getTimeStamp());
         if (post.getStars() == null) post.setStars(new HashMap<String, Boolean>());
         if (post.getStars().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            postViewHolder.star.setPressed(true);
+            postViewHolder.star.setImageResource(R.drawable.ic_like_button_activated);
         } else {
-            postViewHolder.star.setPressed(false);
+            postViewHolder.star.setImageResource(R.drawable.ic_like_button);
         }
         postViewHolder.star.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,6 +351,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             star = itemPostBinding.postLikeButton;
             promotedColor = itemPostBinding.promotedColor;
             time = itemPostBinding.postTime;
+        }
+
+        void update() {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    ((AppCompatActivity) view.getContext()).startSupportActionMode(actionModeCallbacks);
+                    return true;
+                }
+            });
         }
     }
 }

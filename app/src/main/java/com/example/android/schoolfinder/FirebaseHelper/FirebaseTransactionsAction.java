@@ -526,6 +526,7 @@ public class FirebaseTransactionsAction {
             isLiked = true;
         }
 
+        Log.e(TAG, "isLiked ----- " + isLiked);
         likeButton.setImageResource(isLiked ? R.drawable.ic_like_button_activated : R.drawable.ic_like_button);
         startCount.setText(String.valueOf(post.getStarCount()));
         dbRef.child(FirebaseConstants.POSTS_NODE)
@@ -539,6 +540,15 @@ public class FirebaseTransactionsAction {
                         if (post1 == null)
                             return Transaction.success(mutableData);
 
+                        if (post1.getStars() == null)
+                            post1.setStars(new HashMap<String, Boolean>());
+                        if (post1.getStars().containsKey(userId)) {
+                            post1.setStarCount(post1.getStarCount() - 1);
+                            post1.getStars().remove(userId);
+                        } else {
+                            post1.setStarCount(post1.getStarCount() + 1);
+                            post1.getStars().put(userId, true);
+                        }
                         final Map<String, Object> childUpdates = new HashMap<>();
                         //Add it to the post node
                         childUpdates.put(FirebaseConstants.POSTS_NODE + "/" + post1.getUid(), post1);

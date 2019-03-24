@@ -293,6 +293,12 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/selected_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="#77000000"
+            android:visibility="gone" />
     </android.support.v7.widget.CardView>
 
 </layout>

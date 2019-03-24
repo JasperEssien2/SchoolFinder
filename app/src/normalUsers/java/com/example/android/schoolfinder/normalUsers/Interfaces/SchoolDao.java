@@ -30,6 +30,10 @@ public interface SchoolDao {
             ":state_region AND schoolCategory LIKE :category")
     LiveData<List<School>> getAllSchool(String country, String state_region, List<String> category);
 
+    @Query("SELECT * FROM schools WHERE country LIKE :country AND state_region LIKE " +
+            ":state_region")
+    LiveData<List<School>> getAllSchool(String country, String state_region);
+
     @Query("SELECT * FROM schools WHERE schoolName LIKE :name")
     LiveData<List<School>> searchByName(String name);
 

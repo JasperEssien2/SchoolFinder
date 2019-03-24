@@ -3,13 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
-        android:clipChildren="false"
-        android:orientation="vertical"
         tools:context=".Fragments.SearchFragment">
 
         <android.support.design.widget.AppBarLayout
@@ -34,10 +32,11 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/swipeStack"
@@ -212,8 +211,8 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+        </FrameLayout>
         <!--</android.support.v4.widget.NestedScrollView>-->
 
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

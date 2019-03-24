@@ -84,6 +84,11 @@ public class ApplyFragment extends Fragment {
         });
     }
 
+    /**
+     * This method opens up the courses offered fragment to show courses offered by a class
+     *
+     * @param courses
+     */
     private void openCoursesOfferedFragment(ArrayList<Course> courses) {
         Bundle bundle = new Bundle();
         Log.e(TAG, "openCoursesOfferedFragment() ------------------ ");

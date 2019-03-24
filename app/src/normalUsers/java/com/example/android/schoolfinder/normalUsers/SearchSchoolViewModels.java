@@ -75,6 +75,15 @@ public class SearchSchoolViewModels extends AndroidViewModel {
         return schoolLiveData;
     }
 
+    public LiveData<List<School>> getOfflineSchoolsLivedata(String country, String stateRegion, List<String> categories) {
+        mCountryChoice = country;
+        mStateRegionChoice = stateRegion;
+        mSchoolCategories = categories;
+
+        return appDatabase.schoolDao().getAllSchool(country, stateRegion);
+//        return appDatabase.schoolDao().getAllSchool(country, stateRegion, categories);
+    }
+
     public LiveData<List<School>> filterByCountryStateRegion(String country, String stateRegion) {
         mCountryChoice = country;
         mStateRegionChoice = stateRegion;

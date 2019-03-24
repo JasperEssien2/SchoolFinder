@@ -239,7 +239,11 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
 
     @Override
     public void postLike(Post post, boolean isSuccessful) {
-        if (isSuccessful)
-            Toast.makeText(getActivity(), "liked", Toast.LENGTH_SHORT).show();
+        try {
+            if (isSuccessful)
+                Toast.makeText(getActivity(), "liked", Toast.LENGTH_SHORT).show();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }

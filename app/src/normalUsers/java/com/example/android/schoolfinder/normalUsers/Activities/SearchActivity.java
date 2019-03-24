@@ -57,28 +57,35 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
     LiveData<List<School>> schoolListLiveData;
     CountryPickerDialogFragment dialogFragment = new CountryPickerDialogFragment();
     private SearchSchoolViewModels searchSchoolViewModels;
-    private FirebaseTransactionsAction transactionsAction;
+    private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
     private List<School> mSchools;
     private List<String> categoryList = new ArrayList<>();
     private int position;
     private Observer<List<School>> observer;
     private Country countrySelected;
     private StateRegion stateRegionSelected;
+    final SearchStackedCardAdapter cardAdapter = new SearchStackedCardAdapter(this, new ArrayList<School>(),
+            transactionsAction, searchSchoolViewModels);
+    private String countryCode, stateCode;
 
     public SearchActivity() {
         // Required empty public constructor
     }
 
+    private boolean isOffline = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         searchBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-        transactionsAction = new FirebaseTransactionsAction(this);
+
         searchSchoolViewModels = new ViewModelProvider.AndroidViewModelFactory(getApplication())
                 .create(SearchSchoolViewModels.class);
+        cardAdapter.initSchoolViewModels(searchSchoolViewModels);
         searchSchoolViewModels.setOfflineCallback(this);
         setSupportActionBar(searchBinding.toolbar);
-        final SearchStackedCardAdapter cardAdapter = new SearchStackedCardAdapter(this, new ArrayList<School>(), transactionsAction);
+
+
 //        getSupportActionBar()
 //                .setDefaultDisplayHomeAsUpEnabled(true);
 
@@ -108,7 +115,12 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
                     Snackbar.make(searchBinding.getRoot(), "No school found", Snackbar.LENGTH_SHORT);
             }
         };
-        schoolListLiveData = searchSchoolViewModels.getSchoolsLivedata("United States", "California", null);
+        countryCode = "United States";
+        stateCode = "California";
+        if (!isOffline)
+            schoolListLiveData = searchSchoolViewModels.getSchoolsLivedata(countryCode, stateCode, categoryList);
+        else
+            schoolListLiveData = searchSchoolViewModels.getOfflineSchoolsLivedata(countryCode, stateCode, categoryList);
 
         schoolListLiveData.observe(this, observer);
 
@@ -184,6 +196,20 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
                 return true;
             case R.id.filter_by_category:
                 subMenu = item.getSubMenu();
+
+                return true;
+            case R.id.saved_school:
+                isOffline = !isOffline;
+                cardAdapter.isOffline(isOffline);
+                item.setTitle(!isOffline ? "Saved Schools" : "online");
+                schoolListLiveData.removeObserver(observer);
+                if (!isOffline)
+                    schoolListLiveData = searchSchoolViewModels.filterByCategories(categoryList);
+                else
+                    schoolListLiveData = searchSchoolViewModels.getOfflineSchoolsLivedata(countryCode,
+                            stateCode, categoryList);
+                schoolListLiveData.observe(this, observer);
+                Log.e(TAG, "isOffline ------ " + isOffline);
 
                 return true;
             case R.id.category_tetiary:
@@ -267,7 +293,10 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
                 break;
         }
         schoolListLiveData.removeObserver(observer);
-        schoolListLiveData = searchSchoolViewModels.filterByCategories(categoryList);
+        if (!isOffline)
+            schoolListLiveData = searchSchoolViewModels.filterByCategories(categoryList);
+        else schoolListLiveData = searchSchoolViewModels.getOfflineSchoolsLivedata(countryCode,
+                stateCode, categoryList);
         schoolListLiveData.observe(this, observer);
     }
 

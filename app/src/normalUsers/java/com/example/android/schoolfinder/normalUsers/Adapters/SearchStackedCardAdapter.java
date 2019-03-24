@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -20,9 +24,11 @@ import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ItemSchoolCardBinding;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity;
+import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 import com.google.firebase.auth.FirebaseAuth;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,18 +39,58 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 
     private static final String TAG = SearchStackedCardAdapter.class.getSimpleName();
     private FirebaseTransactionsAction transactionsAction;
+    private SearchSchoolViewModels searchSchoolViewModels;
     private Activity mActivity;
     private List<School> mSchoolList;
-    //    private final SearchSchoolViewModels viewModels;
     private ItemSchoolCardBinding mItemSchoolCardBinding;
 
+    private boolean multiSelect = false;
+    private ArrayList<School> selectedItems = new ArrayList<>();
+    private boolean isOffline;
+    private ActionMode.Callback actionModeCallbacks = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            multiSelect = true;
+            if (isOffline) menu.add("Delete");
+            else menu.add("Save");
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            for (School school : selectedItems) {
+                if (!isOffline)
+                    searchSchoolViewModels.insertSchool(school);
+                else searchSchoolViewModels.deleteSchool(school);
+            }
+            multiSelect = false;
+            mode.finish();
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            multiSelect = false;
+            selectedItems.clear();
+            mode.finish();
+            notifyDataSetChanged();
+        }
+    };
+
+
     public SearchStackedCardAdapter(Activity activity, List<School> schoolList,
-                                    FirebaseTransactionsAction transactionsAction) {
+                                    FirebaseTransactionsAction transactionsAction, SearchSchoolViewModels searchSchoolViewModels) {
         super();
         mActivity = activity;
         mSchoolList = schoolList;
         this.transactionsAction = transactionsAction;
 //        mTransactionsAction = transactionsAction;
+        this.searchSchoolViewModels = searchSchoolViewModels;
     }
 
     @NonNull
@@ -63,7 +109,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         if (school == null) return;
 //        new PicassoImageLoader(mActivity, "https://images.megapixl.com/3337/33377575.jpg", R.color.colorLightGrey,
 //                R.color.colorLightGrey, viewHolder.backgroundImage);
-
+        viewHolder.selectItem(school);
         if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
             new PicassoImageLoader(mActivity, school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
                     R.color.colorLightGrey, viewHolder.schoolLogo);
@@ -71,20 +117,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         if (school.getSchoolImages() != null && school.getSchoolImages().get(0) != null)
             new PicassoImageLoader(mActivity, school.getSchoolImages().get(0).getImageUrl(), R.color.colorLightGrey,
                     R.color.colorLightGrey, viewHolder.backgroundImage);
-//        if (school.getSchoolImages() != null && school.getSchoolImages().get(0) != null) {
-//            Log.e(TAG, "Image url --- " + school.getSchoolImages().get(0).getImageUrl());
-//            new PicassoImageLoader(mActivity, "https://jooinn.com/images/school-building-3.jpg", R.color.colorLightGrey,
-//                    R.color.colorLightGrey, viewHolder.backgroundImage);
-//
-//            new PicassoImageLoader(mActivity, school.getSchoolLogoImageUrl() != null ? school.getSchoolLogoImageUrl() : "", R.color.colorLightGrey,
-//                    R.color.colorLightGrey, viewHolder.backgroundImage);
-////            Picasso
-////                    .get()
-////                    .load(school.getSchoolImages().get(0).getImageUrl())
-////                    .placeholder(R.color.colorGrey)
-////                    .error(R.drawable.skool_image1)
-////                    .into(viewHolder.backgroundImage);
-//        }
+
         viewHolder.schoolName.setText(school.getSchoolName() != null ? school.getSchoolName() : "");
         viewHolder.schoolMotto.setText(school.getSchoolMotto() != null ? school.getSchoolMotto() : "");
         viewHolder.schoolLocation.setText(school.getSchoolLocation() != null ? school.getSchoolLocation() : "");
@@ -99,17 +132,6 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         hideOrShowIndicator(school.getImpressedExpressions(), viewHolder.satisfiedIndicator);
         hideOrShowIndicator(school.getNormalExpressions(), viewHolder.neutralIndicator);
         hideOrShowIndicator(school.getNotImpressedExpressions(), viewHolder.dissatisfiedIndicator);
-//        viewHolder.schoolNotImpressedExpressionCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
-//        viewHolder.schoolNormalExpressionCount.setText(String.valueOf(school.getNormalExpressionCount()));
-//        viewHolder.schoolInterestedCount.setText(String.valueOf(school.getImpressedExpressionCount()));
-//        viewHolder.schoolFollowersCount.setText(String.valueOf(school.getFollowersCount()));
-//        mItemSchoolCardBinding.followFrame.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mTransactionsAction.schoolFollowersAction(viewHolder.schoolFollowersCount, school,
-//                        FirebaseAuth.getInstance().getCurrentUser().getUid());
-//            }
-//        });
     }
 
     /**
@@ -190,6 +212,21 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         });
     }
 
+    /**
+     * To control the Contexual Action bar to show delete instead of save when in offline mode
+     *
+     * @param isOffline
+     */
+    public void isOffline(boolean isOffline) {
+        this.isOffline = isOffline;
+    }
+
+    public void initSchoolViewModels(SearchSchoolViewModels searchSchoolViewModels) {
+
+        this.searchSchoolViewModels = searchSchoolViewModels;
+    }
+
+
     public class SearchStackedCardViewHolder extends RecyclerView.ViewHolder {
         public TextView satisfiedCount, followCount, neutralCount, dissatisfiedCount;
         public CircleImageView followIndicator, satisfiedIndicator, neutralIndicator, dissatisfiedIndicator;
@@ -200,15 +237,15 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 
         public SearchStackedCardViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(mActivity, SchoolDetailActivity.class);
-                    intent.putExtra(BundleConstants.SCHOOL_BUNDLE, mSchoolList.get(getAdapterPosition()));
-                    intent.putExtra(BundleConstants.SCHOOL_ID_BUNDLE, mSchoolList.get(getAdapterPosition()).getId());
-                    mActivity.startActivity(intent);
-                }
-            });
+
+            if (getAdapterPosition() > 0)
+                update(mSchoolList.get(getAdapterPosition()));
+            else update(null);
+//            try {
+//                selectItem(mSchoolList.get(getAdapterPosition()));
+//            }catch (ArrayIndexOutOfBoundsException e){
+//                e.printStackTrace();
+//            }
             backgroundImage = mItemSchoolCardBinding.schoolCardBackgroundImage;
             schoolName = mItemSchoolCardBinding.itemSchoolName;
             schoolLocation = mItemSchoolCardBinding.itemSchoolLocation;
@@ -226,6 +263,53 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 //            schoolNormalExpressionCount = mItemSchoolCardBinding.neutralCountTextview;
 //            schoolNotImpressedExpressionCount = mItemSchoolCardBinding.sadCountTextview;
             schoolLogo = mItemSchoolCardBinding.schoolLogo;
+        }
+
+        void update(School item) {
+            if (item != null) {
+                if (selectedItems.contains(item)) {
+                    selectedItems.remove(item);
+                    itemView.findViewById(R.id.selected_indicator).setVisibility(View.GONE);
+                } else {
+                    selectedItems.add(item);
+                    itemView.findViewById(R.id.selected_indicator).setVisibility(View.VISIBLE);
+                }
+            }
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    ((AppCompatActivity) mActivity).startSupportActionMode(actionModeCallbacks);
+                    selectItem(mSchoolList.get(getAdapterPosition()));
+                    return true;
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (getAdapterPosition() != -1)
+                        selectItem(mSchoolList.get(getAdapterPosition()));
+                    Intent intent = new Intent(mActivity, SchoolDetailActivity.class);
+                    intent.putExtra(BundleConstants.SCHOOL_BUNDLE, mSchoolList.get(getAdapterPosition()));
+                    intent.putExtra(BundleConstants.SCHOOL_ID_BUNDLE, mSchoolList.get(getAdapterPosition()).getId());
+                    mActivity.startActivity(intent);
+                }
+            });
+        }
+
+        void selectItem(School item) {
+            if (multiSelect) {
+                if (selectedItems.contains(item)) {
+                    selectedItems.remove(item);
+                    itemView.findViewById(R.id.selected_indicator).setVisibility(View.GONE);
+                } else {
+                    selectedItems.add(item);
+                    itemView.findViewById(R.id.selected_indicator).setVisibility(View.VISIBLE);
+                }
+            } else {
+                itemView.findViewById(R.id.selected_indicator).setVisibility(View.GONE);
+
+            }
         }
 
     }
