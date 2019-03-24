@@ -19,9 +19,9 @@ student to get the best school made me to start this project.
 *Firebase - authentication, real database, media storage
 
 ## Images - Regular Users flavor
-![Alt text](/School_Finder_RegularScreenshots/home_page.jpg? =720x1440 "Home Page")
-![Alt text](/School_Finder_RegularScreenshots/search_page.jpg? =720x1440 "Search Page")
-![Alt text](/School_Finder_RegularScreenshots/post_page.jpg? =720x1440 "Post Page")
+![Alt text](/School_Finder_RegularScreenshots/home_page.jpg? =720x1440)
+![Alt text](/School_Finder_RegularScreenshots/search_page.jpg? =720x1440)
+![Alt text](/School_Finder_RegularScreenshots/post_page.jpg? =720x1440)
 
 ## Version 
 1.0
