@@ -20,6 +20,6 @@ student to get the best school made me to start this project.
 
 ## Images - Regular Users flavor
 <img src="/School_Finder_RegularScreenshots/home_page.jpg" width="360" height="720" /> | <img src="/School_Finder_RegularScreenshots/search_page.jpg" width="360" height="720" />
-<img src="/School_Finder_RegularScreenshots/post_page_1.jpg" width="360" height="720" /> | <img src="/School_Finder_RegularScreenshots/post_page_2.jpg" width="360" height="720" />
+<img src="/School_Finder_RegularScreenshots/post_page1.jpg" width="360" height="720" /> | <img src="/School_Finder_RegularScreenshots/post_page_2.jpg" width="360" height="720" />
 ## Version 
 1.0
