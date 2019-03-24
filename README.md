@@ -20,6 +20,8 @@ student to get the best school made me to start this project.
 
 ## Images - Regular Users flavor
 ![Alt text](/School_Finder_RegularScreenshots/home_page.jpg?raw=true "Home Page")
+![Alt text](/School_Finder_RegularScreenshots/search_page.jpg?raw=true "Search Page")
+![Alt text](/School_Finder_RegularScreenshots/post_page.jpg?raw=true "Post Page")
 
 ## Version 
 1.0
