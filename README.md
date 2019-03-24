@@ -14,9 +14,9 @@ Noticing most nice and standard coming up schools being overshadowed by popular 
 student to get the best school made me to start this project.
 
 ## Librarys
-Picasso - for loading images directly from web.
-Retrofit - for getting and parsing geonames api
-Firebase - authentication, real database, media storage
+*Picasso - for loading images directly from web.
+*Retrofit - for getting and parsing geonames api
+*Firebase - authentication, real database, media storage
 
 ## Images
 ![Alt text](relative/path/to/img.jpg?raw=true "Title")
