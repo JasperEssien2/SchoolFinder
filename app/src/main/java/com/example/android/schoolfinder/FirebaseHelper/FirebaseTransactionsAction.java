@@ -2,8 +2,9 @@ package com.example.android.schoolfinder.FirebaseHelper;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -274,8 +276,10 @@ public class FirebaseTransactionsAction {
             isFollowing = true;
 
         }
-        if (followButton instanceof FloatingActionButton)
-            ((FloatingActionButton) followButton).setImageResource(isFollowing ? R.drawable.ic_follow : R.drawable.ic_follow);
+        if (followButton instanceof CardView)
+            ((CardView) followButton).setCardBackgroundColor(!isFollowing ?
+                    ContextCompat.getColor(followButton.getContext(), R.color.colorLighterGrey) :
+                    ContextCompat.getColor(followButton.getContext(), R.color.colorCyan200));
         else
             followButton.setVisibility(isFollowing ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getFollowersCount()));
@@ -353,10 +357,12 @@ public class FirebaseTransactionsAction {
      * When a user clicks on the impressed smilley to express the impression the school gave
      * this method is called
      *
-     * @param school the instance of the school
-     * @param userId the id of the user
+     * @param school           the instance of the school
+     * @param userId           the id of the user
+     * @param isUsingIndicator
      */
-    public void schoolImpressedAction(final TextView textView, final View impressedButton, final School school, final String userId) {
+    public void schoolImpressedAction(final TextView textView, final View impressedButton, final School school,
+                                      final String userId, boolean isUsingIndicator) {
         boolean isImpressed = false;
 
         if (school.getImpressedExpressions() == null)
@@ -372,8 +378,8 @@ public class FirebaseTransactionsAction {
 
             isImpressed = true;
         }
-        if (impressedButton instanceof FloatingActionButton)
-            ((FloatingActionButton) impressedButton).setImageResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
+        if (!isUsingIndicator)
+            ((CircleImageView) impressedButton).setImageResource(isImpressed ? R.drawable.ic_smile : R.drawable.ic_smile_deactivated);
         else
             impressedButton.setVisibility(isImpressed ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getImpressedExpressionCount()));
@@ -433,11 +439,12 @@ public class FirebaseTransactionsAction {
      * When a user clicks on the not impressed smilley to express the impression the school gave
      * this method is called
      *
-     * @param school the instance of the school
-     * @param userId the id of the user
+     * @param school           the instance of the school
+     * @param userId           the id of the user
+     * @param isUsingIndicator
      */
     public void schoolNotImpressedAction(final TextView textView, final View notImpressedButton,
-                                         final School school, final String userId) {
+                                         final School school, final String userId, boolean isUsingIndicator) {
         //TODO: Add it to the user impressed school node;
 
         if (school.getNotImpressedExpressions() == null)
@@ -454,8 +461,8 @@ public class FirebaseTransactionsAction {
             school.getNotImpressedExpressions().put(userId, true);
             notImpressed = true;
         }
-        if (notImpressedButton instanceof FloatingActionButton)
-            ((FloatingActionButton) notImpressedButton).setImageResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
+        if (!isUsingIndicator)
+            ((CircleImageView) notImpressedButton).setImageResource(notImpressed ? R.drawable.ic_sad__1 : R.drawable.ic_sad__1_deactivated);
         else
             notImpressedButton.setVisibility(notImpressed ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getNotImpressedExpressionCount()));
@@ -604,10 +611,12 @@ public class FirebaseTransactionsAction {
      * When a user clicks on the normal/neutal impressed smilley to express the impression the school gave
      * this method is called
      *
-     * @param school the instance of the school
-     * @param userId the id of the user
+     * @param school           the instance of the school
+     * @param userId           the id of the user
+     * @param isUsingIndicator
      */
-    public void schoolNormalImpressedAction(final TextView textView, final View normalImpressButton, final School school, final String userId) {
+    public void schoolNormalImpressedAction(final TextView textView, final View normalImpressButton,
+                                            final School school, final String userId, boolean isUsingIndicator) {
         //TODO: Add it to the user impressed school node;
         if (school.getNormalExpressions() == null)
             school.setNormalExpressions(new HashMap<String, Boolean>());
@@ -624,8 +633,8 @@ public class FirebaseTransactionsAction {
 
             isNormalImpressed = true;
         }
-        if (normalImpressButton instanceof FloatingActionButton)
-            ((FloatingActionButton) normalImpressButton).setImageResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
+        if (!isUsingIndicator)
+            ((CircleImageView) normalImpressButton).setImageResource(isNormalImpressed ? R.drawable.ic_neutral : R.drawable.ic_neutral_deactivated);
         else
             normalImpressButton.setVisibility(isNormalImpressed ? View.VISIBLE : View.GONE);
         textView.setText(String.valueOf(school.getNormalExpressionCount()));

@@ -20,7 +20,7 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="360dp"
                 android:fitsSystemWindows="true"
                 android:minHeight="@dimen/school_details_appbar_height"
                 app:contentScrim="?attr/colorPrimary"
@@ -101,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.33" />
+                        app:layout_constraintGuide_percent="0.49" />
 
                     <TextView
                         android:id="@+id/school_name"
@@ -139,201 +139,44 @@
                         app:layout_constraintTop_toBottomOf="@+id/school_name"
                         tools:text="11 Ndia street, Egbeluu" />
 
-                    <LinearLayout
-                        android:id="@+id/social_networks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/school_address">
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/social_networks"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="8dp"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:layout_marginEnd="8dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toBottomOf="@+id/school_address">-->
 
-                        <ImageButton
-                            android:id="@+id/facebook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@null"
-                            android:src="@drawable/ic_facebook_full" />
+                    <!--<ImageButton-->
+                    <!--android:id="@+id/facebook"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="8dp"-->
+                    <!--android:background="@null"-->
+                    <!--android:src="@drawable/ic_facebook_full" />-->
 
-                        <ImageButton
-                            android:id="@+id/mail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:background="@null"
-                            android:src="@drawable/ic_email_full" />
+                    <!--<ImageButton-->
+                    <!--android:id="@+id/mail"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="16dp"-->
+                    <!--android:background="@null"-->
+                    <!--android:src="@drawable/ic_email_full" />-->
 
-                        <ImageButton
-                            android:id="@+id/twitter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:background="@null"
-                            android:src="@drawable/ic_twitter_full" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/reactions"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/social_networks">
-
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageButton
-                                    android:id="@+id/follow"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@null"
-                                    android:src="@drawable/ic_follow_" />
-
-                                <TextView
-                                    android:id="@+id/follow_count"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="100"
-
-                                    android:textColor="@color/colorWhite"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/follow_indicator"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:src="#ffffff"
-                                android:visibility="gone" />
-                        </FrameLayout>
+                    <!--<ImageButton-->
+                    <!--android:id="@+id/twitter"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="16dp"-->
+                    <!--android:background="@null"-->
+                    <!--android:src="@drawable/ic_twitter_full" />-->
+                    <!--</LinearLayout>-->
 
 
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageButton
-                                    android:id="@+id/satisfied"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@null"
-                                    android:src="@drawable/ic_sentiment_satisfied" />
-
-                                <TextView
-                                    android:id="@+id/satisfied_count"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10"
-                                    android:textColor="@color/colorWhite"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/satisfied_indicator"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:src="#ffffff"
-                                android:visibility="gone" />
-                        </FrameLayout>
-
-                        <!--TODO: Use a small white circle to indicate when d user follow or express-->
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageButton
-                                    android:id="@+id/neutral"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@null"
-                                    android:src="@drawable/ic_sentiment_neutral" />
-
-                                <TextView
-                                    android:id="@+id/neutral_count"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="100"
-                                    android:textColor="@color/colorWhite"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/neutral_indicator"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:src="#ffffff"
-                                android:visibility="gone" />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageButton
-                                    android:id="@+id/dissatisfied"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@null"
-                                    android:src="@drawable/ic_sentiment_dissatisfied" />
-
-                                <TextView
-                                    android:id="@+id/dissatisfied_count"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="100"
-                                    android:textColor="@color/colorWhite"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/dissatisfied_indicator"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:src="#ffffff"
-                                android:visibility="gone" />
-                        </FrameLayout>
-
-                    </LinearLayout>
 
                     <!--<ImageView-->
                     <!--android:id="@+id/school_settings_edit_name"-->
@@ -360,6 +203,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="top"
                     android:layout_marginBottom="48dp"
+                    app:title=""
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -387,14 +231,65 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/comment_on_school_fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:src="@drawable/ic_edit_white"-->
+        <!--app:fabSize="normal" />-->
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/comment_on_school_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginBottom="75dp"
             android:src="@drawable/ic_edit_white"
-            app:fabSize="normal" />
+            android:visibility="invisible"
+            app:elevation="6dp"
+            app:fabSize="normal"
+            app:pressedTranslationZ="12dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_social_media"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="85dp"
+            android:src="@drawable/ic_email"
+            android:visibility="invisible"
+            app:elevation="6dp"
+            app:fabSize="normal"
+            app:pressedTranslationZ="12dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="85dp"
+            android:layout_marginBottom="16dp"
+
+            android:src="@drawable/ic_smile"
+            android:visibility="invisible"
+            app:fabSize="normal"
+            app:pressedTranslationZ="12dp" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_add"
+            app:fabSize="normal"
+            app:pressedTranslationZ="12dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

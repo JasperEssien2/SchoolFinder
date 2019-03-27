@@ -1,12 +1,17 @@
 package com.example.android.schoolfinder.normalUsers.Fragments;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +19,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
@@ -27,6 +35,7 @@ import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
+import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.FragmentSettingsBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
@@ -90,6 +99,12 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
                 imagePicker();
             }
         });
+        binding.changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showUpdatePasswordAlertDialog();
+            }
+        });
         return binding.getRoot();
     }
 
@@ -118,13 +133,11 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
 
     private void editButtonClicked() {
         enableAllEditView();
-
-
     }
 
     private void doneButtonClicked() {
-        disableAllEditView();
         if (mUser == null) return;
+        boolean isEmailChanged = false;
 
         if (!mUser.getName().toLowerCase().equals(binding.settingsName.getText().toString().toLowerCase())) {
             changeCount++;
@@ -136,14 +149,124 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
         }
         if (!mUser.getEmail().toLowerCase().equals(binding.settingsEmail.getText().toString().toLowerCase())) {
             changeCount++;
-            mUser.setEmail(binding.settingsEmail.getText().toString());
+            isEmailChanged = true;
+            showUpdateEmailAlertDialog();
+//            mUser.setEmail(binding.settingsEmail.getText().toString());
         }
         if (!mUser.getLocation().toLowerCase().equals(binding.settingsLocation.getText().toString().toLowerCase())) {
             changeCount++;
             mUser.setLocation(binding.settingsLocation.getText().toString());
         }
-        if (changeCount != 0)
+        if (changeCount != 0 && !isEmailChanged) {
+            disableAllEditView();
             authentication.putNewUserInDb(mUser);
+        }
+    }
+
+    private void showUpdateEmailAlertDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Email update");
+//        alertDialog.setMessage("Enter password");
+
+        final EditText input = new EditText(getActivity());
+        input.setHint("Enter password");
+        input.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorLighterGrey));
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Ok", null);
+        final Dialog dialog = alertDialog.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!(input.getText().toString().length() >= 6)) {
+                            input.setError(Validation.PASSWORD_LESS);
+                        } else {
+                            input.setError(null);
+
+                            authentication.changeEmail(mUser.getEmail(), binding.settingsEmail.getText().toString(),
+                                    input.getText().toString());
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+//        alertDialog.
+
+        dialog.show();
+    }
+
+    private void showUpdatePasswordAlertDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Password update");
+//        alertDialog.setMessage("Enter password");
+        final LinearLayout linearLayout = new LinearLayout(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        linearLayout.setLayoutParams(lp);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        final EditText oldPassword = new EditText(getActivity());
+        final EditText newPassword = new EditText(getActivity());
+        oldPassword.setHint("Enter current password");
+        oldPassword.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorLighterGrey));
+        oldPassword.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        oldPassword.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        newPassword.setHint("Enter current password");
+        newPassword.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorLighterGrey));
+        newPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        newPassword.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.addView(oldPassword, 0);
+        linearLayout.addView(newPassword, 1);
+        alertDialog.setView(linearLayout);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Ok", null);
+        final Dialog dialog = alertDialog.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!(oldPassword.getText().toString().length() >= 6) ||
+                                !(newPassword.getText().toString().length() >= 6)) {
+                            oldPassword.setError(Validation.PASSWORD_LESS);
+                            newPassword.setError(Validation.PASSWORD_LESS);
+                        } else {
+                            oldPassword.setError(null);
+                            newPassword.setError(null);
+                            authentication.updatePassword(mUser.getEmail(), oldPassword.getText().toString(),
+                                    newPassword.getText().toString());
+
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+//        alertDialog.
+
+        dialog.show();
     }
 
     private void disableAllEditView() {
@@ -211,6 +334,7 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
     @Override
     public void userInsertedToDatabase(Users users) {
         mUser = users;
+        disableAllEditView();
         setUpViewWithData();
     }
 
@@ -233,6 +357,23 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
     public void userGotten(Users users) {
         mUser = users;
         setUpViewWithData();
+    }
+
+    @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+        if (isEmail && isSuccessful) {
+            mUser.setEmail(binding.settingsEmail.getText().toString());
+            Toast.makeText(getActivity(), "Email changed..", Toast.LENGTH_SHORT).show();
+            authentication.putNewUserInDb(mUser);
+        } else if (isEmail && !isSuccessful) {
+            Toast.makeText(getActivity(), "Email update failed..", Toast.LENGTH_SHORT).show();
+            authentication.putNewUserInDb(mUser);
+        }
+        if (!isEmail && isSuccessful) {
+            Toast.makeText(getActivity(), "Password changed..", Toast.LENGTH_SHORT).show();
+        } else if (!isEmail && !isSuccessful) {
+            Toast.makeText(getActivity(), "Password update failed..", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

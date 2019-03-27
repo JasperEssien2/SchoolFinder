@@ -192,6 +192,11 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void profileImageStored(String imageUrl, boolean isSuccesful) {
 //        if (imageUrl != null) {
 //            if (imagePreview != null) {

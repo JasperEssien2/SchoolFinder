@@ -132,6 +132,11 @@ public class SchoolPhotosFragment extends Fragment implements AuthenticationCall
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void profileImageStored(String imageUrl, boolean isSuccesful) {
 
     }

@@ -178,6 +178,11 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks, 
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void onClick(View view) {
 
         switch (view.getId()) {

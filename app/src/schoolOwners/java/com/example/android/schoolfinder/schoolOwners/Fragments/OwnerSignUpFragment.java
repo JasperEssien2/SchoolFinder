@@ -176,6 +176,11 @@ public class OwnerSignUpFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next_button:

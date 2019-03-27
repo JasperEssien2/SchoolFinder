@@ -184,7 +184,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
                 if (school != null) {
                     transactionsAction.schoolImpressedAction(mItemSchoolCardBinding.satisfiedCount,
                             mItemSchoolCardBinding.satisfiedIndicator, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
                 }
             }
         });
@@ -195,7 +195,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
                 if (school != null) {
                     transactionsAction.schoolNormalImpressedAction(mItemSchoolCardBinding.neutralCount,
                             mItemSchoolCardBinding.neutralIndicator, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
                 }
             }
         });
@@ -206,7 +206,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
                 if (school != null) {
                     transactionsAction.schoolNotImpressedAction(mItemSchoolCardBinding.dissatisfiedCount,
                             mItemSchoolCardBinding.dissatisfiedIndicator, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
                 }
             }
         });

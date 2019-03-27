@@ -173,6 +173,11 @@ public class ClassCourseSettingsFragment extends Fragment implements Authenticat
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void profileImageStored(String imageUrl, boolean isSuccesful) {
 
     }

@@ -148,6 +148,11 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         Log.e(TAG, "userGotten from database");
     }
 
+    @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
     private void setUpViewWithData() {
         if (mUser == null) return;
         if (mUser.getProfileImageUrl() != null && !mUser.getProfileImageUrl().isEmpty()) {

@@ -1,5 +1,6 @@
 package com.example.android.schoolfinder.DialogFragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.example.android.schoolfinder.Adapters.ClassesCourseAdapter;
@@ -61,6 +63,15 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
         this.mediaStorage = new MediaStorage(this);
         this.authentication = new Authentication(this);
 
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
     }
 
     @Nullable
@@ -284,6 +295,11 @@ public class ShowUserDetailFragment extends DialogFragment implements Authentica
 
     @Override
     public void userGotten(Users users) {
+
+    }
+
+    @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
 
     }
 

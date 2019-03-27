@@ -437,6 +437,11 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void profileImageStored(String imageUrl, boolean isSuccesful) {
 
     }

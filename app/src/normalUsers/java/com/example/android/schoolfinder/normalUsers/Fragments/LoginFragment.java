@@ -188,4 +188,9 @@ public class LoginFragment extends Fragment implements AuthenticationCallbacks {
     public void userGotten(Users users) {
 
     }
+
+    @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
 }

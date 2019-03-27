@@ -17,6 +17,8 @@ import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
@@ -31,7 +33,6 @@ import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Adapters.SchoolDetailPagerAdapter;
 import com.example.android.schoolfinder.normalUsers.DialogFragments.RatingDialogFragment;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
-import com.google.firebase.auth.FirebaseAuth;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.NetworkPolicy;
@@ -40,16 +41,20 @@ import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class SchoolDetailActivity extends AppCompatActivity implements FirebaseTransactionCallback {
 
     private static final String TAG = SchoolDetailActivity.class.getSimpleName();
+    List<Image> schoolImages = new ArrayList<>();
     private ActivitySchoolDetailBinding schoolDetailBinding;
     private SearchSchoolViewModels viewModels;
     private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
     private School school;
-    List<Image> schoolImages = new ArrayList<>();
+    private boolean isFABOpen = false;
+    private Animation fab_open;
+    private Animation fab_close;
+    private Animation fab_icon_rotate_forward;
+    private Animation fab_icon_rotate_backward;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +62,38 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
         schoolDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_school_detail);
         viewModels = new ViewModelProvider.AndroidViewModelFactory(getApplication())
                 .create(SearchSchoolViewModels.class);
-        setUpOnCLickListeners();
+        fab_open = AnimationUtils.loadAnimation(this, R.anim.anime_fab_open);
+        fab_close = AnimationUtils.loadAnimation(this, R.anim.anime_fab_close);
+        fab_icon_rotate_forward = AnimationUtils.loadAnimation(this, R.anim.anime_fab_rotate_forward);
+        fab_icon_rotate_backward = AnimationUtils.loadAnimation(this, R.anim.anime_fab_rotate_backward);
+        schoolDetailBinding.imageSlider.setPagerIndicatorVisibility(false);
+//        setUpOnCLickListeners();
         setSupportActionBar(schoolDetailBinding.toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        RatingDialogFragment ratingDialogFragment = new RatingDialogFragment();
-        ratingDialogFragment.show(getSupportFragmentManager(), null);
+
+        schoolDetailBinding.fabMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animateFab();
+            }
+        });
+
+        schoolDetailBinding.fabRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Image image = null;
+                if (school != null && school.getSchoolImages() != null) {
+                    schoolImages = school.getSchoolImages();
+                    image = schoolImages.get(0);
+                    RatingDialogFragment ratingDialogFragment = new RatingDialogFragment();
+                    ratingDialogFragment.setBackgroundImageUrl(image.getImageUrl(),
+                            school.getSchoolLogoImageUrl(), school, transactionsAction);
+                    ratingDialogFragment.show(getSupportFragmentManager(), null);
+                }
+            }
+        });
 
 //        setColorPrimary();
 
@@ -75,10 +105,12 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
                         school = schol;
                         Image image = null;
                         if (school != null && school.getSchoolImages() != null) {
+                            schoolImages.clear();
                             schoolImages = school.getSchoolImages();
                             image = schoolImages.get(0);
                             loadImage(image.getImageUrl());
                             setSliderViews();
+
 //                            if(fomerSchoolObject != null) {
 //                                if (fomerSchoolObject.getSchoolImages().size() != school.getSchoolImages().size()) {
 //                                    //That means there was a change in the images
@@ -115,51 +147,80 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
                 new SchoolDetailPagerAdapter(viewModels, getSupportFragmentManager(), this, getIntent().getExtras()));
     }
 
-    private void setUpOnCLickListeners() {
-        schoolDetailBinding.follow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolFollowersAction(schoolDetailBinding.followCount,
-                            schoolDetailBinding.followIndicator, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
+    private void animateFab() {
+        if (isFABOpen) {
+            schoolDetailBinding.fabMore.startAnimation(fab_icon_rotate_backward);
 
-        schoolDetailBinding.satisfied.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolImpressedAction(schoolDetailBinding.satisfiedCount,
-                            schoolDetailBinding.satisfiedIndicator, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        schoolDetailBinding.neutral.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolNormalImpressedAction(schoolDetailBinding.neutralCount,
-                            schoolDetailBinding.neutralIndicator, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        schoolDetailBinding.dissatisfied.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (school != null) {
-                    transactionsAction.schoolNotImpressedAction(schoolDetailBinding.dissatisfiedCount,
-                            schoolDetailBinding.dissatisfiedIndicator, school,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
+            schoolDetailBinding.fabRating.startAnimation(fab_close);
+            schoolDetailBinding.fabSocialMedia.startAnimation(fab_close);
+            schoolDetailBinding.commentOnSchoolFab.startAnimation(fab_close);
+            schoolDetailBinding.fabRating.setClickable(false);
+            schoolDetailBinding.fabSocialMedia.setClickable(false);
+            schoolDetailBinding.commentOnSchoolFab.setClickable(false);
+            schoolDetailBinding.fabRating.setVisibility(View.INVISIBLE);
+            schoolDetailBinding.fabSocialMedia.setVisibility(View.INVISIBLE);
+            schoolDetailBinding.commentOnSchoolFab.setVisibility(View.INVISIBLE);
+            isFABOpen = false;
+        } else {
+            schoolDetailBinding.fabMore.startAnimation(fab_icon_rotate_forward);
+            schoolDetailBinding.fabRating.startAnimation(fab_open);
+            schoolDetailBinding.fabSocialMedia.startAnimation(fab_open);
+            schoolDetailBinding.commentOnSchoolFab.startAnimation(fab_open);
+            schoolDetailBinding.fabRating.setClickable(true);
+            schoolDetailBinding.fabSocialMedia.setClickable(true);
+            schoolDetailBinding.commentOnSchoolFab.setClickable(true);
+            schoolDetailBinding.fabRating.setVisibility(View.VISIBLE);
+            schoolDetailBinding.fabSocialMedia.setVisibility(View.VISIBLE);
+            schoolDetailBinding.commentOnSchoolFab.setVisibility(View.VISIBLE);
+            isFABOpen = true;
+        }
     }
+
+//    private void setUpOnCLickListeners() {
+//        schoolDetailBinding.follow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolFollowersAction(schoolDetailBinding.followCount,
+//                            schoolDetailBinding.followIndicator, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                }
+//            }
+//        });
+//
+//        schoolDetailBinding.satisfied.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolImpressedAction(schoolDetailBinding.satisfiedCount,
+//                            schoolDetailBinding.satisfiedIndicator, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid(), );
+//                }
+//            }
+//        });
+//
+//        schoolDetailBinding.neutral.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolNormalImpressedAction(schoolDetailBinding.neutralCount,
+//                            schoolDetailBinding.neutralIndicator, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid(), );
+//                }
+//            }
+//        });
+//
+//        schoolDetailBinding.dissatisfied.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (school != null) {
+//                    transactionsAction.schoolNotImpressedAction(schoolDetailBinding.dissatisfiedCount,
+//                            schoolDetailBinding.dissatisfiedIndicator, school,
+//                            FirebaseAuth.getInstance().getCurrentUser().getUid(), );
+//                }
+//            }
+//        });
+//    }
 
     /**
      * This method sets up the slider images that is displayed in the collapsible toolbar
@@ -167,6 +228,8 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
     private void setSliderViews() {
         if (school.getSchoolImages() == null) return;
         if (school.getSchoolImages().isEmpty()) return;
+        schoolDetailBinding.imageSlider.setPagerIndicatorVisibility(false);
+//        schoolDetailBinding.imageSlider.
         setUpViewsWithData();
         for (Image images : schoolImages) {
 
@@ -184,34 +247,28 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
      * This method is called to set up the views with the data
      */
     private void setUpViewsWithData() {
-        schoolDetailBinding.satisfiedCount.setText(String.valueOf(school.getImpressedExpressionCount()));
-        schoolDetailBinding.followCount.setText(String.valueOf(school.getFollowersCount()));
-        schoolDetailBinding.dissatisfiedCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
-        schoolDetailBinding.neutralCount.setText(String.valueOf(school.getNormalExpressionCount()));
+
         schoolDetailBinding.schoolAddress.setText(school.getSchoolLocation());
         schoolDetailBinding.schoolName.setText(school.getSchoolName());
-        hideOrShowIndicator(school.getFollowers(), schoolDetailBinding.followIndicator);
-        hideOrShowIndicator(school.getImpressedExpressions(), schoolDetailBinding.satisfiedIndicator);
-        hideOrShowIndicator(school.getNormalExpressions(), schoolDetailBinding.neutralIndicator);
-        hideOrShowIndicator(school.getNotImpressedExpressions(), schoolDetailBinding.dissatisfiedIndicator);
+
         if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
             new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
                     R.color.colorLightGrey, schoolDetailBinding.schoolLogoImgview);
     }
 
-    /**
-     * This method is to check if the users id id in the map of either follow, satisfied, neutral or
-     * dissatisfied. if it is it sets the indicator that the user follows etc else it hides the indicator
-     *
-     * @param map       map
-     * @param indicator a view that indicates
-     */
-    private void hideOrShowIndicator(Map<String, Boolean> map, View indicator) {
-        if (map == null) return;
-        if (map.containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
-            indicator.setVisibility(View.VISIBLE);
-        else indicator.setVisibility(View.GONE);
-    }
+//    /**
+//     * This method is to check if the users id id in the map of either follow, satisfied, neutral or
+//     * dissatisfied. if it is it sets the indicator that the user follows etc else it hides the indicator
+//     *
+//     * @param map       map
+//     * @param indicator a view that indicates
+//     */
+//    private void hideOrShowIndicator(Map<String, Boolean> map, View indicator) {
+//        if (map == null) return;
+//        if (map.containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+//            indicator.setVisibility(View.VISIBLE);
+//        else indicator.setVisibility(View.GONE);
+//    }
 
     private void setColorPrimary() {
         try {

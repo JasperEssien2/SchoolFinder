@@ -194,6 +194,11 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
 
     }
 
+    @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
 
     @Override
     public void profileImageStored(String imageUrl, boolean isSuccesful) {

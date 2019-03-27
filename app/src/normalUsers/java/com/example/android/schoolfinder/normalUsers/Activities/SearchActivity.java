@@ -124,56 +124,8 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
 
         schoolListLiveData.observe(this, observer);
 
-        setUpOnCLickListeners();
-
-
     }
 
-    private void setUpOnCLickListeners() {
-        searchBinding.followButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mSchools != null && !mSchools.isEmpty()) {
-                    transactionsAction.schoolFollowersAction(searchBinding.followersCount,
-                            searchBinding.followButton, mSchools.get(position),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        searchBinding.positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mSchools != null && !mSchools.isEmpty()) {
-                    transactionsAction.schoolImpressedAction(searchBinding.positiveCount,
-                            searchBinding.positiveButton, mSchools.get(position),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        searchBinding.neutralButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mSchools != null && !mSchools.isEmpty()) {
-                    transactionsAction.schoolNormalImpressedAction(searchBinding.neutralCount,
-                            searchBinding.neutralButton, mSchools.get(position),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-
-        searchBinding.negativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mSchools != null && !mSchools.isEmpty()) {
-                    transactionsAction.schoolNotImpressedAction(searchBinding.negativeCount,
-                            searchBinding.negativeButton, mSchools.get(position),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
-            }
-        });
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

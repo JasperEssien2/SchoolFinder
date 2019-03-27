@@ -487,6 +487,11 @@ public class SignUpFragment extends Fragment implements AuthenticationCallbacks,
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void profileImageStored(String imageUrl, boolean isSuccesful) {
         Users users = getUser();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {

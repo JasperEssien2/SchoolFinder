@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="school_details_appbar_height">300dp</dimen>
+    <dimen name="school_details_appbar_height">360dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

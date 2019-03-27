@@ -87,7 +87,7 @@ public class SchoolDetailFragment extends Fragment {
     public void onDestroy() {
         if (detailBinding.schoolLocationMap != null) {
             try {
-                detailBinding.schoolLocationMap.onDestroy();
+//                detailBinding.schoolLocationMap.onDestroy();
             } catch (NullPointerException e) {
                 Log.e(TAG, "Error while attempting MapView.onDestroy(), ignoring exception", e);
             }
@@ -106,8 +106,12 @@ public class SchoolDetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (detailBinding.schoolLocationMap != null) {
-            detailBinding.schoolLocationMap.onSaveInstanceState(outState);
+        try {
+            if (detailBinding.schoolLocationMap != null) {
+                detailBinding.schoolLocationMap.onSaveInstanceState(outState);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -118,13 +122,14 @@ public class SchoolDetailFragment extends Fragment {
         locationService = new AppLocationService(getActivity());
         certificateAdapter = new CertificateAdapter(getActivity());
         achievementAdapter = new CertificateAdapter(getActivity());
-        school = getSchool();
+//        school = getSchool();
         if (viewModels != null)
             viewModels.getSchoolLiveData(getSchoolId())
                     .observe(this, new Observer<School>() {
                         @Override
                         public void onChanged(@Nullable School schol) {
                             school = schol;
+                            Log.e(TAG, "onChanged() ------------- ");
                             if (school != null) {
                                 setUpViewWithData(savedInstanceState);
                                 onLocationEdittextClicked();
@@ -137,6 +142,7 @@ public class SchoolDetailFragment extends Fragment {
     }
 
     private void setUpViewWithData(Bundle savedInstanceState) {
+        Log.e(TAG, "setUpViewWithData()   ------ school " + school.toString());
         detailBinding.schoolDetailDescriptionText.setText(school.getSchoolBiography());
         detailBinding.schoolDetailMottoText.setText(school.getSchoolMotto());
         detailBinding.schoolLocationMap.onCreate(savedInstanceState);

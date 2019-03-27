@@ -19,4 +19,6 @@ public interface AuthenticationCallbacks {
     void userGotten(School school);
 
     void userGotten(Users users);
+
+    void accountUpdated(boolean isEmail, boolean isSuccessful);
 }

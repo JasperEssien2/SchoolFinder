@@ -1,5 +1,6 @@
 package com.example.android.schoolfinder.DialogFragments;
 
+import android.app.Dialog;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.bumptech.glide.Glide;
 import com.example.android.schoolfinder.Constants.BundleConstants;
@@ -36,6 +38,15 @@ public class DialogFragmentImagePreview extends DialogFragment {
         bundle.putInt("action", action);
         dialogFragmentImagePreview.setArguments(bundle);
         return dialogFragmentImagePreview;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
     }
 
     public static DialogFragmentImagePreview newInstance(MediaStorageCallback storageCallback, Uri uri,

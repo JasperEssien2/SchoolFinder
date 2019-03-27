@@ -547,6 +547,11 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     }
 
     @Override
+    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.signup_button:
