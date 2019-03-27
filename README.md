@@ -18,8 +18,8 @@ student to get the best school made me to start this project.
 *Retrofit - for getting and parsing geonames api
 *Firebase - authentication, real database, media storage
 
-## Images
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
-
+## Images - Regular Users flavor
+<img src="/School_Finder_RegularScreenshots/home_page.jpg" width="180" height="360" /> | <img src="/School_Finder_RegularScreenshots/search_page.jpg" width="180" height="360" />
+<img src="/School_Finder_RegularScreenshots/post_page1.jpg" width="180" height="360" /> | <img src="/School_Finder_RegularScreenshots/post_page_2.jpg" width="180" height="360" />
 ## Version 
 1.0
