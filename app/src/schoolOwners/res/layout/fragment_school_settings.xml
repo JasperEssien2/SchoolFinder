@@ -21,188 +21,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp">
 
-                <!--<android.support.v7.widget.CardView-->
-                <!--android:id="@+id/school_details_expresion_card"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="16dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:background="@color/colorGrey"-->
-                <!--app:cardCornerRadius="7dp"-->
-                <!--app:cardElevation="10dp"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent">-->
-
-                <!--&lt;!&ndash;TODO: This library sometimes crashes the app with an inflater exception&ndash;&gt;-->
-                <!--<com.makeramen.roundedimageview.RoundedImageView-->
-                <!--android:id="@+id/school_settings_logo_imgview"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--android:src="@drawable/place_holder"-->
-                <!--app:riv_corner_radius="7dp" />-->
-
-                <!--<ImageView-->
-                <!--android:id="@+id/school_settings_edit_school_change_logo"-->
-                <!--android:layout_width="24dp"-->
-                <!--android:layout_height="24dp"-->
-                <!--android:layout_gravity="bottom|end"-->
-                <!--android:layout_margin="4dp"-->
-                <!--android:background="@drawable/circle_background"-->
-                <!--android:padding="4dp"-->
-                <!--android:src="@drawable/ic_add_photo"-->
-                <!--app:backgroundTint="@color/colorCyan200" />-->
-
-
-                <!--</android.support.v7.widget.CardView>-->
-
-                <!--<android.support.v7.widget.CardView-->
-                <!--android:id="@+id/school_details_social_card"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="16dp"-->
-                <!--android:layout_marginTop="32dp"-->
-                <!--android:layout_marginEnd="16dp"-->
-                <!--android:background="@color/colorGrey"-->
-                <!--app:cardElevation="10dp"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent">-->
-
-
-                <!--<GridLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-
-                <!--android:columnCount="2"-->
-                <!--android:gravity="center">-->
-
-                <!--<LinearLayout-->
-                <!--android:id="@+id/school_website_frame"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_rowWeight="1"-->
-                <!--android:layout_columnWeight="1"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:id="@+id/school_website"-->
-                <!--android:layout_width="@dimen/dimen_30dp"-->
-                <!--android:layout_height="@dimen/dimen_30dp"-->
-
-                <!--android:src="@drawable/ic_internet"-->
-                <!--app:civ_border_color="@color/colorWhite"-->
-                <!--app:civ_border_width="2dp" />-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/school_website_link"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="School's website" />-->
-
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                <!--android:id="@+id/school_email_frame"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_rowWeight="1"-->
-                <!--android:layout_columnWeight="1"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:id="@+id/school_email"-->
-                <!--android:layout_width="@dimen/dimen_30dp"-->
-                <!--android:layout_height="@dimen/dimen_30dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:src="@drawable/ic_email"-->
-                <!--app:civ_border_color="@color/colorWhite"-->
-                <!--app:civ_border_width="2dp" />-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/school_email_link"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="School's email" />-->
-
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                <!--android:id="@+id/school_facebook_frame"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_rowWeight="1"-->
-                <!--android:layout_columnWeight="1"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:orientation="horizontal">-->
-
-
-                <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:id="@+id/school_facebook"-->
-                <!--android:layout_width="@dimen/dimen_30dp"-->
-                <!--android:layout_height="@dimen/dimen_30dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:src="@drawable/ic_facebook"-->
-                <!--app:civ_border_color="@color/colorWhite"-->
-                <!--app:civ_border_width="2dp" />-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/school_facebook_link"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="School's facebook" />-->
-
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                <!--android:id="@+id/school_twitter_frame"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_rowWeight="1"-->
-                <!--android:layout_columnWeight="1"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:id="@+id/school_twitter"-->
-                <!--android:layout_width="@dimen/dimen_30dp"-->
-                <!--android:layout_height="@dimen/dimen_30dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:src="@drawable/ic_facebook"-->
-                <!--app:civ_border_color="@color/colorWhite"-->
-                <!--app:civ_border_width="2dp" />-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/school_twitter_link"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="School's twitter" />-->
-
-                <!--</LinearLayout>-->
-
-
-                <!--</GridLayout>-->
-
-                <!--</android.support.v7.widget.CardView>-->
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cardView"
@@ -211,7 +29,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    app:cardElevation="10dp"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -230,11 +49,11 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
-                            tools:src="@drawable/ic_email"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/ic_email" />
 
                         <View
                             android:id="@+id/view"
@@ -300,9 +119,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    app:cardElevation="10dp"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView">
@@ -386,114 +206,11 @@
                         app:backgroundTint="@color/colorCyan200" />
                 </android.support.v7.widget.CardView>
 
-                <!--<android.support.v7.widget.CardView-->
-                <!--android:id="@+id/cardView5"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginEnd="16dp"-->
-                <!--android:layout_marginStart="16dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--app:cardElevation="10dp"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/cardView4">-->
-
-                <!--<android.support.constraint.ConstraintLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent">-->
-
-                <!--<com.makeramen.roundedimageview.RoundedImageView-->
-                <!--android:id="@+id/imageView_school_owner"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:layout_height="60dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--android:src="@drawable/place_holder"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toStartOf="@+id/view_school_owner"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent"-->
-                <!--app:riv_border_color="@color/colorCyan200"-->
-                <!--app:riv_border_width="2dp"-->
-                <!--app:riv_corner_radius="10dp" />-->
-
-                <!--<View-->
-                <!--android:id="@+id/view_school_owner"-->
-                <!--android:layout_width="3dp"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:background="#EEEEEE"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toStartOf="@+id/guideline5"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/school_detail_owner_header"-->
-                <!--style="@style/StyleSchoolDetailHeader"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginTop="32dp"-->
-                <!--android:text="@string/school_detail_about_owner"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="@+id/guideline5"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/school_detail_owner_details_name"-->
-                <!--style="@style/StyleSchoolDetailsText"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:textStyle="bold"-->
-                <!--app:layout_constraintBottom_toBottomOf="school_detail_owner_details_biography"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintHorizontal_bias="0.0"-->
-                <!--app:layout_constraintStart_toStartOf="@+id/guideline5"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/school_detail_owner_header"-->
-                <!--app:layout_constraintVertical_bias="0.0"-->
-                <!--tools:text="Jasper Essien" />-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/school_detail_owner_details_biography"-->
-                <!--style="@style/StyleSchoolDetailsText"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="32dp"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintHorizontal_bias="0.0"-->
-                <!--app:layout_constraintStart_toStartOf="@+id/guideline5"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/school_detail_owner_details_name"-->
-                <!--app:layout_constraintVertical_bias="0.0"-->
-                <!--tools:text="Was born in 1990, schooled under Alexander the great, won the\nbest stupidness in 1900 in the womb.. hollup what am i saying?" />-->
-
-                <!--<android.support.constraint.Guideline-->
-                <!--android:id="@+id/guideline5"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="vertical"-->
-                <!--app:layout_constraintGuide_percent="0.24" />-->
-
-                <!--</android.support.constraint.ConstraintLayout>-->
-                <!--</android.support.v7.widget.CardView>-->
-
                 <android.support.v7.widget.CardView
                     android:id="@+id/cardView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    app:cardElevation="10dp"
+                    style="@style/SchoolSettingsCardStyle"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -580,9 +297,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    app:cardElevation="10dp"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -676,10 +394,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="32dp"
-                    app:cardElevation="10dp"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"

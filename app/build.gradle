@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.github.medyo:fancybuttons:1.9.1'
+    implementation 'com.github.florent37:arclayout:1.0.3'
 
     //    implementation 'com.joooonho:selectableroundedimageview:1.0.1'
 //    implementation 'com.steelkiwi:badge-holder-view:1.1.0'

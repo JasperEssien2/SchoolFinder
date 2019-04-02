@@ -5,51 +5,68 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".Activities.SchoolDetailActivity">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:layout_height="match_parent">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
-                android:layout_width="match_parent"
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="350dp"
-                android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:titleEnabled="false">
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.40" />
+
+            <com.github.florent37.arclayout.ArcLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:elevation="5dp"
+                app:arc_cropDirection="cropOutside"
+                app:arc_height="50dp"
+                app:arc_position="bottom"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!--<FrameLayout-->
+                <!--android:id="@+id/collapsing_header"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@color/colorCyan500"-->
+                <!--app:layout_constraintBottom_toTopOf="@+id/guideline"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent">-->
 
 
-                <FrameLayout
-                    android:id="@+id/collapsing_header"
+                <ImageView
+                    android:id="@+id/appbar_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax">
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorWhite">
 
-                    <ImageView
-                        android:id="@+id/appbar_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="350dp"
-                        android:scaleType="centerCrop"
-                        android:src="@color/colorWhite">
+                </ImageView>
 
-                    </ImageView>
+                <!--</FrameLayout>-->
+                <!--<android.support.design.widget.AppBarLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:fitsSystemWindows="true"-->
+                <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
 
-                </FrameLayout>
+
+                <!--</android.support.design.widget.AppBarLayout>-->
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/scrim_gradient2_color_cyan_200"
+                    android:background="@drawable/scrim_gradient2_color_cyan_200_curved_bottom"
+
                     android:fitsSystemWindows="true" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -239,22 +256,6 @@
 
                 </LinearLayout>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/settings_tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/colorCyan500"
-                    android:textSize="18sp"
-                    app:layout_collapseMode="pin"
-                    app:tabGravity="fill"
-                    app:tabIndicatorColor="@color/colorWhite"
-                    app:tabIndicatorGravity="top"
-                    app:tabIndicatorHeight="4dp"
-                    app:tabMode="fixed"
-                    app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:tabTextColor="#FFFFFF" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -263,34 +264,67 @@
                     android:layout_gravity="top"
                     android:layout_marginBottom="16dp"
                     app:layout_collapseMode="parallax"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:title=""
-                    app:titleTextAppearance="@style/TextAppearance.AppCompat.Title">
+                    app:titleTextAppearance="@style/TextAppearance.AppCompat.Title"
+                    app:titleTextColor="@color/colorWhite">
 
 
                 </android.support.v7.widget.Toolbar>
 
+            </com.github.florent37.arclayout.ArcLayout>
 
-            </android.support.design.widget.CollapsingToolbarLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/settings_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
 
-        </android.support.design.widget.AppBarLayout>
+                android:layout_marginBottom="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toTopOf="@+id/settings_tabs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline"
+                app:layout_constraintVertical_bias="0.0" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/settings_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+            <android.support.design.widget.TabLayout
+                android:id="@+id/settings_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#aa005662"
+                android:textSize="18sp"
+                app:layout_collapseMode="pin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/colorCyan500"
+                app:tabIndicatorGravity="top"
+                app:tabIndicatorHeight="5dp"
+                app:tabMode="fixed"
+                app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:tabTextColor="#FFFFFF" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_courses_classes_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_add"
-            android:visibility="gone"
-            app:fabSize="normal" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_courses_classes_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:src="@drawable/ic_add"
+                android:visibility="invisible"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </android.support.constraint.ConstraintLayout>
+
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

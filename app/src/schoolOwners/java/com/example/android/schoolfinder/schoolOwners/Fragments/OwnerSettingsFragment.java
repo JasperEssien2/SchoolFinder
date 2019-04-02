@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.DialogFragments.DialogFragmentImagePreview;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
-import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
 import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.Models.Image;
 import com.example.android.schoolfinder.Models.Post;
@@ -102,20 +101,17 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
         ownerSettingsBinding.settingsSchoolOwnerContact.setOnFocusChangeListener(this);
         ownerSettingsBinding.settingsSchoolOwnerEmail.setOnFocusChangeListener(this);
         ownerSettingsBinding.settingsSchoolOwnerLocation.setOnFocusChangeListener(this);
+        ownerSettingsBinding.changePasswordButton.setOnClickListener(this);
 
-//        ownerSettingsBinding.schoolOwnerSettingsImagePicker.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.e(TAG, "Owner settings image picker button clicked oh");
-//                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-//                photoPickerIntent.setType("image/*");
-//                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
-//            }
-//        });
 
         return ownerSettingsBinding.getRoot();
     }
 
+    /**
+     * This method sets the views up with the data
+     *
+     * @param school an instance of the school in question
+     */
     private void setUpViewWithData(School school) {
         Users owner = school.getSchoolOwnerDetails();
         if (owner == null) return;
@@ -129,6 +125,7 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
 //                .into(ownerSettingsBinding.ownerSettingsImage);
 
     }
+
 
     private void editFieldButtonClicked(AppCompatEditText editText) {
         editText.setEnabled(!editText.isEnabled());
@@ -465,6 +462,7 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
                 break;
             case R.id.change_password_button:
+                Log.e(TAG, "change password button clicked ----- ");
                 showUpdatePasswordAlertDialog();
                 break;
         }

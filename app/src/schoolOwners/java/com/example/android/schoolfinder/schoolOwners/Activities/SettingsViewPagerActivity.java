@@ -12,7 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -35,7 +34,7 @@ import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.Utility.Validation;
-import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
+import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerMainBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.example.android.schoolfinder.schoolOwners.Adapters.SchoolSettingsPagerAdapter;
@@ -54,7 +53,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
 
     private static final int SELECT_PHOTO_DP = 355;
     private static final int SELECT_BACKGROUND_PHOTO = 555;
-    private ActivitySettingsViewPagerBinding settingsViewPagerBinding;
+    private ActivitySettingsViewPagerMainBinding settingsViewPagerBinding;
     private School school;
     private Authentication authentication;
     private static final String TAG = SettingsViewPagerActivity.class.getSimpleName();
@@ -72,7 +71,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         super.onCreate(savedInstanceState);
 
 
-        settingsViewPagerBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings_view_pager);
+        settingsViewPagerBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings_view_pager_main);
         setSupportActionBar(settingsViewPagerBinding.toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -317,6 +316,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     }
 
     private void setUpViewWithData(School school) {
+        if (school == null) return;
         if (school.getSchoolLogoImageUrl() != null)
             new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
                     settingsViewPagerBinding.schoolSettingsLogoImgview);
