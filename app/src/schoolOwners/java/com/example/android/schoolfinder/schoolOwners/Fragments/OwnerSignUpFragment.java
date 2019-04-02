@@ -11,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
+import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
+import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -18,19 +22,25 @@ import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.FragmentOwnersSignUpBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallbacks;
+import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 //import com.example.android.schoolfinder.schoolOwners.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OwnerSignUpFragment extends Fragment implements View.OnClickListener, AuthenticationCallbacks {
+public class OwnerSignUpFragment extends Fragment implements View.OnClickListener, AuthenticationCallbacks,
+        MediaStorageCallback {
 
     private FragmentOwnersSignUpBinding ownersSignUpBinding;
     private Authentication auth = new Authentication(this);
     private AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks;
     private AppCompatEditText mNameE, mContactE, mEmailE, mLocationE, mBiographyE;
     private TextInputLayout mNameL, mContactL, mEmailL, mLocationL, mBiographyL;
+    private static final int SELECT_PHOTO = 454;
+    private MediaStorage mediaStorage = new MediaStorage(this);;
 
     public OwnerSignUpFragment() {
         // Required empty public constructor
@@ -176,7 +186,42 @@ public class OwnerSignUpFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
+
+    }
+
+    @Override
+    public void profileImageStored(String imageUrl, boolean isSuccesful) {
+
+    }
+
+    @Override
+    public void certificateImageStored(Certificate certificate, String imageUrl, boolean isCert) {
+
+    }
+
+    @Override
+    public void profileImageDeleted(boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void logoStored(String imageUrl) {
+
+    }
+
+    @Override
+    public void schoolImageAdded(String imageUrl, String tag) {
+
+    }
+
+    @Override
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void postImageAdded(Post post, boolean isSuccessful) {
 
     }
 

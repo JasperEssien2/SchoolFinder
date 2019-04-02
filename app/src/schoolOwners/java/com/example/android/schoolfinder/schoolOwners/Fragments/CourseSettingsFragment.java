@@ -173,7 +173,7 @@ public class CourseSettingsFragment extends Fragment implements AuthenticationCa
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 

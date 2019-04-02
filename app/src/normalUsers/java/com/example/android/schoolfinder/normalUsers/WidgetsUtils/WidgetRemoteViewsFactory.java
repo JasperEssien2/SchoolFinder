@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -136,7 +137,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     @Override
     public void schoolsGotten(List<School> schools) {
-
+        Log.e(TAG, "schoolsGotten() -- widget -- " + schools.toString());
         this.schools = schools;
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(application.getBaseContext());
         int appWidgetIds[] = appWidgetManager.getAppWidgetIds(

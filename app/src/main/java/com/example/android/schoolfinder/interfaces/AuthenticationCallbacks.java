@@ -20,5 +20,5 @@ public interface AuthenticationCallbacks {
 
     void userGotten(Users users);
 
-    void accountUpdated(boolean isEmail, boolean isSuccessful);
+    void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail);
 }

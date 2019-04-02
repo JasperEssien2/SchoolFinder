@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 
 import com.example.android.schoolfinder.FirebaseHelper.FirebaseTransactionsAction;
 import com.example.android.schoolfinder.Models.School;
@@ -97,6 +100,7 @@ public class RatingDialogFragment extends DialogFragment {
                     transactionsAction.schoolImpressedAction(binding.positiveCount,
                             binding.positiveButton, school,
                             FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
+                    scaleButton(binding.positiveButton);
                 }
             }
         });
@@ -108,6 +112,7 @@ public class RatingDialogFragment extends DialogFragment {
                     transactionsAction.schoolNormalImpressedAction(binding.neutralCount,
                             binding.neutralButton, school,
                             FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
+                    scaleButton(binding.neutralButton);
                 }
             }
         });
@@ -119,6 +124,7 @@ public class RatingDialogFragment extends DialogFragment {
                     transactionsAction.schoolNotImpressedAction(binding.negativeCount,
                             binding.negativeButton, school,
                             FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
+                    scaleButton(binding.negativeButton);
                 }
             }
         });
@@ -137,5 +143,23 @@ public class RatingDialogFragment extends DialogFragment {
         if (map.containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
             indicator.setImageResource(resourseActivated);
         else indicator.setImageResource(resourseDeactivated);
+    }
+
+    private void scaleButton(View v) {
+        Animation scaleDownAnimation = new ScaleAnimation(
+                1.0f,
+                0,
+                1.0f,
+                0,
+                Animation.RELATIVE_TO_SELF,
+                0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f);
+        scaleDownAnimation.setDuration(500);
+        scaleDownAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleDownAnimation.setRepeatCount(1);
+        scaleDownAnimation.setRepeatMode(Animation.REVERSE);
+        v.startAnimation(scaleDownAnimation);
+//        v.clearAnimation();
     }
 }

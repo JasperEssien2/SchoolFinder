@@ -104,12 +104,15 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
                         School fomerSchoolObject = school;
                         school = schol;
                         Image image = null;
+                        setUpViewsWithData();
                         if (school != null && school.getSchoolImages() != null) {
                             schoolImages.clear();
                             schoolImages = school.getSchoolImages();
                             image = schoolImages.get(0);
                             loadImage(image.getImageUrl());
+                            Log.e(TAG, "Data Gotten --- School info: --- " + schol.toString());
                             setSliderViews();
+
 
 //                            if(fomerSchoolObject != null) {
 //                                if (fomerSchoolObject.getSchoolImages().size() != school.getSchoolImages().size()) {
@@ -176,51 +179,6 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
         }
     }
 
-//    private void setUpOnCLickListeners() {
-//        schoolDetailBinding.follow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (school != null) {
-//                    transactionsAction.schoolFollowersAction(schoolDetailBinding.followCount,
-//                            schoolDetailBinding.followIndicator, school,
-//                            FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                }
-//            }
-//        });
-//
-//        schoolDetailBinding.satisfied.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (school != null) {
-//                    transactionsAction.schoolImpressedAction(schoolDetailBinding.satisfiedCount,
-//                            schoolDetailBinding.satisfiedIndicator, school,
-//                            FirebaseAuth.getInstance().getCurrentUser().getUid(), );
-//                }
-//            }
-//        });
-//
-//        schoolDetailBinding.neutral.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (school != null) {
-//                    transactionsAction.schoolNormalImpressedAction(schoolDetailBinding.neutralCount,
-//                            schoolDetailBinding.neutralIndicator, school,
-//                            FirebaseAuth.getInstance().getCurrentUser().getUid(), );
-//                }
-//            }
-//        });
-//
-//        schoolDetailBinding.dissatisfied.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (school != null) {
-//                    transactionsAction.schoolNotImpressedAction(schoolDetailBinding.dissatisfiedCount,
-//                            schoolDetailBinding.dissatisfiedIndicator, school,
-//                            FirebaseAuth.getInstance().getCurrentUser().getUid(), );
-//                }
-//            }
-//        });
-//    }
 
     /**
      * This method sets up the slider images that is displayed in the collapsible toolbar
@@ -230,7 +188,9 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
         if (school.getSchoolImages().isEmpty()) return;
         schoolDetailBinding.imageSlider.setPagerIndicatorVisibility(false);
 //        schoolDetailBinding.imageSlider.
-        setUpViewsWithData();
+
+        Log.e(TAG, "setSliderView() --- images count" + schoolImages.size());
+        schoolDetailBinding.imageSlider.clearSliderViews();
         for (Image images : schoolImages) {
 
             SliderView sliderView = new DefaultSliderView(this);
@@ -240,6 +200,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
 
             //at last add this view in your layout :
             schoolDetailBinding.imageSlider.addSliderView(sliderView);
+
         }
     }
 
@@ -247,7 +208,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
      * This method is called to set up the views with the data
      */
     private void setUpViewsWithData() {
-
+        if (school == null) return;
         schoolDetailBinding.schoolAddress.setText(school.getSchoolLocation());
         schoolDetailBinding.schoolName.setText(school.getSchoolName());
 

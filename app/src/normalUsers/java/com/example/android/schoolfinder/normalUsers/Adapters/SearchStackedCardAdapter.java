@@ -51,6 +51,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             multiSelect = true;
+            selectedItems.clear();
             if (isOffline) menu.add("Delete");
             else menu.add("Save");
             return true;
@@ -287,12 +288,15 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (getAdapterPosition() != -1)
+                    if (getAdapterPosition() != -1) {
                         selectItem(mSchoolList.get(getAdapterPosition()));
-                    Intent intent = new Intent(mActivity, SchoolDetailActivity.class);
-                    intent.putExtra(BundleConstants.SCHOOL_BUNDLE, mSchoolList.get(getAdapterPosition()));
-                    intent.putExtra(BundleConstants.SCHOOL_ID_BUNDLE, mSchoolList.get(getAdapterPosition()).getId());
-                    mActivity.startActivity(intent);
+                        if (!multiSelect) {
+                            Intent intent = new Intent(mActivity, SchoolDetailActivity.class);
+                            intent.putExtra(BundleConstants.SCHOOL_BUNDLE, mSchoolList.get(getAdapterPosition()));
+                            intent.putExtra(BundleConstants.SCHOOL_ID_BUNDLE, mSchoolList.get(getAdapterPosition()).getId());
+                            mActivity.startActivity(intent);
+                        }
+                    }
                 }
             });
         }

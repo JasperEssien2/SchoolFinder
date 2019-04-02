@@ -7,14 +7,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/sign_in_login_background"
+        android:fillViewport="true"
+        android:paddingBottom="32dp"
         tools:context=".Fragments.SignUpFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="32dp"
-            android:layout_gravity="center_vertical">
+            android:isScrollContainer="true">
 
             <FrameLayout
                 android:id="@+id/frameLayout"
@@ -74,14 +77,12 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_school_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
+                    style="@style/AuthenticationFieldStyle"
                     android:drawableStart="@drawable/ic_person_outline_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="text"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColor="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
             </android.support.design.widget.TextInputLayout>
 
@@ -103,14 +104,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_school_contact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
+                    style="@style/AuthenticationFieldStyle"
                     android:drawableStart="@drawable/ic_phone_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="number"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColor="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -133,13 +131,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_school_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/AuthenticationFieldStyle"
                     android:drawableStart="@drawable/ic_mail_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/colorWhite"
+                    android:textColor="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -163,13 +159,10 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_school_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/AuthenticationFieldStyle"
                     android:drawableStart="@drawable/ic_add_location_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="text"
-                    android:textColorHint="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -195,14 +188,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_school_biography"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/AuthenticationFieldStyle"
                     android:drawableStart="@drawable/ic_person_outline_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="text"
                     android:minHeight="70dp"
-                    android:textColorHint="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -226,13 +216,10 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_school_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/AuthenticationFieldStyle"
                     android:drawableStart="@drawable/ic_person_outline_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="text"
-                    android:textColorHint="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -253,14 +240,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/AuthenticationFieldStyle"
                     android:layout_marginTop="8dp"
                     android:drawableStart="@drawable/ic_lock_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -279,20 +263,18 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/sign_up_confirm_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
+                    style="@style/AuthenticationFieldStyle"
                     android:drawableStart="@drawable/ic_lock_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
 
+
             <FrameLayout
-                android:id="@+id/signup_previous"
+                android:id="@+id/signup_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -307,82 +289,106 @@
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_confirm_password_inputLayout">
 
                 <TextView
-                    android:id="@+id/move_to_previous_page_textview"
+                    android:id="@+id/sign_up_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/button_previous"
+                    android:text="@string/button_sign_up"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
                     android:textColor="@color/colorWhite" />
 
+                <ProgressBar
+                    android:id="@+id/sign_up_progressbar"
+                    android:layout_width="@dimen/login_signup_progressbar_dimen"
+                    android:layout_height="@dimen/login_signup_progressbar_dimen"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
 
             </FrameLayout>
+
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/login_sign_up_button_background"
-                android:elevation="10dp"
-                android:minHeight="45dp"
-                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signup_previous">
+                app:layout_constraintTop_toBottomOf="@+id/signup_button">
 
-                <FrameLayout
-                    android:id="@+id/signup_button"
-                    android:layout_width="0dp"
+                <!--<FrameLayout-->
+                <!--android:id="@+id/signup_previous"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="32dp"-->
+                <!--android:layout_marginTop="16dp"-->
+                <!--android:layout_marginEnd="32dp"-->
+                <!--android:background="@drawable/login_sign_up_button_background"-->
+                <!--android:elevation="10dp"-->
+                <!--android:minHeight="45dp"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintHorizontal_bias="0.0"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/sign_up_confirm_password_inputLayout">-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/move_to_previous_page_textview"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:text="@string/button_previous"-->
+                <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"-->
+                <!--android:textColor="@color/colorWhite" />-->
+
+
+                <!--</FrameLayout>-->
+
+                <TextView
+                    android:id="@+id/signup_previous"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:minHeight="45dp">
+                    android:layout_gravity="center"
+                    android:text="@string/button_previous"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/sign_up_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/button_sign_up"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
-                        android:textColor="@color/colorWhite" />
-
-                    <ProgressBar
-                        android:id="@+id/sign_up_progressbar"
-                        android:layout_width="@dimen/login_signup_progressbar_dimen"
-                        android:layout_height="@dimen/login_signup_progressbar_dimen"
-                        android:layout_gravity="center"
-                        android:visibility="gone" />
-
-                </FrameLayout>
-
-                <FrameLayout
+                <TextView
                     android:id="@+id/login_button"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:minHeight="45dp">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/have_an_account"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
+                <!--<FrameLayout-->
+                <!--android:id="@+id/login_button"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:minHeight="45dp">-->
 
-                    <TextView
-                        android:id="@+id/move_to_login_page_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/login"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"
-                        android:textColor="@color/colorWhite" />
+                <!--<TextView-->
+                <!--android:id="@+id/move_to_login_page_textview"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:text="@string/login"-->
+                <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button"-->
+                <!--android:textColor="@color/colorWhite" />-->
 
-                    <!--<ProgressBar-->
-                    <!--android:id="@+id/sign_up_progressbar"-->
-                    <!--android:layout_width="@dimen/login_signup_progressbar_dimen"-->
-                    <!--android:layout_height="@dimen/login_signup_progressbar_dimen"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:visibility="gone" />-->
+                <!--&lt;!&ndash;<ProgressBar&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/sign_up_progressbar"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="@dimen/login_signup_progressbar_dimen"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="@dimen/login_signup_progressbar_dimen"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:visibility="gone" />&ndash;&gt;-->
 
-                </FrameLayout>
+                <!--</FrameLayout>-->
 
             </LinearLayout>
             <!--<FrameLayout-->

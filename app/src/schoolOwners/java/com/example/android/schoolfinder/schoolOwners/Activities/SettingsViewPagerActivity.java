@@ -1,17 +1,27 @@
 package com.example.android.schoolfinder.schoolOwners.Activities;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
@@ -24,6 +34,7 @@ import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
+import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
@@ -77,6 +88,12 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         viewpagerAdapter = new SchoolSettingsPagerAdapter(
                 getSupportFragmentManager(), this, getBundle(), this);
         settingsViewPagerBinding.settingsViewpager.setAdapter(viewpagerAdapter);
+        settingsViewPagerBinding.mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showUpdateEmailAlertDialog();
+            }
+        });
 
         settingsViewPagerBinding.settingsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -194,6 +211,79 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     public void initFabCallback(AddImagesFabClicked fabClicked) {
 
         this.fabClicked = fabClicked;
+    }
+
+    private void showUpdateEmailAlertDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Email update");
+//        alertDialog.setMessage("Enter password");
+
+
+        final LinearLayout linearLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        linearLayout.setLayoutParams(lp);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText email = new EditText(this);
+        final EditText password = new EditText(this);
+        email.setHint("Enter email ");
+        email.setText(school.getSchoolEmail());
+        email.setHintTextColor(ContextCompat.getColor(this, R.color.colorLighterGrey));
+        email.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        email.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        password.setHint("Enter password");
+        password.setHintTextColor(ContextCompat.getColor(this, R.color.colorLighterGrey));
+        password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        password.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.addView(email, 0);
+        linearLayout.addView(password, 1);
+        alertDialog.setView(linearLayout);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Ok", null);
+        alertDialog.setNegativeButton("Cancel", null);
+        final Dialog dialog = alertDialog.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int errorCount = 0;
+
+                        if(!Validation.validateEmail(email.getText().toString())){
+                            email.setError(Validation.EMAIL_NOT_VALID);
+                            errorCount++;
+                        }else{
+                            email.setError(null);
+                        }
+                        if (!(password.getText().toString().length() >= 6)) {
+                            password.setError(Validation.PASSWORD_LESS);
+                            errorCount++;
+                        } else {
+                            password.setError(null);
+                        }
+
+                        if(errorCount == 0){
+                            authentication.changeEmail(school.getSchoolEmail(),email.getText().toString(),
+                                    password.getText().toString());
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+//        alertDialog.
+
+        dialog.show();
     }
 
     @Override
@@ -356,8 +446,15 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
-
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
+        if (isEmail && isSuccessful) {
+            school.setSchoolEmail(newEmail);
+            Toast.makeText(this, "Email changed..", Toast.LENGTH_SHORT).show();
+            authentication.putNewUserInDb(school);
+        } else {
+            Toast.makeText(this, "Email update failed..", Toast.LENGTH_SHORT).show();
+            authentication.putNewUserInDb(school);
+        }
     }
 
     @Override

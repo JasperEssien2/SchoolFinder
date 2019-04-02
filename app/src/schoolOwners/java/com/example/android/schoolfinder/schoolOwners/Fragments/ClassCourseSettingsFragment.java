@@ -173,7 +173,7 @@ public class ClassCourseSettingsFragment extends Fragment implements Authenticat
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 

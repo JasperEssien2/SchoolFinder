@@ -31,13 +31,10 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/login_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_mail_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/colorWhite"
+                    style="@style/AuthenticationFieldStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -59,14 +56,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/login_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_lock_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
 
                     android:inputType="textPassword"
-                    android:textColorHint="@color/colorWhite"
+                    style="@style/AuthenticationFieldStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>

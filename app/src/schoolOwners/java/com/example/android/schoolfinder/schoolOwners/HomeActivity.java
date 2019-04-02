@@ -157,7 +157,7 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 }

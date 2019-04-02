@@ -237,8 +237,8 @@ public class Authentication implements BaseAuthentication {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Log.d(TAG, "User email address updated.");
-                                            mCallbacks.accountUpdated(true, true);
-                                        } else mCallbacks.accountUpdated(true, false);
+                                            mCallbacks.accountUpdated(true, true, newEmail);
+                                        } else mCallbacks.accountUpdated(true, false, null);
                                     }
                                 });
                         //----------------------------------------------------------\\
@@ -266,10 +266,10 @@ public class Authentication implements BaseAuthentication {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Log.d(TAG, "Password updated");
-                                        mCallbacks.accountUpdated(false, true);
+                                        mCallbacks.accountUpdated(false, true, null);
                                     } else {
                                         Log.d(TAG, "Error password not updated");
-                                        mCallbacks.accountUpdated(false, false);
+                                        mCallbacks.accountUpdated(false, false, null);
                                     }
                                 }
                             });

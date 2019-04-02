@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -171,7 +172,7 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
         final EditText input = new EditText(getActivity());
         input.setHint("Enter password");
         input.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorLighterGrey));
-        input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        input.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -179,6 +180,7 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
         alertDialog.setView(input);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Ok", null);
+        alertDialog.setNegativeButton("Cancel", null);
         final Dialog dialog = alertDialog.create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -225,11 +227,12 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
         oldPassword.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         oldPassword.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
+        oldPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-        newPassword.setHint("Enter current password");
+        newPassword.setHint("Enter new password");
         newPassword.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorLighterGrey));
         newPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
+        newPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         newPassword.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         linearLayout.addView(oldPassword, 0);
@@ -360,7 +363,7 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
         if (isEmail && isSuccessful) {
             mUser.setEmail(binding.settingsEmail.getText().toString());
             Toast.makeText(getActivity(), "Email changed..", Toast.LENGTH_SHORT).show();

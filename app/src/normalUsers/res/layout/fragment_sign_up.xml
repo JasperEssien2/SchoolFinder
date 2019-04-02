@@ -73,12 +73,10 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_person_outline_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="text"
+                    style="@style/AuthenticationEdittextStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -100,14 +98,12 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_contact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_phone_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:hint="@string/edit_contact"
                     android:inputType="number"
                     android:textColorHint="@color/colorWhite"
+                    style="@style/AuthenticationEdittextStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -130,13 +126,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_mail_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="textEmailAddress"
                     android:textColorHint="@color/colorWhite"
+                    style="@style/AuthenticationEdittextStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -158,13 +152,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signup_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_add_location_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="text"
                     android:textColorHint="@color/colorWhite"
+                    style="@style/AuthenticationEdittextStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -184,13 +176,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/signUp_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
                     android:drawableStart="@drawable/ic_lock_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="textPassword"
+                    style="@style/AuthenticationEdittextStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -211,13 +201,11 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/sign_up_confirm_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_lock_white"
                     android:drawableEnd="@drawable/ic_check_white"
-                    android:drawablePadding="16dp"
                     android:inputType="textPassword"
                     android:textColorHint="@color/colorWhite"
+                    style="@style/AuthenticationEdittextStyle"
                     app:backgroundTint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>

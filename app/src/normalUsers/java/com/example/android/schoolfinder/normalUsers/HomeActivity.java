@@ -88,7 +88,11 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
     @Override
     protected void onResume() {
         super.onResume();
-        authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
+        try {
+            authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -149,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 

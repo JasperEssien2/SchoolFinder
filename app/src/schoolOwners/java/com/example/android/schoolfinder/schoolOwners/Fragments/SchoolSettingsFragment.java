@@ -1,19 +1,26 @@
 package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.android.schoolfinder.Adapters.CertificateAdapter;
@@ -28,6 +35,7 @@ import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.AppLocationService;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
+import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.FragmentSchoolSettingsBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
@@ -261,6 +269,8 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
         }
     }
 
+
+
     /**
      * Action to take to either disable or enable the field when the field edit button
      * is clickec
@@ -437,7 +447,7 @@ public class SchoolSettingsFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 

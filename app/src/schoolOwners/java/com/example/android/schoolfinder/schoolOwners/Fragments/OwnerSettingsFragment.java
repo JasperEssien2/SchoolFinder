@@ -1,6 +1,8 @@
 package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
@@ -9,13 +11,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
@@ -28,6 +36,7 @@ import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
+import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.FragmentOwnerSettingsBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
@@ -50,7 +59,6 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
     private FragmentOwnerSettingsBinding ownerSettingsBinding;
     private School school;
     private Authentication authentication;
-    private MediaStorage mediaStorage;
 
     public OwnerSettingsFragment() {
         // Required empty public constructor
@@ -69,7 +77,6 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         authentication = new Authentication(this);
-        mediaStorage = new MediaStorage(this);
 
         authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
         super.onCreate(savedInstanceState);
@@ -192,7 +199,7 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 
@@ -282,6 +289,70 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
     private void updateUser(School school) {
         Log.e(TAG, "Update user called --- ");
         authentication.putNewUserInDb(school);
+    }
+
+    private void showUpdatePasswordAlertDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Password update");
+//        alertDialog.setMessage("Enter password");
+        final LinearLayout linearLayout = new LinearLayout(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        linearLayout.setLayoutParams(lp);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        final EditText oldPassword = new EditText(getActivity());
+        final EditText newPassword = new EditText(getActivity());
+        oldPassword.setHint("Enter current password");
+        oldPassword.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorLighterGrey));
+        oldPassword.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        oldPassword.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        oldPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        newPassword.setHint("Enter current password");
+        newPassword.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorLighterGrey));
+        newPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        newPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        newPassword.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.addView(oldPassword, 0);
+        linearLayout.addView(newPassword, 1);
+        alertDialog.setView(linearLayout);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Ok", null);
+        alertDialog.setNegativeButton("Cancel", null);
+        final Dialog dialog = alertDialog.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!(oldPassword.getText().toString().length() >= 6) ||
+                                !(newPassword.getText().toString().length() >= 6)) {
+                            oldPassword.setError(Validation.PASSWORD_LESS);
+                            newPassword.setError(Validation.PASSWORD_LESS);
+                        } else {
+                            oldPassword.setError(null);
+                            newPassword.setError(null);
+                            authentication.updatePassword(school.getSchoolEmail(), oldPassword.getText().toString(),
+                                    newPassword.getText().toString());
+
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+//        alertDialog.
+
+        dialog.show();
     }
 
     /**
@@ -393,7 +464,9 @@ public class OwnerSettingsFragment extends Fragment implements AuthenticationCal
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
                 break;
-
+            case R.id.change_password_button:
+                showUpdatePasswordAlertDialog();
+                break;
         }
     }
 

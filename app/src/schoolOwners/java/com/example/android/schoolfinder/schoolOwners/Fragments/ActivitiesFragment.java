@@ -195,7 +195,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 

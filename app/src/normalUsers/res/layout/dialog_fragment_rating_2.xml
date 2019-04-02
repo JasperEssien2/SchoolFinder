@@ -61,8 +61,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/positive_button"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_smile_deactivated" />
 
@@ -85,8 +85,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/neutral_button"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_neutral_deactivated" />
 
@@ -109,8 +109,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/negative_button"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_sad__1_deactivated" />
 

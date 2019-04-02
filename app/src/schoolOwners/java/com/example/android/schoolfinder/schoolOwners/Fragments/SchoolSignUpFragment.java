@@ -547,7 +547,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     }
 
     @Override
-    public void accountUpdated(boolean isEmail, boolean isSuccessful) {
+    public void accountUpdated(boolean isEmail, boolean isSuccessful, String newEmail) {
 
     }
 

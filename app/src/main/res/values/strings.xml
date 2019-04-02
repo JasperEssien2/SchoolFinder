@@ -20,8 +20,8 @@
     <string name="school_achievements_header">School Achievements</string>
     <string name="password">Password</string>
     <string name="edit_confirm_password">Confirm Password</string>
-    <string name="button_previous">Previous</string>
-    <string name="have_an_account">Have an account already?</string>
+    <string name="button_previous">move to previous page?</string>
+    <string name="have_an_account">Have an account already? Login</string>
     <string name="login">Login</string>
     <string name="title_activity_maps">Map</string>
     <string name="add_image">Add Image</string>
@@ -39,6 +39,9 @@
     <string name="menu_delete_account">Delete Account</string>
     <string name="saved">Saved Schools</string>
     <string name="title_edit">edit</string>
+    <string name="translation_name_activities">translation_activities</string>
+    <string name="translation_name_search">translation_search</string>
+    <string name="translation_name_settings">translation_settings</string>
 
 
 </resources>

@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.example.android.schoolfinder.Utility.SchoolTypeConverters;
 
@@ -27,8 +28,10 @@ public class School implements Parcelable {
         }
     };
     //    @TypeConverters(SchoolTypeConverters.class)
-    @PrimaryKey(autoGenerate = true)
+//    @PrimaryKey(autoGenerate = true)
     private int dbPrimaryKey;
+    @PrimaryKey()
+    @NonNull
     private String id;
     private String schoolName;
     private String schoolLocation;
