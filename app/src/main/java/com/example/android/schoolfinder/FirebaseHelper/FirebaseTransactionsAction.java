@@ -435,7 +435,7 @@ public class FirebaseTransactionsAction {
                         if (dataSnapshot != null) {
                             school1 = dataSnapshot.getValue(School.class);
                             if (school1 != null)
-                                textView.setText(String.valueOf(school1.getImpressedExpressionCount()));
+//                                textView.setText(String.valueOf(school1.getImpressedExpressionCount()));
                             sendNotification0(school1, "positive");
                             if (databaseError == null) mCallback.impressedExpression(school1, true);
                             else mCallback.impressedExpression(school1, false);
@@ -526,7 +526,7 @@ public class FirebaseTransactionsAction {
                         if (dataSnapshot != null) {
                             school1 = dataSnapshot.getValue(School.class);
                             if (school1 != null)
-                                textView.setText(String.valueOf(school1.getNotImpressedExpressionCount()));
+//                                textView.setText(String.valueOf(school1.getNotImpressedExpressionCount()));
                             sendNotification0(school1, "negative");
                             if (b) mCallback.notImpressedExpression(school1, true);
                             else mCallback.notImpressedExpression(school1, false);
@@ -720,7 +720,7 @@ public class FirebaseTransactionsAction {
                         if (dataSnapshot != null) {
                             school1 = dataSnapshot.getValue(School.class);
                             if (school1 != null)
-                                textView.setText(String.valueOf(school1.getNormalExpressionCount()));
+//                                textView.setText(String.valueOf(school1.getNormalExpressionCount()));
                             sendNotification0(school1, "neutral");
                             if (databaseError == null)
                                 mCallback.notImpressedExpression(school, true);
