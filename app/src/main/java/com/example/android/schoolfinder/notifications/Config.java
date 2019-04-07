@@ -3,7 +3,7 @@ package com.example.android.schoolfinder.notifications;
 import com.google.gson.annotations.SerializedName;
 
 public class Config {
-    @SerializedName("content")
+    @SerializedName("body")
     public String content = "";
     @SerializedName("title")
     public String title = "";

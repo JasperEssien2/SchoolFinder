@@ -39,7 +39,14 @@
         <!--<activity android:name=".schoolOwners.Activities.AuthenticationViewPagerActivity" />-->
         <service android:name=".Utility.AppLocationService" />
         <service android:name=".normalUsers.WidgetsUtils.ListViewWidgetService" />
-        <service android:name=".notifications.NotificationService" />
+        <service
+            android:name=".notifications.NotificationService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

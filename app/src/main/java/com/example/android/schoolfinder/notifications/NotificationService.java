@@ -20,6 +20,7 @@ import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.squareup.picasso.Picasso;
@@ -73,7 +74,8 @@ public class NotificationService extends FirebaseMessagingService {
 
 
         NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
-        style.bigPicture(bitmap);
+//        if(bitmap != null)
+//        style.bigPicture(bitmap);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -97,7 +99,7 @@ public class NotificationService extends FirebaseMessagingService {
                 notificationManager.createNotificationChannel(notificationChannel);
             }
         }
-
+        style.setSummaryText(config.content);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(config.title)
@@ -112,6 +114,7 @@ public class NotificationService extends FirebaseMessagingService {
 
 
         if (notificationManager != null) {
+
             notificationManager.notify(1, notificationBuilder.build());
         }
 
@@ -127,7 +130,7 @@ public class NotificationService extends FirebaseMessagingService {
 
         Map<String, String> data = remoteMessage.getData();
         config.title = data.get("title");
-        config.content = data.get("content");
+        config.content = data.get("data");
         config.imageUrl = data.get("imageUrl");
 //        Config.gameUrl = data.get("gameUrl");
         //Create thread to fetch image from notification
@@ -142,6 +145,7 @@ public class NotificationService extends FirebaseMessagingService {
                         Picasso.get()
                                 .load(config.imageUrl)
                                 .into(target);
+                    else sendNotification(null);
                 }
             });
         }
@@ -157,6 +161,8 @@ public class NotificationService extends FirebaseMessagingService {
                 .child(FirebaseConstants.TOKEN)
                 .setValue(s);
         Log.e(TAG, "onNewToken() ----------------------- " + s);
+        FirebaseMessaging.getInstance().subscribeToTopic("notification");
+
         super.onNewToken(s);
 //        FirebaseMessaging.getInstance().subscribeToTopic()
     }

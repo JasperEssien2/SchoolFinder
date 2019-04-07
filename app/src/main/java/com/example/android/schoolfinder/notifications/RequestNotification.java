@@ -7,6 +7,12 @@ public class RequestNotification {
     @SerializedName("to") //  "to" changed to token
     private String token;
 
+    @SerializedName("content_available")
+    private boolean contentAvailable;
+
+    @SerializedName("priority")
+    private String priority;
+
     @SerializedName("data")
     private Config sendNotificationModel;
 
@@ -26,4 +32,19 @@ public class RequestNotification {
         this.token = token;
     }
 
+    public boolean isContentAvailable() {
+        return contentAvailable;
+    }
+
+    public void setContentAvailable(boolean contentAvailable) {
+        this.contentAvailable = contentAvailable;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 }

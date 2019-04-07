@@ -84,14 +84,17 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
             @Override
             public void onClick(View view) {
                 Image image = null;
-                if (school != null && school.getSchoolImages() != null) {
+                if (school == null) return;
+                RatingDialogFragment ratingDialogFragment = new RatingDialogFragment();
+                if (school.getSchoolImages() != null) {
                     schoolImages = school.getSchoolImages();
                     image = schoolImages.get(0);
-                    RatingDialogFragment ratingDialogFragment = new RatingDialogFragment();
                     ratingDialogFragment.setBackgroundImageUrl(image.getImageUrl(),
                             school.getSchoolLogoImageUrl(), school, transactionsAction);
-                    ratingDialogFragment.show(getSupportFragmentManager(), null);
                 }
+                else ratingDialogFragment.setBackgroundImageUrl(null,
+                        school.getSchoolLogoImageUrl(), school, transactionsAction);
+                ratingDialogFragment.show(getSupportFragmentManager(), null);
             }
         });
 

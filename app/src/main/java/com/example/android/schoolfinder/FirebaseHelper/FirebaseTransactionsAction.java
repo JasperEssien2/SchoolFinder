@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.android.schoolfinder.BuildConfig;
 import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.Certificate;
 import com.example.android.schoolfinder.Models.Image;
@@ -32,6 +31,7 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -308,7 +308,7 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.FOLLOWING_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(null);
                             isFollowing = false;
                         } else {
@@ -318,14 +318,14 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.FOLLOWING_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(true);
                             isFollowing = true;
                         }
-                        school.setFollowers(school1.getFollowers());
-                        school.setFollowersCount(school1.getFollowersCount());
+                        school1.setFollowers(school1.getFollowers());
+                        school1.setFollowersCount(school1.getFollowersCount());
                         // Set value and report transaction success
-                        mutableData.setValue(school);
+                        mutableData.setValue(school1);
                         return Transaction.success(mutableData);
 //                        return null;
                     }
@@ -333,19 +333,21 @@ public class FirebaseTransactionsAction {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
                         Log.d(TAG, "following:onComplete:" + databaseError);
+                        School school1 = null;
                         if (dataSnapshot != null) {
-                            School school1 = dataSnapshot.getValue(School.class);
+                            school1 = dataSnapshot.getValue(School.class);
                             if (school1 != null)
                                 textView.setText(String.valueOf(school1.getFollowersCount()));
                         }
 //                        followButton.setImageDrawable(isFollowing ? R.drawable.foll);
+                        if (school1 == null) return;
                         if (databaseError == null && isFollowing) {
-                            transferAllSchoolPostWhenUserFollows(school, userId);
-                            mCallback.following(school, true);
-                            sendNotification0(school, "follow");
+                            transferAllSchoolPostWhenUserFollows(school1, userId);
+                            mCallback.following(school1, true);
+                            sendNotification0(school1, "follow");
                         } else if (databaseError == null && !isFollowing) {
-                            removeAllSchoolPostWhenUserUnFollows(school, userId);
-                            mCallback.following(school, false);
+                            removeAllSchoolPostWhenUserUnFollows(school1, userId);
+                            mCallback.following(school1, false);
                         }
                     }
                 });
@@ -407,7 +409,7 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.IMPRESSED_EXPRESSION_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(null);
                         } else {
                             // Star the post and add self to stars
@@ -416,7 +418,7 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.IMPRESSED_EXPRESSION_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(true);
                         }
 
@@ -429,8 +431,15 @@ public class FirebaseTransactionsAction {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
                         Log.d(TAG, "impressedTransaction:onComplete:" + databaseError);
-                        if (databaseError == null) mCallback.impressedExpression(school, true);
-                        else mCallback.impressedExpression(school, false);
+                        School school1 = null;
+                        if (dataSnapshot != null) {
+                            school1 = dataSnapshot.getValue(School.class);
+                            if (school1 != null)
+                                textView.setText(String.valueOf(school1.getImpressedExpressionCount()));
+                            sendNotification0(school1, "positive");
+                            if (databaseError == null) mCallback.impressedExpression(school1, true);
+                            else mCallback.impressedExpression(school1, false);
+                        }
                     }
                 });
     }
@@ -488,7 +497,7 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.NOT_IMPRESSED_EXPRESSION_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(null);
                         } else {
                             // Star the post and add self to stars
@@ -497,7 +506,7 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.NOT_IMPRESSED_EXPRESSION_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(true);
 //                            notImpressed = true;
                         }
@@ -513,8 +522,15 @@ public class FirebaseTransactionsAction {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
                         Log.d(TAG, "notImpressedTransaction:onComplete:" + databaseError);
-                        if (b) mCallback.notImpressedExpression(school, true);
-                        else mCallback.notImpressedExpression(school, false);
+                        School school1 = null;
+                        if (dataSnapshot != null) {
+                            school1 = dataSnapshot.getValue(School.class);
+                            if (school1 != null)
+                                textView.setText(String.valueOf(school1.getNotImpressedExpressionCount()));
+                            sendNotification0(school1, "negative");
+                            if (b) mCallback.notImpressedExpression(school1, true);
+                            else mCallback.notImpressedExpression(school1, false);
+                        }
                     }
                 });
     }
@@ -600,6 +616,25 @@ public class FirebaseTransactionsAction {
 
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+                        Post post1 = dataSnapshot.getValue(Post.class);
+                        dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
+                                .child(post1.getSenderUid())
+                                .child(FirebaseConstants.SCHOOL_DETAIL_NODE)
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        School school = dataSnapshot.getValue(School.class);
+
+                                        if (school != null) {
+                                            sendNotification0(school, "postLike");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
                         if (b)
                             mCallback.postLike(null, true);
                         else mCallback.postLike(null, false);
@@ -659,7 +694,7 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.NORMAL_EXPRESSION_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(null);
 //                            isNormalImpressed = false;
                         } else {
@@ -669,7 +704,7 @@ public class FirebaseTransactionsAction {
                             dbRef.child(FirebaseConstants.NORMAL_USERS_NODE)
                                     .child(userId)
                                     .child(FirebaseConstants.NORMAL_EXPRESSION_NODE)
-                                    .child(school.getId())
+                                    .child(school1.getId())
                                     .setValue(true);
                         }
                         // Set value and report transaction success
@@ -681,8 +716,16 @@ public class FirebaseTransactionsAction {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
                         Log.d(TAG, "notImpressedTransaction:onComplete:" + databaseError);
-                        if (databaseError == null) mCallback.notImpressedExpression(school, true);
-                        else mCallback.notImpressedExpression(school, false);
+                        School school1 = null;
+                        if (dataSnapshot != null) {
+                            school1 = dataSnapshot.getValue(School.class);
+                            if (school1 != null)
+                                textView.setText(String.valueOf(school1.getNormalExpressionCount()));
+                            sendNotification0(school1, "neutral");
+                            if (databaseError == null)
+                                mCallback.notImpressedExpression(school, true);
+                            else mCallback.notImpressedExpression(school, false);
+                        }
                     }
                 });
     }
@@ -710,11 +753,11 @@ public class FirebaseTransactionsAction {
     }
 
     private void sendNotification(final Users users, final School school, final String notifType) {
+        Log.e(TAG, "sendNotification() ------------------ ");
         FirebaseDatabase.getInstance()
                 .getReference()
-                .child(BuildConfig.FLAVOR.equals("normalUsers") ? FirebaseConstants.NORMAL_USERS_NODE
-                        : FirebaseConstants.SCHOOLS_USERS_NODE)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(FirebaseConstants.SCHOOLS_USERS_NODE)
+                .child(school.getId())
                 .child(FirebaseConstants.TOKEN)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -723,10 +766,15 @@ public class FirebaseTransactionsAction {
                         Config config = new Config();
                         RequestNotification requestNotification = new RequestNotification();
                         requestNotification.setToken(token);
+                        requestNotification.setContentAvailable(true);
+                        requestNotification.setPriority("high");
+//                        requestNotification.setToken("/topics/notification");
                         switch (notifType) {
-                            case "follow":
-                                config.title = "New Follower";
-                                config.content = users.getName() + "followed you";
+                            case "unfollow":
+                                break;
+                            case "positive":
+                                config.title = "A user just rated " + school.getSchoolName();
+                                config.content = users.getName() + ", rated positive";
                                 config.imageUrl = users.getProfileImageUrl();
                                 requestNotification.setSendNotificationModel(config);
                                 ApiClient.getClient()
@@ -736,8 +784,9 @@ public class FirebaseTransactionsAction {
                                             @Override
                                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                                 Log.e(TAG, "notification url ------- " + response.raw().toString());
-
+//                                                response.isSuccessful()
                                                 Log.e(TAG, "token url ------- " + token);
+                                                Log.e("TAG", "response: " + new Gson().toJson(call.request().body()));
                                             }
 
                                             @Override
@@ -745,6 +794,104 @@ public class FirebaseTransactionsAction {
 
                                             }
                                         });
+                                break;
+                            case "negative":
+                                config.title = "A user just rated " + school.getSchoolName();
+                                config.content = users.getName() + ", rated negative";
+                                config.imageUrl = users.getProfileImageUrl();
+                                requestNotification.setSendNotificationModel(config);
+                                ApiClient.getClient()
+                                        .create(ApiInterface.class)
+                                        .sendNotification(requestNotification)
+                                        .enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                Log.e(TAG, "notification url ------- " + response.raw().toString());
+//                                                response.isSuccessful()
+                                                Log.e(TAG, "token url ------- " + token);
+                                                Log.e("TAG", "response: " + new Gson().toJson(call.request().body()));
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                            }
+                                        });
+                                break;
+
+                            case "neutral":
+                                config.title = "A user just rated " + school.getSchoolName();
+                                config.content = users.getName() + ", rated neutral";
+                                config.imageUrl = users.getProfileImageUrl();
+                                requestNotification.setSendNotificationModel(config);
+                                ApiClient.getClient()
+                                        .create(ApiInterface.class)
+                                        .sendNotification(requestNotification)
+                                        .enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                Log.e(TAG, "notification url ------- " + response.raw().toString());
+//                                                response.isSuccessful()
+                                                Log.e(TAG, "token url ------- " + token);
+                                                Log.e("TAG", "response: " + new Gson().toJson(call.request().body()));
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                            }
+                                        });
+                                break;
+
+                            case "follow":
+                                config.title = "You have a new Follower";
+                                config.content = users.getName() + ": just followed you";
+                                config.imageUrl = users.getProfileImageUrl();
+                                requestNotification.setSendNotificationModel(config);
+                                ApiClient.getClient()
+                                        .create(ApiInterface.class)
+//                                        .sendNotification("/topics/notification", requestNotification.getSendNotificationModel())
+                                        .sendNotification(requestNotification)
+                                        .enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                Log.e(TAG, "notification url ------- " + response.raw().toString());
+//                                                response.isSuccessful()
+                                                Log.e(TAG, "token url ------- " + token);
+                                                Log.e("TAG", "response: " + new Gson().toJson(call.request().body()));
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                            }
+                                        });
+                                break;
+
+                            case "postLike":
+                                config.title = users.getName() + ", Liked your post...";
+                                config.content = users.getName() + ", Liked your post...";
+                                config.imageUrl = users.getProfileImageUrl();
+                                requestNotification.setSendNotificationModel(config);
+                                ApiClient.getClient()
+                                        .create(ApiInterface.class)
+//                                        .sendNotification("/topics/notification", requestNotification.getSendNotificationModel())
+                                        .sendNotification(requestNotification)
+                                        .enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                Log.e(TAG, "notification url ------- " + response.raw().toString());
+//                                                response.isSuccessful()
+                                                Log.e(TAG, "token url ------- " + token);
+                                                Log.e("TAG", "response: " + new Gson().toJson(call.request().body()));
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                            }
+                                        });
+                                break;
                         }
                     }
 

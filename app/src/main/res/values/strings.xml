@@ -42,6 +42,7 @@
     <string name="translation_name_activities">translation_activities</string>
     <string name="translation_name_search">translation_search</string>
     <string name="translation_name_settings">translation_settings</string>
+    <string name="transistion_home_card">transistion_home_card</string>
 
 
 </resources>

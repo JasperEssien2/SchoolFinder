@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,10 +36,9 @@ import com.example.android.schoolfinder.Utility.Validation;
 import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerMainBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
-import com.example.android.schoolfinder.schoolOwners.Adapters.SchoolSettingsPagerAdapter;
 import com.example.android.schoolfinder.schoolOwners.DialogFragments.AddClassOrCourseDialogFragment;
 import com.example.android.schoolfinder.schoolOwners.Fragments.ClassCourseSettingsFragment;
-import com.example.android.schoolfinder.schoolOwners.interfaces.SchoolSettingsViewPagerCallback;
+import com.example.android.schoolfinder.schoolOwners.utilities.Navigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -49,7 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsViewPagerActivity extends AppCompatActivity implements AuthenticationCallbacks,
-        SchoolSettingsViewPagerCallback, MediaStorageCallback {
+        MediaStorageCallback {
 
     private static final int SELECT_PHOTO_DP = 355;
     private static final int SELECT_BACKGROUND_PHOTO = 555;
@@ -62,10 +60,9 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
     /**
      * This is initialized to get the current page of the viewpager
      */
-    private TabLayout.Tab mTab;
-    private SchoolSettingsPagerAdapter viewpagerAdapter;
+//    private SchoolSettingsPagerAdapter viewpagerAdapter;
     private AddImagesFabClicked fabClicked;
-
+    private Navigation bottomNavigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +80,15 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
             school = getSchool();
             setUpViewWithData(school);
         }
-        settingsViewPagerBinding.settingsTabs.setupWithViewPager(settingsViewPagerBinding.settingsViewpager);
-        viewpagerAdapter = new SchoolSettingsPagerAdapter(
-                getSupportFragmentManager(), this, getBundle(), this);
-        settingsViewPagerBinding.settingsViewpager.setAdapter(viewpagerAdapter);
+        bottomNavigation = new Navigation(this, getBundle(), settingsViewPagerBinding.addCoursesClassesFab,
+                settingsViewPagerBinding);
+        bottomNavigation.setSelected(R.id.action_school_settings);
+        bottomNavigation.init();
+        addCourseOrClassFabListener();
+//        settingsViewPagerBinding.settingsTabs.setupWithViewPager(settingsViewPagerBinding.settingsViewpager);
+//        viewpagerAdapter = new SchoolSettingsPagerAdapter(
+//                getSupportFragmentManager(), this, getBundle(), this);
+//        settingsViewPagerBinding.settingsViewpager.setAdapter(viewpagerAdapter);
         settingsViewPagerBinding.mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,49 +96,49 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
             }
         });
 
-        settingsViewPagerBinding.settingsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mTab = tab;
-                viewpagerAdapter.tabSelected(tab.getPosition());
-                settingsViewPagerBinding.settingsViewpager.setCurrentItem(tab.getPosition());
-
-                Log.e(TAG, "Tab position ----- " + tab.getPosition());
-
-                switch (tab.getPosition()) {
-                    case 0:
-                        showLogoHideOwnerPic();
-                        hideFab();
-                        break;
-                    case 1:
-                        hideFab();
-                        hideLogoShowOwnerPic();
-                        break;
-                    case 2:
-                        showFab();
-                        showLogoHideOwnerPic();
-                        break;
-                    case 3:
-                        showFab();
-                        showLogoHideOwnerPic();
-                        break;
-                    case 4:
-                        showFab();
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        settingsViewPagerBinding.settingsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                mTab = tab;
+//                viewpagerAdapter.tabSelected(tab.getPosition());
+//                settingsViewPagerBinding.settingsViewpager.setCurrentItem(tab.getPosition());
+//
+//                Log.e(TAG, "Tab position ----- " + tab.getPosition());
+//
+//                switch (tab.getPosition()) {
+//                    case 0:
+//                        showLogoHideOwnerPic();
+//                        hideFab();
+//                        break;
+//                    case 1:
+//                        hideFab();
+//                        hideLogoShowOwnerPic();
+//                        break;
+//                    case 2:
+//                        showFab();
+//                        showLogoHideOwnerPic();
+//                        break;
+//                    case 3:
+//                        showFab();
+//                        showLogoHideOwnerPic();
+//                        break;
+//                    case 4:
+//                        showFab();
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
         settingsViewPagerBinding.schoolSettingsLogoImgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,54 +159,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
             }
         });
 
-        settingsViewPagerBinding.addCoursesClassesFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mTab.getPosition() == 2) {
-                    if (school != null) {
-                        Bundle b = new Bundle();
-                        b.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
-                        AddClassOrCourseDialogFragment dialogFragment = AddClassOrCourseDialogFragment.newInstance(b);
-                        ClassCourseSettingsFragment fragment =
-                                (ClassCourseSettingsFragment) viewpagerAdapter.getRegisteredFragment(2);
-//                                        getSupportFragmentManager().findFragmentByTag(
-//                                        "android:switcher:" + R.id.settings_viewpager + ":" +
-//                                                settingsViewPagerBinding.settingsViewpager.getCurrentItem());
-                        dialogFragment.initCallback(null, school);
-                        if (fragment != null) {
-                            Log.e(TAG, "Fragment found ---- ");
-                            dialogFragment.initFragment(fragment);
-                            dialogFragment.show(getSupportFragmentManager(), null);
-                        } else {
-                            Log.e(TAG, "Fragment IS NULL ---- ");
-                        }
-                    }
 
-                } else if (mTab.getPosition() == 3) {
-                    if (school != null) {
-                        Bundle b = new Bundle();
-                        b.putBoolean(BundleConstants.IS_CLASS_SEETTING, false);
-                        AddClassOrCourseDialogFragment dialogFragment = AddClassOrCourseDialogFragment.newInstance(b);
-                        ClassCourseSettingsFragment fragment =
-                                (ClassCourseSettingsFragment) viewpagerAdapter.getRegisteredFragment(3);
-//                                        getSupportFragmentManager().findFragmentByTag(
-//                                        "android:switcher:" + R.id.settings_viewpager + ":" +
-//                                                settingsViewPagerBinding.settingsViewpager.getCurrentItem());
-                        dialogFragment.initCallback(null, school);
-                        if (fragment != null) {
-                            Log.e(TAG, "Fragment found ---- ");
-                            dialogFragment.initFragment(fragment);
-                            dialogFragment.show(getSupportFragmentManager(), null);
-                        } else {
-                            Log.e(TAG, "Fragment IS NULL ---- ");
-                        }
-                    }
-                } else if (mTab.getPosition() == 4) {
-                    if (fabClicked != null)
-                        fabClicked.fabClicked();
-                }
-            }
-        });
     }
 
     public void initFabCallback(AddImagesFabClicked fabClicked) {
@@ -212,6 +167,46 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         this.fabClicked = fabClicked;
     }
 
+    private void addCourseOrClassFabListener() {
+        settingsViewPagerBinding.addCoursesClassesFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (school != null) {
+                    Bundle b = new Bundle();
+                    b.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
+                    AddClassOrCourseDialogFragment dialogFragment = AddClassOrCourseDialogFragment.newInstance(b);
+                    ClassCourseSettingsFragment fragment = null;
+                    if (bottomNavigation.getSelected() == R.id.action_courses_setting) {
+                        fragment = (ClassCourseSettingsFragment)
+                                getSupportFragmentManager().findFragmentByTag("class_course_setting");
+                    } else if (bottomNavigation.getSelected() == R.id.action_classes_settings) {
+                        fragment = (ClassCourseSettingsFragment)
+                                getSupportFragmentManager().findFragmentByTag("class_course_setting");
+                    } else if (bottomNavigation.getSelected() == R.id.action_gallery_setting) {
+                        if (fabClicked != null)
+                            fabClicked.fabClicked();
+                    }
+
+                    dialogFragment.initCallback(null, school);
+                    if (fragment != null) {
+                        Log.e(TAG, "Fragment found ---- ");
+                        dialogFragment.initFragment(fragment);
+                        dialogFragment.show(getSupportFragmentManager(), null);
+                    } else {
+                        Log.e(TAG, "Fragment IS NULL ---- ");
+                    }
+                }
+
+            }
+
+        });
+    }
+
+    /**
+     * This method shows the dialog box where the user can input their new email address to update
+     * the email address
+     */
     private void showUpdateEmailAlertDialog() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Email update");
@@ -315,10 +310,15 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         startActivityForResult(photoPickerIntent, SELECT_BACKGROUND_PHOTO);
     }
 
+    /**
+     * This method binds the data with the views
+     *
+     * @param school
+     */
     private void setUpViewWithData(School school) {
         if (school == null) return;
         if (school.getSchoolLogoImageUrl() != null)
-            new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
+            new PicassoImageLoader(this, school.getSchoolLogoImageUrl(), R.drawable.logo_place_holder, R.drawable.logo_place_holder,
                     settingsViewPagerBinding.schoolSettingsLogoImgview);
         if (school.getSchoolImages() != null)
             if (school.getSchoolImages().get(0) != null)
@@ -326,12 +326,16 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
                         settingsViewPagerBinding.appbarImage);
 
         if (school.getSchoolOwnerDetails().getProfileImageUrl() != null)
-            new PicassoImageLoader(this, school.getSchoolOwnerDetails().getProfileImageUrl(), R.color.colorLightGrey, R.color.colorLightGrey,
+            new PicassoImageLoader(this, school.getSchoolOwnerDetails().getProfileImageUrl(), R.drawable.place_holder, R.drawable.place_holder,
                     settingsViewPagerBinding.ownerSettingsImage);
         settingsViewPagerBinding.schoolName.setText(school.getSchoolName() != null ? school.getSchoolName() :
                 "");
         settingsViewPagerBinding.schoolAddress.setText(school.getSchoolLocation() != null ? school.getSchoolLocation() :
                 "");
+        settingsViewPagerBinding.followingCount.setText(String.valueOf(school.getFollowersCount()));
+        settingsViewPagerBinding.positiveCount.setText(String.valueOf(school.getImpressedExpressionCount()));
+        settingsViewPagerBinding.neutralCount.setText(String.valueOf(school.getNormalExpressionCount()));
+        settingsViewPagerBinding.negativeCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
     }
 
     private Bundle getBundle() {
@@ -350,31 +354,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         return null;
     }
 
-    @Override
-    public void hideLogoShowOwnerPic() {
-        settingsViewPagerBinding.frameLayout.setVisibility(View.VISIBLE);
-        settingsViewPagerBinding.schoolAddress.setVisibility(View.GONE);
-        settingsViewPagerBinding.schoolName.setVisibility(View.GONE);
-        settingsViewPagerBinding.schoolSettingsLogoImgview.setVisibility(View.GONE);
-        settingsViewPagerBinding.facebook.setVisibility(View.GONE);
-        settingsViewPagerBinding.twitter.setVisibility(View.GONE);
-        settingsViewPagerBinding.mail.setVisibility(View.GONE);
-//        settingsViewPagerBinding.schoolSettingsEditName.setVisibility(View.GONE);
-        Log.e(TAG, "hideLogoShowOwnerPic() _______________________");
-    }
 
-    @Override
-    public void showLogoHideOwnerPic() {
-        settingsViewPagerBinding.frameLayout.setVisibility(View.GONE);
-        settingsViewPagerBinding.schoolAddress.setVisibility(View.VISIBLE);
-        settingsViewPagerBinding.schoolName.setVisibility(View.VISIBLE);
-        settingsViewPagerBinding.schoolSettingsLogoImgview.setVisibility(View.VISIBLE);
-        settingsViewPagerBinding.facebook.setVisibility(View.VISIBLE);
-        settingsViewPagerBinding.twitter.setVisibility(View.VISIBLE);
-        settingsViewPagerBinding.mail.setVisibility(View.VISIBLE);
-//        settingsViewPagerBinding.schoolSettingsEditName.setVisibility(View.VISIBLE);
-        Log.e(TAG, "showLogoHideOwnerPic() _______________________");
-    }
 
     @Override
     public void schoolImageAdded(String imageUrl, String tag) {
@@ -398,13 +378,7 @@ public class SettingsViewPagerActivity extends AppCompatActivity implements Auth
         }
     }
 
-    private void hideFab() {
-        settingsViewPagerBinding.addCoursesClassesFab.setVisibility(View.GONE);
-    }
 
-    private void showFab() {
-        settingsViewPagerBinding.addCoursesClassesFab.setVisibility(View.VISIBLE);
-    }
 
     @Override
     public void login(boolean loggedInSuccessful, FirebaseUser user) {

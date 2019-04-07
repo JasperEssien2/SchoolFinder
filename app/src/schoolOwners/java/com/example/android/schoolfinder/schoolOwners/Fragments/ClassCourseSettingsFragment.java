@@ -105,6 +105,56 @@ public class ClassCourseSettingsFragment extends Fragment implements Authenticat
 
     }
 
+    private void addCourseOrClassFabListener() {
+//        settingsViewPagerBinding.addCoursesClassesFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mTab.getPosition() == 2) {
+//                    if (school != null) {
+//                        Bundle b = new Bundle();
+//                        b.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
+//                        AddClassOrCourseDialogFragment dialogFragment = AddClassOrCourseDialogFragment.newInstance(b);
+//                        ClassCourseSettingsFragment fragment =
+//                                (ClassCourseSettingsFragment) viewpagerAdapter.getRegisteredFragment(2);
+////                                        getSupportFragmentManager().findFragmentByTag(
+////                                        "android:switcher:" + R.id.settings_viewpager + ":" +
+////                                                settingsViewPagerBinding.settingsViewpager.getCurrentItem());
+//                        dialogFragment.initCallback(null, school);
+//                        if (fragment != null) {
+//                            Log.e(TAG, "Fragment found ---- ");
+//                            dialogFragment.initFragment(fragment);
+//                            dialogFragment.show(getSupportFragmentManager(), null);
+//                        } else {
+//                            Log.e(TAG, "Fragment IS NULL ---- ");
+//                        }
+//                    }
+//
+//                } else if (mTab.getPosition() == 3) {
+//                    if (school != null) {
+//                        Bundle b = new Bundle();
+//                        b.putBoolean(BundleConstants.IS_CLASS_SEETTING, false);
+//                        AddClassOrCourseDialogFragment dialogFragment = AddClassOrCourseDialogFragment.newInstance(b);
+//                        ClassCourseSettingsFragment fragment =
+//                                (ClassCourseSettingsFragment) viewpagerAdapter.getRegisteredFragment(3);
+////                                        getSupportFragmentManager().findFragmentByTag(
+////                                        "android:switcher:" + R.id.settings_viewpager + ":" +
+////                                                settingsViewPagerBinding.settingsViewpager.getCurrentItem());
+//                        dialogFragment.initCallback(null, school);
+//                        if (fragment != null) {
+//                            Log.e(TAG, "Fragment found ---- ");
+//                            dialogFragment.initFragment(fragment);
+//                            dialogFragment.show(getSupportFragmentManager(), null);
+//                        } else {
+//                            Log.e(TAG, "Fragment IS NULL ---- ");
+//                        }
+//                    }
+//                } else if (mTab.getPosition() == 4) {
+//                    if (fabClicked != null)
+//                        fabClicked.fabClicked();
+//                }
+//            }
+//        });
+    }
     /**
      * This sets up the recycler view to be used in this fragment
      */

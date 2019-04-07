@@ -42,10 +42,10 @@ public class RatingDialogFragment extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.rounded_corners_dialog_background_15dp);
 //        getDialog().
         setUpOnCLickListeners();
-        if (url != null) new PicassoImageLoader(getActivity(), url, R.color.colorLightGrey,
+        if (url != null && !url.isEmpty()) new PicassoImageLoader(getActivity(), url, R.color.colorLightGrey,
                 R.color.colorLightGrey, binding.dialogTopSchoolBackground);
 
-        if (logoUrl != null) new PicassoImageLoader(getActivity(), logoUrl, R.color.colorLightGrey,
+        if (logoUrl != null && !logoUrl.isEmpty()) new PicassoImageLoader(getActivity(), logoUrl, R.color.colorLightGrey,
                 R.color.colorLightGrey, binding.schoolLogo);
         binding.positiveCount.setText(String.valueOf(school.getImpressedExpressionCount()));
         binding.followersCount.setText(String.valueOf(school.getFollowersCount()));

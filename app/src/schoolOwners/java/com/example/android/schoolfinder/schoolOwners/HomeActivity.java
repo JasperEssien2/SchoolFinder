@@ -3,6 +3,7 @@ package com.example.android.schoolfinder.schoolOwners;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -111,10 +112,37 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         homeBinding.schoolName.setText(mSchool.getSchoolName() != null ? mSchool.getSchoolName() : "");
         homeBinding.schoolMotto.setText(mSchool.getSchoolMotto() != null ? mSchool.getSchoolMotto() : "");
         homeBinding.schoolLocation.setText(mSchool.getSchoolLocation() != null ? mSchool.getSchoolLocation() : "");
-        homeBinding.followingCount.setText(String.valueOf(mSchool.getFollowersCount()));
-        homeBinding.positiveCount.setText(String.valueOf(mSchool.getImpressedExpressionCount()));
-        homeBinding.neutralCount.setText(String.valueOf(mSchool.getNormalExpressionCount()));
-        homeBinding.negativeCount.setText(String.valueOf(mSchool.getNotImpressedExpressionCount()));
+
+    }
+
+    private Bundle animateHomeCardView() {
+        // Get the transition name from the string
+        String transitionName = getString(R.string.transistion_home_card);
+
+        // Define the view that the animation will start from
+        View viewStart = homeBinding.userDetailsView;
+
+        ActivityOptionsCompat options =
+
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        viewStart,   // Starting view
+                        transitionName);
+        return options.toBundle();//
+    }
+
+    private Bundle animateHomeSettingsButtonView() {
+        // Get the transition name from the string
+        String transitionName = getString(R.string.translation_name_settings);
+
+        // Define the view that the animation will start from
+        View viewStart = homeBinding.buttonSettings;
+
+        ActivityOptionsCompat options =
+
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        viewStart,   // Starting view
+                        transitionName);
+        return options.toBundle();//
     }
 
     @Override

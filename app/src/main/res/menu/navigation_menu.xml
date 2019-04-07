@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_school_settings"
+        android:icon="@drawable/ic_school_building"
+        android:title="school" />
+    <item
+        android:id="@+id/action_owner_settings"
+        android:icon="@drawable/ic_user_settings"
+        android:title="owner" />
+    <item
+        android:id="@+id/action_classes_settings"
+        android:icon="@drawable/ic_class_settings"
+        android:title="class" />
+    <item
+        android:id="@+id/action_courses_setting"
+        android:icon="@drawable/ic_courses_settings"
+        android:title="courses" />
+
+    <item
+        android:id="@+id/action_gallery_setting"
+        android:icon="@drawable/ic_gallery_settings"
+        android:title="gallery" />
+</menu>

@@ -144,7 +144,7 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
         holder.courseClassText.setText(clas.getNameOfClass());
         if (clas.getHeadOfClass() != null && clas.getHeadOfClass().getProfileImageUrl() != null)
             new PicassoImageLoader(mActivity, clas.getHeadOfClass().getProfileImageUrl(),
-                    R.color.colorLightGrey, R.color.colorLightGrey, holder.headImage);
+                    R.drawable.place_holder, R.drawable.place_holder, holder.headImage);
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -244,27 +244,21 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
 //                    R.color.colorLightGrey, R.color.colorLightGrey, background);
 
         else if (name.toLowerCase().startsWith("Mathematics".toLowerCase()) || name.toLowerCase().endsWith("Mathematics".toLowerCase()))
-            new PicassoImageLoader(mActivity, R.drawable.ic_math,
-                    R.color.colorLightGrey, R.color.colorLightGrey, background);
+            background.setImageResource(R.drawable.ic_math);
 
         else if (name.toLowerCase().startsWith("Geography".toLowerCase()) || name.toLowerCase().endsWith("Geography".toLowerCase()))
-            new PicassoImageLoader(mActivity, R.drawable.ic_geography_course,
-                    R.color.colorLightGrey, R.color.colorLightGrey, background);
+            background.setImageResource(R.drawable.ic_geography_course);
 
         else if (name.toLowerCase().startsWith("Biology".toLowerCase()) || name.toLowerCase().endsWith("Biology".toLowerCase()))
-            new PicassoImageLoader(mActivity, R.drawable.ic_biology_course,
-                    R.color.colorLightGrey, R.color.colorLightGrey, background);
+            background.setImageResource(R.drawable.ic_biology_course);
 
         else if (name.toLowerCase().startsWith("physics".toLowerCase()) || name.toLowerCase().endsWith("physics".toLowerCase()))
-            new PicassoImageLoader(mActivity, R.drawable.ic_physics_course,
-                    R.color.colorLightGrey, R.color.colorLightGrey, background);
+            background.setImageResource(R.drawable.ic_physics_course);
 
         else if (name.toLowerCase().startsWith("chemistry".toLowerCase()) || name.toLowerCase().endsWith("chemistry".toLowerCase()))
-            new PicassoImageLoader(mActivity, R.drawable.ic_chemistry_course,
-                    R.color.colorLightGrey, R.color.colorLightGrey, background);
+            background.setImageResource(R.drawable.ic_chemistry_course);
         else {
-            new PicassoImageLoader(mActivity, R.drawable.ic_course_place_holder,
-                    R.color.colorLightGrey, R.color.colorLightGrey, background);
+            background.setImageResource(R.drawable.ic_course_place_holder);
         }
     }
 
@@ -280,7 +274,7 @@ public class ClassesCourseAdapter extends RecyclerView.Adapter<ClassesCourseAdap
         if (course.getHeadTeacherOfCourse() != null &&
                 course.getHeadTeacherOfCourse().getProfileImageUrl() != null) {
             new PicassoImageLoader(mActivity, course.getHeadTeacherOfCourse().getProfileImageUrl(),
-                    R.color.colorLightGrey, R.color.colorLightGrey, holder.headImage);
+                    R.drawable.place_holder, R.drawable.place_holder, holder.headImage);
         }
     }
 
