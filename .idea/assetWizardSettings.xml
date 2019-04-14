@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_gallery_settings" />
-                            <entry key="sourceFile" value="C:\Users\JAHSWILL\Documents\School Finder App\gallery_settings.svg" />
+                            <entry key="outputName" value="ic_app_icon" />
+                            <entry key="sourceFile" value="C:\Users\JAHSWILL\Documents\School Finder App\app_icon.svg" />
                           </map>
                         </option>
                       </PersistentState>
