@@ -1,11 +1,15 @@
 package com.example.android.schoolfinder.normalUsers;
 
 import android.app.Application;
+import android.appwidget.AppWidgetManager;
 import android.arch.core.util.Function;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -14,6 +18,7 @@ import com.example.android.schoolfinder.Constants.FirebaseConstants;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.normalUsers.Interfaces.SearchSchoolOfflineDatabaseCallback;
 import com.example.android.schoolfinder.normalUsers.Utility.AppDatabase;
+import com.example.android.schoolfinder.normalUsers.WidgetsUtils.SavedSchoolWidget;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
@@ -123,7 +128,7 @@ public class SearchSchoolViewModels extends AndroidViewModel {
     }
 
     public void insertSchool(School school) {
-        new AddSchoolAsyncTask(appDatabase, offlineCallback)
+        new AddSchoolAsyncTask(appDatabase, offlineCallback, this.getApplication().getBaseContext())
                 .execute(school);
     }
 
@@ -374,23 +379,32 @@ public class SearchSchoolViewModels extends AndroidViewModel {
 
         private final AppDatabase appDatabase;
         private final SearchSchoolOfflineDatabaseCallback callback;
+        private Context baseContext;
 
-        public AddSchoolAsyncTask(AppDatabase appDatabase, SearchSchoolOfflineDatabaseCallback callback) {
+        public AddSchoolAsyncTask(AppDatabase appDatabase, SearchSchoolOfflineDatabaseCallback callback, Context baseContext) {
 
             this.appDatabase = appDatabase;
             this.callback = callback;
+            this.baseContext = baseContext;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            callback.schoolAdded();
+        public static void sendRefreshBroadcast(Context context) {
+            Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            intent.setComponent(new ComponentName(context, SavedSchoolWidget.class));
+            context.sendBroadcast(intent);
         }
 
         @Override
         protected Void doInBackground(School... schools) {
             appDatabase.schoolDao().insertSchool(schools[0]);
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            sendRefreshBroadcast(baseContext);
+            callback.schoolAdded();
         }
     }
 }

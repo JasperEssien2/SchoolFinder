@@ -143,7 +143,10 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
      * @param indicator a view that indicates
      */
     private void hideOrShowIndicator(Map<String, Boolean> map, View indicator) {
-        if (map == null) return;
+        if (map == null) {
+            indicator.setVisibility(View.GONE);
+            return;
+        }
         if (map.containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
             indicator.setVisibility(View.VISIBLE);
         else indicator.setVisibility(View.GONE);

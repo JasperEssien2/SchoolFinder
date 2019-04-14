@@ -14,6 +14,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -34,6 +35,10 @@ import com.example.android.countryregioncitypicker.Models.Country;
 import com.example.android.countryregioncitypicker.Models.GeoNamesViewModels;
 import com.example.android.schoolfinder.Constants.BundleConstants;
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
+import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
+import com.example.android.schoolfinder.Models.Certificate;
+import com.example.android.schoolfinder.Models.Image;
+import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
@@ -45,13 +50,18 @@ import com.example.android.schoolfinder.databinding.FragmentSchoolSignUpFieldsBi
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallbacks;
 import com.example.android.schoolfinder.interfaces.GetLocationCallback;
+import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.example.android.schoolfinder.schoolOwners.Activities.AuthenticationViewPagerActivity;
 import com.example.android.schoolfinder.schoolOwners.DialogFragments.CategoryDialogFragment;
 import com.example.android.schoolfinder.schoolOwners.HomeActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 //import com.example.android.schoolfinder.Activities.AuthenticationViewPagerActivity;
 //import com.example.android.schoolfinder.HomeActivity;
@@ -60,12 +70,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SchoolSignUpFragment extends Fragment implements AuthenticationCallbacks, View.OnClickListener {
+public class SchoolSignUpFragment extends Fragment implements AuthenticationCallbacks, View.OnClickListener,
+        MediaStorageCallback {
 
     private static final String TAG = SchoolSignUpFragment.class.getSimpleName();
     private static final int ALL_PERMISSIONS_RESULT = 1011;
+    private static final int SELECT_PHOTO = 358;
     final Criteria criteria = new Criteria();
     FragmentSchoolSignUpFieldsBinding schoolSignUpFieldsBinding;
+    School school;
     private AppLocationService locationService;
     private Authentication auth = new Authentication(this);
     private String mCountry, mState_region, mCity;
@@ -79,6 +92,8 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     private TextInputLayout mSchoolNameL, mSchoolContactL, mSchoolEmailL, mSchoolLocationL, mSchoolBiographyL,
             mPasswordL, mConfirmPasswordL;
     private Users mSchoolOwnerDetails;
+    private MediaStorage mediaStorage = new MediaStorage(this);
+    private Uri imageUri;
     private double latitude, longitude;
     private String addressFromLocation;
     private GeoNamesViewModels.CountriesViewModel countriesViewModel;
@@ -100,7 +115,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                                             @Override
                                             public void onChanged(@Nullable Country country) {
 //                                                if (country != null) {
-                                                    mCountry = country.getCountryName();
+                                                mCountry = country.getCountryName();
 //                                                }
 //                                                assert country != null;
                                                 mState_region = country.getAdminName1();
@@ -161,6 +176,12 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                 .signupPrevious.setOnClickListener(this);
         mSchoolLocationE.setFocusable(false);
         mSchoolLocationE.setOnClickListener(this);
+        schoolSignUpFieldsBinding.ownerSettingsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagePicker();
+            }
+        });
         schoolSignUpFieldsBinding.signupSchoolCategory.setFocusable(false);
         schoolSignUpFieldsBinding.signupSchoolCategory.setOnClickListener(this);
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -180,6 +201,15 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         // Now create a location manager
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         return schoolSignUpFieldsBinding.getRoot();
+    }
+
+    /**
+     * This method is called to open up the image image picker intent
+     */
+    private void imagePicker() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, SELECT_PHOTO);
     }
 
     /**
@@ -213,27 +243,6 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         }
         locationManager.requestSingleUpdate(criteria, locationListener, null);
 
-//        if (locationService != null) {
-//            final Location location = locationService
-//                    .getLocation(LocationManager.GPS_PROVIDER);
-//            Log.e(TAG, "onLocationEdittextClicked() called ---  --- ");
-//            if (location != null) {
-//                latitude = location.getLatitude();
-//                longitude = location.getLongitude();
-//                final LocationAddress locationAddress = new LocationAddress();
-//                LocationAddress.getAddressFromLocation(latitude, longitude,
-//                        getActivity(), getActivity(), new GeocoderHandler(new GetLocationCallback() {
-//                            @Override
-//                            public void setAddress(String address) {
-//                                Log.e(TAG, "Addreess oooh --- " + address);
-//                                addressFromLocation = address;
-//                                mSchoolLocationE.setText(address);
-//                            }
-//                        }));
-//            }else {
-//                showSettingsAlert();
-//            }
-//        }
     }
 
     /**
@@ -247,6 +256,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
 
     /**
      * This is called in the CategoryDialogFragment to set the categories chosen by the user
+     *
      * @param categories of the school
      */
     public void setSchoolCategories(List<String> categories) {
@@ -320,6 +330,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
 
     /**
      * This method adds permission to request from the device
+     *
      * @param wantedPermissions
      * @return list of permission required
      */
@@ -338,6 +349,7 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     /**
      * For android 6.0 up, this method checks to see if the app has permission from the device to use
      * location
+     *
      * @param permission required
      * @return
      */
@@ -348,7 +360,6 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
 
         return true;
     }
-
 
     /**
      * Gets the text from the edittext
@@ -388,7 +399,6 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         schoolSignUpFieldsBinding.signUpProgressbar.setVisibility(View.GONE);
         schoolSignUpFieldsBinding.signUpTextview.setVisibility(View.VISIBLE);
     }
-
 
     /**
      * This method validates the fields
@@ -464,7 +474,6 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
         mSchoolOwnerDetails = schoolOwnerDetails;
     }
 
-
     /**
      * Initializes a user object
      *
@@ -501,15 +510,20 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        School school = getSchool();
-        if (school != null) {
-            school.setId(user.getUid());
-            if (signedUpSuccessful)
-                auth.putNewUserInDb(school);
-            else {
-                disableProgressbar();
+        school = getSchool();
+        if (signedUpSuccessful) {
+            if (imageUri != null)
+                mediaStorage.addSchoolLogo(imageUri);
+
+            if (school != null) {
+                school.setId(user.getUid());
+                if (signedUpSuccessful)
+                    auth.putNewUserInDb(school);
+                else {
+                    disableProgressbar();
+                }
+                Log.e(TAG, "school is null ooooh ");
             }
-            Log.e(TAG, "school is null ooooh ");
         }
     }
 
@@ -552,6 +566,56 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
     }
 
     @Override
+    public void profileImageStored(String imageUrl, boolean isSuccesful) {
+        if (imageUrl != null) {
+            if (school != null) {
+                school.getSchoolOwnerDetails().setProfileImageUrl(imageUrl);
+                school.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                auth.putNewUserInDb(school);
+            }
+        }
+    }
+
+    @Override
+    public void certificateImageStored(Certificate certificate, String imageUrl, boolean isCert) {
+
+    }
+
+    @Override
+    public void profileImageDeleted(boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void logoStored(String imageUrl) {
+        if (mSchoolOwnerDetails != null && mSchoolOwnerDetails.getProfileImageUrl() != null) {
+            mediaStorage.addProfileImage(true, Uri.parse(mSchoolOwnerDetails.getProfileImageUrl()));
+        } else {
+            if (school != null) {
+                school.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                if (imageUrl != null)
+                    school.setSchoolLogoImageUrl(imageUrl);
+                auth.putNewUserInDb(school);
+            }
+        }
+    }
+
+    @Override
+    public void schoolImageAdded(String imageUrl, String tag) {
+
+    }
+
+    @Override
+    public void schoolImageAdded(List<Image> images, boolean isSuccessful) {
+
+    }
+
+    @Override
+    public void postImageAdded(Post post, boolean isSuccessful) {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.signup_button:
@@ -572,6 +636,26 @@ public class SchoolSignUpFragment extends Fragment implements AuthenticationCall
                 break;
             case R.id.signup_school_category:
                 onCategoryEdittextClicked();
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case SELECT_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    imageUri = data.getData();
+                    if (imageUri != null) {
+                        Picasso
+                                .get()
+                                .load(imageUri)
+                                .into(schoolSignUpFieldsBinding.ownerSettingsImage);
+                    } else
+                        Toast.makeText(getActivity(), "Error getting image", Toast.LENGTH_SHORT).show();
+
+                }
                 break;
         }
     }

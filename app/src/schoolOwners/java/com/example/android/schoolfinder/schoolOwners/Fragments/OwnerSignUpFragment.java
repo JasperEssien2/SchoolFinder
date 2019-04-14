@@ -1,7 +1,9 @@
 package com.example.android.schoolfinder.schoolOwners.Fragments;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.FirebaseHelper.MediaStorage;
@@ -24,8 +27,11 @@ import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.AuthenticationViewPagerCallbacks;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 //import com.example.android.schoolfinder.schoolOwners.R;
 
 /**
@@ -40,7 +46,8 @@ public class OwnerSignUpFragment extends Fragment implements View.OnClickListene
     private AppCompatEditText mNameE, mContactE, mEmailE, mLocationE, mBiographyE;
     private TextInputLayout mNameL, mContactL, mEmailL, mLocationL, mBiographyL;
     private static final int SELECT_PHOTO = 454;
-    private MediaStorage mediaStorage = new MediaStorage(this);;
+    private MediaStorage mediaStorage = new MediaStorage(this);
+    private Uri imageUri;
 
     public OwnerSignUpFragment() {
         // Required empty public constructor
@@ -55,9 +62,25 @@ public class OwnerSignUpFragment extends Fragment implements View.OnClickListene
         initFields();
         ownersSignUpBinding.loginButton.setOnClickListener(this);
         ownersSignUpBinding.nextButton.setOnClickListener(this);
+        ownersSignUpBinding.ownerSettingsImagePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagePicker();
+            }
+        });
 
         return ownersSignUpBinding.getRoot();
     }
+
+    /**
+     * This method is called to open up the image image picker intent
+     */
+    private void imagePicker() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+    }
+
 
     public void initAuthenticationCallbacks(AuthenticationViewPagerCallbacks authenticationViewPagerCallbacks) {
 
@@ -151,6 +174,7 @@ public class OwnerSignUpFragment extends Fragment implements View.OnClickListene
         users.setEmail(getTextFromEditText(mEmailE));
         users.setLocation(getTextFromEditText(mLocationE));
         users.setBiography(getTextFromEditText(mBiographyE));
+        users.setProfileImageUrl(imageUri.toString());
         return users;
     }
 
@@ -236,6 +260,26 @@ public class OwnerSignUpFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.login_button:
                 authenticationViewPagerCallbacks.loginButtonClicked(false, null, null);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case SELECT_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    imageUri = data.getData();
+                    if (imageUri != null) {
+                        Picasso
+                                .get()
+                                .load(imageUri)
+                                .into(ownersSignUpBinding.ownerSettingsImage);
+                    } else
+                        Toast.makeText(getActivity(), "Error getting image", Toast.LENGTH_SHORT).show();
+
+                }
                 break;
         }
     }

@@ -15,13 +15,18 @@ public class PicassoImageLoader {
     public PicassoImageLoader(Activity activity, final String imageUrl,
                               final int placeholder, final int errorImage, final ImageView imageView) {
         if (activity != null)
-            Glide
-                    .with(activity)
-                    .load(imageUrl)
-                    .centerCrop()
-                    .placeholder(placeholder)
-                    .error(errorImage)
-                    .into(imageView);
+            try {
+                Glide
+                        .with(activity)
+                        .load(imageUrl)
+                        .centerCrop()
+                        .placeholder(placeholder)
+                        .error(errorImage)
+                        .into(imageView);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+
 
 //        Picasso.get()
 //                .load(imageUrl)
@@ -56,13 +61,17 @@ public class PicassoImageLoader {
     public PicassoImageLoader(Context context, final String imageUrl,
                               final int placeholder, final int errorImage, final ImageView imageView) {
         if (context != null)
-            Glide
-                    .with(context)
-                    .load(imageUrl)
-                    .centerCrop()
-                    .placeholder(placeholder)
-                    .error(errorImage)
-                    .into(imageView);
+            try {
+                Glide
+                        .with(context)
+                        .load(imageUrl)
+                        .centerCrop()
+                        .placeholder(placeholder)
+                        .error(errorImage)
+                        .into(imageView);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
 
 //        Picasso.get()
 //                .load(imageUrl)

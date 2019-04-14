@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <receiver android:name="com.example.android.schoolfinder.normalUsers.WidgetsUtils.SavedSchoolWidget">
+        <receiver
+            android:name="com.example.android.schoolfinder.normalUsers.WidgetsUtils.SavedSchoolWidget"
+            android:permission="android.permission.BIND_REMOTEVIEWS">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

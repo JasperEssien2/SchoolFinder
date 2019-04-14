@@ -129,6 +129,10 @@ public class Authentication implements BaseAuthentication {
                 });
     }
 
+    /**
+     * This method updates the user's token in the database each time the device token changes , this
+     * token is to be used for the notification services
+     */
     public void updateToken() {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -214,6 +218,13 @@ public class Authentication implements BaseAuthentication {
         }
     }
 
+    /**
+     * This the method is used to change the user's password
+     *
+     * @param oldEmail the old email
+     * @param newEmail the new email
+     * @param password password
+     */
     public void changeEmail(String oldEmail, final String newEmail, String password) {
         FirebaseUser user = FirebaseAuth.getInstance()
                 .getCurrentUser();
@@ -246,6 +257,12 @@ public class Authentication implements BaseAuthentication {
                 });
     }
 
+    /**
+     * This method executes task to help change the user's password
+     * @param email of the user
+     * @param oldPassword old password
+     * @param newPassword new password
+     */
     public void updatePassword(String email, String oldPassword, final String newPassword) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

@@ -38,7 +38,11 @@
         <!--<activity android:name=".schoolOwners.HomeActivity" />-->
         <!--<activity android:name=".schoolOwners.Activities.AuthenticationViewPagerActivity" />-->
         <service android:name=".Utility.AppLocationService" />
-        <service android:name=".normalUsers.WidgetsUtils.ListViewWidgetService" />
+        <service
+            android:name=".normalUsers.WidgetsUtils.ListViewWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS">
+
+        </service>
         <service
             android:name=".notifications.NotificationService"
             android:enabled="true"
@@ -47,6 +51,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5d504d1c65fe75ee51b580894f63709e4604c253" />
     </application>
 
 </manifest>
