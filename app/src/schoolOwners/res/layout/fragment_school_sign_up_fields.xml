@@ -40,7 +40,7 @@
                         android:layout_height="100dp"
                         android:layout_gravity="center"
                         android:background="@drawable/circle_background"
-                        android:contentDescription="School logo profile image"
+                        android:contentDescription="@string/content_desc_school_logo"
                         android:elevation="6dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/logo_place_holder"
@@ -59,6 +59,7 @@
                         android:background="@drawable/circle_background"
                         android:backgroundTint="@color/colorCyan200"
                         android:elevation="6dp"
+                        android:contentDescription="@string/content_desc_image_picker"
                         android:padding="6dp"
                         android:src="@drawable/ic_add_photo" />
 

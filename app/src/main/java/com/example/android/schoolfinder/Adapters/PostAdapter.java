@@ -180,8 +180,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         if (hasImages)
             setUpImagesRecycler(postViewHolder.images, post);
         if (post.getSchoolLogo() != null && post.getSchoolLogo().getImageUrl() != null)
-            new PicassoImageLoader(activity, post.getSchoolLogo().getImageUrl(), R.drawable.place_holder,
-                    R.drawable.place_holder, postViewHolder.logo);
+            new PicassoImageLoader(activity, post.getSchoolLogo().getImageUrl(), R.drawable.logo_place_holder,
+                    R.drawable.logo_place_holder, postViewHolder.logo);
 
         postViewHolder.name.setText(post.getAuthor());
         postViewHolder.starCount.setText(String.valueOf(post.getStarCount()));

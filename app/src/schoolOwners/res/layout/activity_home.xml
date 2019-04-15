@@ -76,6 +76,7 @@
                             android:id="@+id/background_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/content_desc_home_card"
                             android:scaleType="centerCrop" />
 
                         <View
@@ -94,7 +95,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="32dp"
-                                android:text="Bright hope Standard"
+                                tools:text="Bright hope Standard"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +107,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="4dp"
-                                android:text="Securing your future!"
+                                tools:text="Securing your future!"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +119,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="4dp"
-                                android:text="11 Ndia street, Egbelu"
+                                tools:text="11 Ndia street, Egbelu"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -467,6 +468,7 @@
                         android:layout_margin="30dp"
                         android:background="@drawable/circle_background"
                         android:elevation="7dp"
+                        android:contentDescription="@string/content_desc_notification_button_icon"
                         android:gravity="center"
                         android:padding="6dp"
                         app:srcCompat="@drawable/ic_notification" />
@@ -502,6 +504,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="30dp"
+                        android:contentDescription="@string/content_desc_activities_button_icon"
                         android:background="@drawable/circle_background"
                         android:elevation="7dp"
                         android:gravity="center"
@@ -542,6 +545,7 @@
                         android:layout_margin="30dp"
                         android:background="@drawable/circle_background"
                         android:elevation="7dp"
+                        android:contentDescription="@string/content_desc_settings_button_icon"
                         android:gravity="center"
                         android:padding="6dp"
                         app:srcCompat="@drawable/ic_settings_skool" />

@@ -3,22 +3,22 @@
     <item
         android:id="@+id/action_school_settings"
         android:icon="@drawable/ic_school_building"
-        android:title="school" />
+        android:title="@string/bottom_nav_school" />
     <item
         android:id="@+id/action_owner_settings"
         android:icon="@drawable/ic_user_settings"
-        android:title="owner" />
+        android:title="@string/bottom_nav_owner" />
     <item
         android:id="@+id/action_classes_settings"
         android:icon="@drawable/ic_class_settings"
-        android:title="class" />
+        android:title="@string/bottom_nav_class" />
     <item
         android:id="@+id/action_courses_setting"
         android:icon="@drawable/ic_courses_settings"
-        android:title="courses" />
+        android:title="@string/bottom_nav_course" />
 
     <item
         android:id="@+id/action_gallery_setting"
         android:icon="@drawable/ic_gallery_settings"
-        android:title="gallery" />
+        android:title="@string/bottom_nav_gallery" />
 </menu>

@@ -153,13 +153,14 @@ public class NotificationService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String s) {
-        FirebaseDatabase.getInstance()
-                .getReference()
-                .child(BuildConfig.FLAVOR.equals("normalUsers") ? FirebaseConstants.NORMAL_USERS_NODE
-                        : FirebaseConstants.SCHOOLS_USERS_NODE)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(FirebaseConstants.TOKEN)
-                .setValue(s);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child(BuildConfig.FLAVOR.equals("normalUsers") ? FirebaseConstants.NORMAL_USERS_NODE
+                            : FirebaseConstants.SCHOOLS_USERS_NODE)
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(FirebaseConstants.TOKEN)
+                    .setValue(s);
         Log.e(TAG, "onNewToken() ----------------------- " + s);
         FirebaseMessaging.getInstance().subscribeToTopic("notification");
 

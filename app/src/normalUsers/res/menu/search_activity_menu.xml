@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
         android:icon="@drawable/ic_search"
         android:title="@string/title_search"
         app:showAsAction="ifRoom" />
@@ -23,8 +22,7 @@
         android:id="@+id/filter_by_category"
         android:title="@string/filter_by_category">
         <menu>
-            <group android:id="@+id/filter_by_category_group"
-                android:checkableBehavior="all">
+            <group android:checkableBehavior="all">
                 <item
                     android:id="@+id/category_tetiary"
                     android:title="@string/title_tertiary"
@@ -58,9 +56,7 @@
 
     </item>
 
-    <item
-        android:id="@+id/filter_by_starred"
-        android:title="@string/filter_by_starred" />
+    <item android:title="@string/filter_by_starred" />
 
     <item
         android:id="@+id/saved_school"

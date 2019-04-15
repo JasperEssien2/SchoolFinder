@@ -50,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center"
             android:background="@null"
+            android:contentDescription="@string/content_desc_option_menu"
             android:src="@drawable/ic_option_menu" />
 
     </android.support.v7.widget.CardView>

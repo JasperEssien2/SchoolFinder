@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Follow"
+                        android:text="@string/title_follow"
                         android:textColor="@color/colorWhite"
                         android:textSize="24sp"
                         android:textStyle="bold" />

@@ -6,14 +6,13 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_notification">Activities</string>
     <string name="edit_name">Name</string>
+
     <string name="edit_contact">Contact</string>
     <string name="edit_email">Email</string>
     <string name="edit_location">Location</string>
     <string name="edit_password">Password</string>
     <string name="edit_confirm_password">Confirm Password</string>
 
-    <string name="button_add_photo">Add photo</string>
-    <string name="school_detail_motto_header">School motto</string>
     <string name="school_achievements_header">School achievements</string>
     <string name="school_certificates_header">School certificates</string>
     <string name="title_search">Search</string>
@@ -23,5 +22,4 @@
 
     <string name="filter_by_starred">Filter by Starred</string>
     <string name="appwidget_text">School</string>
-    <string name="add_widget">Add widget</string>
 </resources>

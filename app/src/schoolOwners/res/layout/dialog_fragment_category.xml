@@ -17,7 +17,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Select Categories"
+                android:text="@string/title_select_categories"
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -30,7 +30,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:paddingStart="32dp"
-            android:text="Tertiary"
+            android:text="@string/title_tertiary"
             android:textSize="24sp" />
 
         <CheckBox
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:paddingStart="32dp"
-            android:text="High School"
+            android:text="@string/title_high_school"
             android:textSize="24sp" />
 
         <CheckBox
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:paddingStart="32dp"
-            android:text="Mid School"
+            android:text="@string/title_mid_school"
             android:textSize="24sp" />
 
         <CheckBox
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:paddingStart="32dp"
-            android:text="Kindergarten/Nurseries"
+            android:text="@string/title_kindergarten_nurseries"
             android:textSize="24sp" />
 
         <CheckBox
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:paddingStart="32dp"
-            android:text="Others"
+            android:text="@string/title_others"
             android:textSize="24sp" />
 
         <Button
@@ -75,6 +75,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:text="Done"/>
+            android:text="@string/title_done" />
     </LinearLayout>
 </layout>

@@ -55,5 +55,6 @@
     <string name="menu_setup_class_with_sheet">Sheet class setup</string>
     <string name="menu_setup_courses_with_sheet">Sheet course setup</string>
     <string name="menu_edit_category">Edit Category</string>
+    <string name="menu_edit">Edit</string>
 
 </resources>

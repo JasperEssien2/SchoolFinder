@@ -43,7 +43,7 @@
                     android:ellipsize="end"
                     android:gravity="start"
                     android:maxLines="1"
-                    android:text="Compose post"
+                    android:text="@string/title_compose_post"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/colorWhite" />
 
@@ -55,11 +55,13 @@
                 android:layout_margin="16dp"
                 android:background="@drawable/add_post_background"
                 android:clipToPadding="false"
+                android:paddingTop="16dp"
                 android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:orientation="vertical">
 
                     <EditText
@@ -68,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/colorWhite"
                         android:gravity="top"
-                        android:hint="Compose a post.."
+                        android:hint="@string/hint_compose_post"
                         android:minHeight="120dp"
                         android:paddingTop="8dp" />
 
@@ -96,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|end"
                     android:background="@null"
-                    android:padding="16dp"
+                    android:contentDescription="@string/content_desc_smiley_picker"
+                    android:padding="4dp"
                     android:src="@drawable/ic_smile" />
             </FrameLayout>
 
@@ -114,6 +117,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="start|center_vertical"
                     android:background="@null"
+                    android:contentDescription="@string/content_desc_image_picker"
                     android:src="@drawable/ic_add_images" />
 
                 <FrameLayout
@@ -131,7 +135,7 @@
                         android:gravity="center"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:text="promote?"
+                        android:text="@checkbox_promote"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 </FrameLayout>
@@ -150,7 +154,7 @@
                     contentPadding="2dp"
                     android:background="@drawable/curved_rectangle_cyan_200"
                     android:gravity="center"
-                    android:text="Post"
+                    android:text="@string/button_post"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />

@@ -23,7 +23,7 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:padding="6dp"
-                android:text="Welcome To School Finder"
+                android:text="@string/title_welcome_text"
                 android:textColor="@color/colorWhite"
                 android:textSize="36sp"
                 app:layout_constraintEnd_toEndOf="parent"

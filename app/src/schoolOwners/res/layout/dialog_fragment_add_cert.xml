@@ -19,7 +19,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Cert name" />
+            android:hint="@string/hint_cert_name" />
 
         <ImageView
             android:id="@+id/image_view"
@@ -27,7 +27,7 @@
             android:layout_height="200dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-
+            android:contentDescription="@string/content_desc_certificate"
             android:background="#DDDDDD"
             />
 
@@ -38,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Cert Description" />
+            android:hint="@string/hint_cert_description" />
 
 
         <LinearLayout

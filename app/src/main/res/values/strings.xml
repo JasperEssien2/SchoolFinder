@@ -1,4 +1,12 @@
 <resources>
+
+    <string name="title_notification">Notification</string>
+    <string name="title_certificates">Certificates</string>
+    <string name="title_achievement">Achievements</string>
+    <string name="school_detail_cert_header">School Certificates</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_compose_post">Compose post</string>
+
     <string name="app_name">School Finder</string>
 
     <string name="button_notification">Notification</string>
@@ -6,14 +14,40 @@
     <string name="button_get_location">Location</string>
     <string name="button_sign_up">Sign up</string>
     <string name="button_sign_in">Log in</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_ok">Ok</string>
+    <string name="button_post">Post</string>
+    <string name="button_search_courses">Search courses</string>
 
-    <string name="title_notification">Notification</string>
-    <string name="title_certificates">Certificates</string>
-    <string name="title_achievement">Achievements</string>
+    <string name="title_follow">Follow</string>
+    <string name="title_select_categories">Select Categories</string>
+    <string name="title_following">following</string>
+    <string name="title_positive">positive</string>
+    <string name="title_neutral">neutral</string>
+    <string name="title_negative">negative</string>
+    <string name="promoted">promoted</string>
+    <string name="checkbox_promote">promote?</string>
+
+    <string name="title_welcome_text">Welcome To School Finder</string>
+
+
+    <string name="hint_cert_name">Certificate name</string>
+    <string name="hint_compose_post">Compose a post..</string>
+    <string name="hint_cert_description">Cert Description</string>
+    <string name="hint_add_courses">Others - (Example: "course1, course2")</string>
+
+    <string name="bottom_nav_school">school</string>
+    <string name="bottom_nav_owner">owner</string>
+    <string name="bottom_nav_class">classes</string>
+    <string name="bottom_nav_course">courses</string>
+    <string name="bottom_nav_gallery">gallery</string>
+
+    <string name="edit_biography">Biography</string>
     <string name="dialog_button_edit">Edit</string>
     <string name="button_search">Search</string>
-    <string name="school_detail_cert_header">School Certificates</string>
     <string name="school_biography">School Biography</string>
+    <string name="school_motto">School Motto</string>
+    <string name="school_location">School Location</string>
     <string name="school_detail_about_owner">About Owner</string>
     <string name="change_password">Change Password</string>
     <string name="school_certificates_header">School Certificates</string>
@@ -23,7 +57,6 @@
     <string name="button_previous">move to previous page?</string>
     <string name="have_an_account">Have an account already? Login</string>
     <string name="login">Login</string>
-    <string name="title_activity_maps">Map</string>
     <string name="add_image">Add Image</string>
     <string name="title_tertiary">Tertiary</string>
     <string name="title_high_school">High School</string>
@@ -39,10 +72,46 @@
     <string name="menu_delete_account">Delete Account</string>
     <string name="saved">Saved Schools</string>
     <string name="title_edit">edit</string>
+    <string name="title_edit_name">edit name</string>
     <string name="translation_name_activities">translation_activities</string>
     <string name="translation_name_search">translation_search</string>
     <string name="translation_name_settings">translation_settings</string>
     <string name="transistion_home_card">transistion_home_card</string>
+
+
+    <string name="content_desc_home_card">Home Card background image</string>
+    <string name="content_desc_notification">Notification button</string>
+    <string name="content_desc_activities">Activities button</string>
+    <string name="content_desc_image_picker">Image picker</string>
+    <string name="content_desc_smiley_picker">Smiley picker</string>
+    <string name="content_desc_image_preview">Image preview</string>
+    <string name="content_desc_close_button">Close button</string>
+    <string name="content_desc_school_motto">School logo</string>
+    <string name="content_desc_school_motto_edit_button">School motto edit button</string>
+    <string name="content_desc_school_biography_edit_button">School biography edit button</string>
+    <string name="content_desc_profile_img">User Profile Image</string>
+    <string name="content_desc_school_owner_profile_img">School Owner profile image</string>
+    <string name="content_desc_certificate">School Certificate</string>
+    <string name="content_desc_certificate_icon">School Certificate icon</string>
+    <string name="content_desc_certificate_edit_butt">School Certificate edit button</string>
+    <string name="content_desc_school_location_edit_butt">School location edit button</string>
+    <string name="content_desc_achievements_icon">School Achievements icon</string>
+    <string name="content_desc_option_menu">Option menu</string>
+    <string name="content_desc_promoted_indicator">Post promoted indicator</string>
+    <string name="content_desc_country_flag">Country Flag</string>
+    <string name="content_desc_follow">Follow button</string>
+    <string name="content_desc_neutral">Neutral button</string>
+    <string name="content_desc_negative">Negative button</string>
+    <string name="content_desc_positive">Positive button</string>
+    <string name="content_desc_selected_background">School item selected background</string>
+    <string name="content_desc_activities_button_icon">Activities button icon</string>
+    <string name="content_desc_settings_button_icon">Settings button icon</string>
+    <string name="content_desc_notification_button_icon">Notifications button icon</string>
+    <string name="content_desc_app_bar_image">App bar image</string>
+    <string name="content_desc_school_logo">School logo</string>
+    <string name="content_desc_school_facebook">School Facebook link</string>
+    <string name="content_desc_school_email">School Email link</string>
+    <string name="content_desc_school_twitter">School Twitter link</string>
 
 
 </resources>

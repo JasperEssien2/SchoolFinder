@@ -12,7 +12,6 @@ import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
-import com.example.android.schoolfinder.databinding.ActivitySettingsViewPagerBinding;
 import com.example.android.schoolfinder.schoolOwners.Fragments.ClassCourseSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.Fragments.OwnerSettingsFragment;
 import com.example.android.schoolfinder.schoolOwners.Fragments.SchoolPhotosFragment;
@@ -32,7 +31,6 @@ public class SchoolSettingsPagerAdapter extends FragmentStatePagerAdapter {
     private Bundle mSchool;
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
     //    private SchoolSettingsViewPagerCallback mViewPagerCallback;
-    private ActivitySettingsViewPagerBinding settingsViewPagerBinding;
 
     private int tabSelectedPos;
 

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_edit"
-        android:title="edit"
+        android:title="@string/menu_edit"
         app:showAsAction="ifRoom" />
 
     <item

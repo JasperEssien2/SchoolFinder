@@ -18,6 +18,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
+            android:contentDescription="@string/content_desc_school_motto"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -33,10 +34,10 @@
                 android:layout_marginStart="16dp"
                 android:gravity="start"
                 android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:paddingBottom="8dp"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 tools:text="Bright Hope Standard" />
 
             <TextView
@@ -47,10 +48,10 @@
                 android:layout_marginStart="16dp"
                 android:gravity="start"
                 android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:paddingBottom="8dp"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 tools:text="11 Ndia street" />
 
             <TextView
@@ -61,10 +62,10 @@
                 android:layout_marginStart="16dp"
                 android:gravity="start"
                 android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:paddingBottom="8dp"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 tools:text="Being the best always" />
 
         </LinearLayout>

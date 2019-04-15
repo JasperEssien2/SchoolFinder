@@ -49,6 +49,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view"
                             app:layout_constraintStart_toStartOf="parent"
+                            android:contentDescription="@string/content_desc_school_motto"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <View
@@ -70,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="32dp"
-                            android:text="School Motto"
+                            android:text="@string/school_motto"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -123,6 +124,7 @@
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:src="@drawable/ic_email"
+                            android:contentDescription="@string/content_desc_school_motto"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view_school_description"
                             app:layout_constraintStart_toStartOf="parent"
@@ -303,6 +305,7 @@
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:scaleType="centerCrop"
+                            android:contentDescription="@string/content_desc_certificate_icon"
                             android:src="@drawable/ic_achievement_header_icon"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view_school_certificate"
@@ -382,6 +385,7 @@
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:scaleType="centerCrop"
+                            android:contentDescription="@string/content_desc_achievements_icon"
                             android:src="@drawable/ic_achievement_header_icon"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/view_school_achievement"
@@ -470,7 +474,7 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:gravity="center"
-                            android:text="School Location"
+                            android:text="@string/school_location"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

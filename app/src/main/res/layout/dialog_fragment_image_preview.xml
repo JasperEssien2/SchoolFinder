@@ -10,6 +10,7 @@
             android:layout_width="350dp"
             android:layout_height="450dp"
             android:minHeight="350dp"
+            android:contentDescription="@string/content_desc_image_preview"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -24,7 +25,7 @@
                 android:id="@+id/cancel_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/button_cancel"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Ok"
+                android:text="@string/button_ok"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

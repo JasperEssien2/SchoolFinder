@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background_plain_rect_grey"
             android:ems="10"
-            android:hint='Others - (Example: "course1, course2")'
+            android:hint='@string/hint_add_courses'
             android:inputType="textPersonName"
             android:padding="6dp"
             android:textColorHint="@color/colorWhite"
@@ -84,6 +84,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:background="@null"
+            android:contentDescription="@string/button_search_courses"
             app:layout_constraintBottom_toBottomOf="@+id/view2"
             app:layout_constraintEnd_toStartOf="@+id/mark_all_check_box"
             app:layout_constraintTop_toTopOf="parent"
