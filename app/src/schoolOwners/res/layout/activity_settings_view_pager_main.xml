@@ -180,6 +180,7 @@
                             android:layout_marginEnd="8dp"
                             android:background="@android:color/transparent"
                             android:enabled="false"
+                            android:fontFamily="@font/montserrat"
                             android:gravity="center"
                             android:padding="4dp"
                             android:singleLine="true"
@@ -251,6 +252,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:fitsSystemWindows="true"
+                    app:elevation="0dp"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:layout_anchorGravity="top">
 
@@ -261,6 +263,7 @@
                         android:layout_gravity="top"
                         android:layout_marginBottom="16dp"
                         android:background="@android:color/transparent"
+                        app:elevation="0dp"
                         app:layout_scrollFlags="snap"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                         app:title=""

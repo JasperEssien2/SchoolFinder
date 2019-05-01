@@ -8,7 +8,8 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--<item name="coordinatorLayoutStyle">@style/Widget.Support.CoordinatorLayout</item>-->
         <!-- android:textColorSecondary is the color of the menu overflow icon (three vertical dots) -->
-
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="fontFamily">@font/montserrat</item>
         <item name="android:windowContentTransitions">true</item>
 
         <item name="android:windowSharedElementEnterTransition">
