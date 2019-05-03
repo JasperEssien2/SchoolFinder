@@ -3,277 +3,294 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/activity_home"
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/home_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/activity_home"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                app:elevation="0dp">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_gravity="top"
-                    android:background="@color/colorLighterGrey"
-                    android:fitsSystemWindows="true"
-                    app:collapseIcon="@drawable/ic_option_menu"
-                    app:popupTheme="@style/ToolBarColorOptionMenu" />
-            </android.support.design.widget.AppBarLayout>
-
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_light"
-                tools:context=".HomeActivity">
+                android:orientation="vertical">
 
-                <FrameLayout
+                <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline6"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    app:elevation="0dp">
 
-
-                    <com.example.android.customtrapezuimcardview.CustomDiagonalCardView
-                        android:id="@+id/user_details_view"
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_gravity="top"
+                        android:background="@color/colorLighterGrey"
+                        android:fitsSystemWindows="true"
+                        app:collapseIcon="@drawable/ic_option_menu"
+                        app:popupTheme="@style/ToolBarColorOptionMenu" />
+                </android.support.design.widget.AppBarLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_light"
+                    tools:context=".HomeActivity">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline6"
                         app:layout_constraintTop_toTopOf="parent">
 
 
+                        <com.example.android.customtrapezuimcardview.CustomDiagonalCardView
+                            android:id="@+id/user_details_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <ImageView
+                                android:id="@+id/background_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/content_desc_home_card"
+                                android:scaleType="centerCrop" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/scrim_gradient2_color_white"
+                                android:fitsSystemWindows="true" />
+
+                            <android.support.constraint.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/name"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="32dp"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:text="Jahswill Essien" />
+
+                                <TextView
+                                    android:id="@+id/email"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="4dp"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/name"
+                                    tools:text="JasperEssien2@gmail.com" />
+
+                                <TextView
+                                    android:id="@+id/location"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="4dp"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/email"
+                                    tools:text="11 Ndia street, Egbelu" />
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="32dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:gravity="start"
+                                    android:orientation="horizontal"
+                                    android:padding="0dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/location">
+
+
+                                </android.support.v7.widget.RecyclerView>
+
+                            </android.support.constraint.ConstraintLayout>
+
+                        </com.example.android.customtrapezuimcardview.CustomDiagonalCardView>
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/home_user_image"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="top|end"
+                            android:layout_marginEnd="32dp"
+                            android:elevation="8dp"
+                            android:src="@drawable/place_holder" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/notification_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@android:color/transparent"
+                        android:padding="4dp"
+                        android:transitionName="@string/translation_name_activities"
+                        app:layout_constraintBottom_toTopOf="@+id/setting_frame"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/button_notification"
+                            style="@style/style_card_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cardBackgroundColor="#ffffff"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="6dp">
+
+                            <TextView
+                                style="@style/style_card_button_text"
+                                android:text="@string/button_notification" />
+                        </android.support.v7.widget.CardView>
+
                         <ImageView
-                            android:id="@+id/background_image"
+                            android:id="@+id/notification_imageView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="30dp"
+                            android:background="@drawable/circle_background"
+                            android:contentDescription="@string/content_desc_notification"
+                            android:elevation="7dp"
+                            android:gravity="center"
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/ic_notification" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/search_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginBottom="8dp"
+                        android:padding="4dp"
+                        android:transitionName="@string/translation_name_search"
+                        app:layout_constraintBottom_toTopOf="@+id/notification_frame"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/button_search"
+                            style="@style/style_card_button"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:contentDescription="@string/content_desc_home_card"
-                            android:scaleType="centerCrop" />
+                            app:cardBackgroundColor="#ffffff"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="6dp">
 
-                        <View
+                            <TextView
+                                style="@style/style_card_button_text"
+                                android:text="@string/button_search" />
+                        </android.support.v7.widget.CardView>
+
+                        <ImageView
+                            android:id="@+id/activities_imageView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="30dp"
+                            android:background="@drawable/circle_background"
+                            android:contentDescription="@string/content_desc_activities_button_icon"
+                            android:elevation="7dp"
+                            android:gravity="center"
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/ic_gallery" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/setting_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginBottom="32dp"
+                        android:padding="4dp"
+                        android:transitionName="@string/translation_name_settings"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/button_settings"
+                            style="@style/style_card_button"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/scrim_gradient2_color_white"
-                            android:fitsSystemWindows="true" />
-
-                        <android.support.constraint.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            app:cardBackgroundColor="#ffffff"
+                            app:cardCornerRadius="10dp"
+                            app:elevation="6dp">
 
                             <TextView
-                                android:id="@+id/name"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="32dp"
-                                android:textSize="24sp"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="Jahswill Essien" />
+                                style="@style/style_card_button_text"
+                                android:text="@string/button_settings" />
+                        </android.support.v7.widget.CardView>
 
-                            <TextView
-                                android:id="@+id/email"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="4dp"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/name"
-                                tools:text="JasperEssien2@gmail.com" />
+                        <ImageView
+                            android:id="@+id/settings_imageView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="30dp"
+                            android:background="@drawable/circle_background"
+                            android:contentDescription="@string/content_desc_settings_button_icon"
+                            android:elevation="7dp"
+                            android:gravity="center"
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/ic_settings_skool" />
 
-                            <TextView
-                                android:id="@+id/location"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="4dp"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/email"
-                                tools:text="11 Ndia street, Egbelu" />
+                    </FrameLayout>
 
-                            <android.support.v7.widget.RecyclerView
-                                android:layout_width="0dp"
-                                android:layout_height="50dp"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="32dp"
-                                android:layout_marginEnd="8dp"
-                                android:gravity="start"
-                                android:orientation="horizontal"
-                                android:padding="0dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/location">
+                    <android.support.constraint.Guideline
+                        android:id="@+id/guideline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.59" />
 
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
 
-                            </android.support.v7.widget.RecyclerView>
+            <android.support.design.widget.NavigationView
+                android:id="@+id/home_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:headerLayout="@layout/home_nav_header"
+                app:menu="@menu/home_drawer_navigation_menu">
 
-                        </android.support.constraint.ConstraintLayout>
+            </android.support.design.widget.NavigationView>
+        </android.support.design.widget.CoordinatorLayout>
 
-                    </com.example.android.customtrapezuimcardview.CustomDiagonalCardView>
-
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/home_user_image"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="top|end"
-                        android:layout_marginEnd="32dp"
-                        android:elevation="8dp"
-                        android:src="@drawable/place_holder" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/notification_frame"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@android:color/transparent"
-                    android:padding="4dp"
-                    android:transitionName="@string/translation_name_activities"
-                    app:layout_constraintBottom_toTopOf="@+id/setting_frame"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/button_notification"
-                        style="@style/style_card_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardBackgroundColor="#ffffff"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="6dp">
-
-                        <TextView
-                            style="@style/style_card_button_text"
-                            android:text="@string/button_notification" />
-                    </android.support.v7.widget.CardView>
-
-                    <ImageView
-                        android:id="@+id/notification_imageView"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="30dp"
-                        android:background="@drawable/circle_background"
-                        android:elevation="7dp"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:contentDescription="@string/content_desc_notification"
-                        app:srcCompat="@drawable/ic_notification" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/search_frame"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
-                    android:padding="4dp"
-                    android:transitionName="@string/translation_name_search"
-                    app:layout_constraintBottom_toTopOf="@+id/notification_frame"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/button_search"
-                        style="@style/style_card_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardBackgroundColor="#ffffff"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="6dp">
-
-                        <TextView
-                            style="@style/style_card_button_text"
-                            android:text="@string/button_search" />
-                    </android.support.v7.widget.CardView>
-
-                    <ImageView
-                        android:id="@+id/activities_imageView"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="30dp"
-                        android:background="@drawable/circle_background"
-                        android:elevation="7dp"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:contentDescription="@string/content_desc_activities_button_icon"
-                        app:srcCompat="@drawable/ic_gallery" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/setting_frame"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="32dp"
-                    android:padding="4dp"
-                    android:transitionName="@string/translation_name_settings"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/button_settings"
-                        style="@style/style_card_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardBackgroundColor="#ffffff"
-                        app:cardCornerRadius="10dp"
-                        app:elevation="6dp">
-
-                        <TextView
-                            style="@style/style_card_button_text"
-                            android:text="@string/button_settings" />
-                    </android.support.v7.widget.CardView>
-
-                    <ImageView
-                        android:id="@+id/settings_imageView"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="30dp"
-                        android:background="@drawable/circle_background"
-                        android:elevation="7dp"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:contentDescription="@string/content_desc_settings_button_icon"
-                        app:srcCompat="@drawable/ic_settings_skool" />
-
-                </FrameLayout>
-
-                <android.support.constraint.Guideline
-                    android:id="@+id/guideline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.59" />
-
-            </android.support.constraint.ConstraintLayout>
-        </LinearLayout>
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.DrawerLayout>
 </layout>

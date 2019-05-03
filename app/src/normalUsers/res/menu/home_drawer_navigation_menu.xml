@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_school_building"
+        android:title="@string/home_nav_home" />
+    <item
+        android:id="@+id/action_top_schools"
+        android:icon="@drawable/ic_user_settings"
+        android:title="@string/home_nav_top_shools" />
+    <item
+        android:id="@+id/action_chats"
+        android:icon="@drawable/ic_class_settings"
+        android:title="@string/home_nav_chats" />
+    <item
+        android:id="@+id/action_following"
+        android:icon="@drawable/ic_courses_settings"
+        android:title="@string/home_nav_following" />
+
+    <item
+        android:id="@+id/action_applications"
+        android:icon="@drawable/ic_gallery_settings"
+        android:title="@string/home_nav_applications" />
+
+    <item
+        android:id="@+id/action_subsription"
+        android:icon="@drawable/ic_gallery_settings"
+        android:title="@string/home_nav_subscription" />
+</menu>

@@ -22,4 +22,11 @@
 
     <string name="filter_by_starred">Filter by Starred</string>
     <string name="appwidget_text">School</string>
+
+    <string name="home_nav_home">Home</string>
+    <string name="home_nav_top_shools">Top Schools</string>
+    <string name="home_nav_chats">Chats</string>
+    <string name="home_nav_following">Following</string>
+    <string name="home_nav_applications">Applications</string>
+    <string name="home_nav_subscription">Subscriptions</string>
 </resources>
