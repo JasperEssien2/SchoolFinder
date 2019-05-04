@@ -3,13 +3,17 @@ package com.example.android.schoolfinder.normalUsers;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.School;
@@ -43,6 +47,46 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         ViewCompat.setElevation(homeBinding.userDetailsView, 8.0f);
         ViewCompat.setElevation(homeBinding.homeUserImage, 8.0f);
 
+        ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, homeBinding.homeDrawerLayout, homeBinding.toolbar, R.string.Open, R.string.Close);
+
+        homeBinding.homeDrawerLayout.addDrawerListener(t);
+        t.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+
+        homeBinding.homeNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id) {
+                    case R.id.action_home:
+                        Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_top_schools:
+                        Toast.makeText(HomeActivity.this, "Top Schools", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_chats:
+                        Toast.makeText(HomeActivity.this, "Chats", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_following:
+                        Toast.makeText(HomeActivity.this, "Following", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_applications:
+                        Toast.makeText(HomeActivity.this, "Applications", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_subsription:
+                        Toast.makeText(HomeActivity.this, "Subscription", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        return true;
+                }
+
+
+                return true;
+
+            }
+        });
         authentication = new Authentication(this);
         authentication.updateToken();
 //        FlowTextView flowTextView;

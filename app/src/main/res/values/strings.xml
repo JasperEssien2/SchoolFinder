@@ -112,6 +112,8 @@
     <string name="content_desc_school_facebook">School Facebook link</string>
     <string name="content_desc_school_email">School Email link</string>
     <string name="content_desc_school_twitter">School Twitter link</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
 
 
 </resources>

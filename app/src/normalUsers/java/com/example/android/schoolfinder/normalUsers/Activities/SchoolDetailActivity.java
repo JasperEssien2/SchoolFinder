@@ -5,13 +5,10 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -28,10 +25,11 @@ import com.example.android.schoolfinder.Models.Post;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
-import com.example.android.schoolfinder.databinding.ActivitySchoolDetailBinding;
+import com.example.android.schoolfinder.databinding.ActivitySchoolDetail2Binding;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
-import com.example.android.schoolfinder.normalUsers.Adapters.SchoolDetailPagerAdapter;
 import com.example.android.schoolfinder.normalUsers.DialogFragments.RatingDialogFragment;
+import com.example.android.schoolfinder.normalUsers.Fragments.DialogFragmentMap;
+import com.example.android.schoolfinder.normalUsers.Fragments.SchoolDetailFragment;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.SliderView;
@@ -46,7 +44,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
 
     private static final String TAG = SchoolDetailActivity.class.getSimpleName();
     List<Image> schoolImages = new ArrayList<>();
-    private ActivitySchoolDetailBinding schoolDetailBinding;
+    private ActivitySchoolDetail2Binding schoolDetailBinding;
     private SearchSchoolViewModels viewModels;
     private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
     private School school;
@@ -59,7 +57,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        schoolDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_school_detail);
+        schoolDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_school_detail2);
         viewModels = new ViewModelProvider.AndroidViewModelFactory(getApplication())
                 .create(SearchSchoolViewModels.class);
         fab_open = AnimationUtils.loadAnimation(this, R.anim.anime_fab_open);
@@ -70,6 +68,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
 //        setUpOnCLickListeners();
         setSupportActionBar(schoolDetailBinding.toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -79,7 +78,15 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
                 animateFab();
             }
         });
-
+        schoolDetailBinding.viewSchoolInMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (school == null) return;
+                DialogFragmentMap bottomSheetDialog = DialogFragmentMap.getInstance();
+                bottomSheetDialog.initSchool(school);
+                bottomSheetDialog.show(getSupportFragmentManager(), "Custom Bottom Sheet");
+            }
+        });
         schoolDetailBinding.fabRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,30 +134,36 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
                     }
                 });
 
-        schoolDetailBinding.schoolDetailsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                schoolDetailBinding.schoolDetailsViewpager.setCurrentItem(tab.getPosition());
-                switch (tab.getPosition()) {
-                    case 0:
-                        // TODO
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        schoolDetailBinding.schoolDetailsTabs.setupWithViewPager(schoolDetailBinding.schoolDetailsViewpager);
-        schoolDetailBinding.schoolDetailsViewpager.setAdapter(
-                new SchoolDetailPagerAdapter(viewModels, getSupportFragmentManager(), this, getIntent().getExtras()));
+        SchoolDetailFragment schoolDetailFragment = SchoolDetailFragment.newInstance(getIntent().getExtras());
+        schoolDetailFragment.setViewModel(viewModels);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(schoolDetailBinding.fragmentDetail.getId(), schoolDetailFragment)
+                .commit();
+//        schoolDetailBinding.schoolDetailsTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                schoolDetailBinding.schoolDetailsViewpager.setCurrentItem(tab.getPosition());
+//                switch (tab.getPosition()) {
+//                    case 0:
+//                        // TODO
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
+//        schoolDetailBinding.schoolDetailsTabs.setupWithViewPager(schoolDetailBinding.schoolDetailsViewpager);
+//        schoolDetailBinding.schoolDetailsViewpager.setAdapter(
+//                new SchoolDetailPagerAdapter(viewModels, getSupportFragmentManager(), this, getIntent().getExtras()));
     }
 
     private void animateFab() {
@@ -212,7 +225,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
      */
     private void setUpViewsWithData() {
         if (school == null) return;
-        schoolDetailBinding.schoolAddress.setText(school.getSchoolLocation());
+        schoolDetailBinding.schoolLocation.setText(school.getSchoolLocation());
         schoolDetailBinding.schoolName.setText(school.getSchoolName());
 
         if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
@@ -234,32 +247,6 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
 //        else indicator.setVisibility(View.GONE);
 //    }
 
-    private void setColorPrimary() {
-        try {
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.skool_image1);
-            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                @SuppressWarnings("ResourceType")
-                @Override
-                public void onGenerated(Palette palette) {
-
-                    int vibrantColor = palette.getVibrantColor(R.color.colorPrimary);
-                    int vibrantDarkColor = palette.getDarkVibrantColor(R.color.colorPrimaryDark);
-                    schoolDetailBinding.collapsingToolbar.setContentScrimColor(vibrantColor);
-                    schoolDetailBinding.collapsingToolbar.setStatusBarScrimColor(vibrantDarkColor);
-                }
-            });
-
-        } catch (Exception e) {
-            // if Bitmap fetch fails, fallback to primary colors
-            Log.e(TAG, "onCreate: failed to create bitmap from background", e.fillInStackTrace());
-            schoolDetailBinding.collapsingToolbar.setContentScrimColor(
-                    ContextCompat.getColor(this, R.color.colorPrimary)
-            );
-            schoolDetailBinding.collapsingToolbar.setStatusBarScrimColor(
-                    ContextCompat.getColor(this, R.color.colorPrimaryDark)
-            );
-        }
-    }
 
     private void loadImage(String url) {
         Display display = getWindowManager().getDefaultDisplay();
@@ -287,20 +274,20 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
 
                                     @SuppressLint("ResourceAsColor") int vibrantColor = palette.getVibrantColor(R.color.colorPrimary);
                                     @SuppressLint("ResourceAsColor") int vibrantDarkColor = palette.getDarkVibrantColor(R.color.colorPrimaryDark);
-                                    schoolDetailBinding.collapsingToolbar.setContentScrimColor(vibrantColor);
-                                    schoolDetailBinding.collapsingToolbar.setStatusBarScrimColor(vibrantDarkColor);
+//                                    schoolDetailBinding.collapsingToolbar.setContentScrimColor(vibrantColor);
+//                                    schoolDetailBinding.collapsingToolbar.setStatusBarScrimColor(vibrantDarkColor);
                                 }
                             });
                         } catch (Exception e) {
                             Log.e(TAG, "picasso failed --- " + e.getMessage());
                             // if Bitmap fetch fails, fallback to primary colors
                             Log.e(TAG, "onCreate: failed to create bitmap from background", e.fillInStackTrace());
-                            schoolDetailBinding.collapsingToolbar.setContentScrimColor(
-                                    ContextCompat.getColor(SchoolDetailActivity.this, R.color.colorPrimary)
-                            );
-                            schoolDetailBinding.collapsingToolbar.setStatusBarScrimColor(
-                                    ContextCompat.getColor(SchoolDetailActivity.this, R.color.colorPrimaryDark)
-                            );
+//                            schoolDetailBinding.collapsingToolbar.setContentScrimColor(
+//                                    ContextCompat.getColor(SchoolDetailActivity.this, R.color.colorPrimary)
+//                            );
+//                            schoolDetailBinding.collapsingToolbar.setStatusBarScrimColor(
+//                                    ContextCompat.getColor(SchoolDetailActivity.this, R.color.colorPrimaryDark)
+//                            );
                         }
                     }
 

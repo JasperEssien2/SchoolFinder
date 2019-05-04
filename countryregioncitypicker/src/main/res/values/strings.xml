@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CountryRegionCityPicker</string>
+    <string name="content_desc_country_flag">country flag</string>
 </resources>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Fragments.SchoolDetailFragment">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/school_motto_header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/school_detail_motto_header"
+                        style="@style/StyleSchoolDetailHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/school_motto" />
+
+                    <ImageButton
+                        android:id="@+id/motto_expand_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="8dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                </FrameLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/school_motto_exp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5"
+                    app:layout_constraintEnd_toEndOf="@+id/school_motto_header"
+                    app:layout_constraintStart_toStartOf="@+id/school_motto_header"
+                    app:layout_constraintTop_toBottomOf="@+id/school_motto_header">
+
+                    <TextView
+                        android:id="@+id/school_detail_motto_text"
+                        style="@style/StyleSchoolDetailsText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="32dp"
+                        tools:text="We bring stupidness to life" />
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorGrey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/school_motto_exp" />
+
+                <FrameLayout
+                    android:id="@+id/school_bio_header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view1">
+
+                    <TextView
+                        android:id="@+id/school_detail_description_header"
+                        style="@style/StyleSchoolDetailHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/school_biography" />
+
+                    <ImageButton
+                        android:id="@+id/biography_expand_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@null"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+                </FrameLayout>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorGrey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/school_biography_exp" />
+
+                <FrameLayout
+                    android:id="@+id/school_cert_header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/school_biography_exp">
+
+                    <TextView
+                        android:id="@+id/school_detail_certificate_header"
+                        style="@style/StyleSchoolDetailHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/school_certificates_header"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/cert_expand_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="8dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                </FrameLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/school_cert_exp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5"
+                    app:layout_constraintEnd_toEndOf="@+id/school_cert_header"
+                    app:layout_constraintStart_toStartOf="@+id/school_cert_header"
+                    app:layout_constraintTop_toBottomOf="@+id/school_cert_header">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/school_certificates_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/school_detail_certificate_header" />
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorGrey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/school_cert_exp" />
+
+                <FrameLayout
+                    android:id="@+id/school_achievement_header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view3">
+
+                    <TextView
+                        android:id="@+id/school_detail_achievement_header"
+                        style="@style/StyleSchoolDetailHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/school_achievements_header" />
+
+                    <ImageButton
+                        android:id="@+id/achievement_expand_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@null"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+                </FrameLayout>
+
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/school_achievement_exp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5"
+                    app:layout_constraintEnd_toEndOf="@+id/school_achievement_header"
+                    app:layout_constraintStart_toStartOf="@+id/school_achievement_header"
+                    app:layout_constraintTop_toBottomOf="@+id/school_achievement_header">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/school_achievement_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal" />
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorGrey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/school_achievement_exp" />
+
+                <FrameLayout
+                    android:id="@+id/school_owner_details_header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view4">
+
+                    <TextView
+                        android:id="@+id/school_detail_owner_header"
+                        style="@style/StyleSchoolDetailHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="@string/school_detail_about_owner" />
+
+                    <ImageButton
+                        android:id="@+id/aboit_owner_expand_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@null"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+
+                </FrameLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/school_owner_detail_exp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5"
+                    app:layout_constraintEnd_toEndOf="@+id/school_owner_details_header"
+                    app:layout_constraintStart_toStartOf="@+id/school_owner_details_header"
+                    app:layout_constraintTop_toBottomOf="@+id/school_owner_details_header">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/school_detail_owner_details_name"
+                            style="@style/StyleSchoolDetailsText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            tools:text="Jasper Essien" />
+
+                        <TextView
+                            android:id="@+id/school_detail_owner_details_biography"
+                            style="@style/StyleSchoolDetailsText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Was born in 1990, schooled under Alexander the great, won the\nbest stupidness in 1900 in the womb.. hollup what am i saying?" />
+
+
+                    </LinearLayout>
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorGrey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/school_owner_detail_exp" />
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/school_biography_exp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5"
+                    app:layout_constraintEnd_toEndOf="@+id/school_bio_header"
+                    app:layout_constraintStart_toStartOf="@+id/school_bio_header"
+                    app:layout_constraintTop_toBottomOf="@+id/school_bio_header">
+
+                    <TextView
+                        android:id="@+id/school_detail_description_text"
+                        style="@style/StyleSchoolDetailsText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="32dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline1"
+                        app:layout_constraintTop_toBottomOf="@+id/school_detail_description_header"
+                        tools:text="Founded in the year 1900, twas the first school in the world, excels in stupidness, etc" />
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
