@@ -23,6 +23,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorCyan200"
                 android:fitsSystemWindows="true"
+                app:navigationIcon="@drawable/ic_arrow_back_white"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
                 app:title="Search" />
 
@@ -32,11 +33,12 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-        <FrameLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/swipeStack"
@@ -48,6 +50,7 @@
 
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="bottom|center"
@@ -211,7 +214,7 @@
 
             </LinearLayout>
 
-        </FrameLayout>
+        </android.support.constraint.ConstraintLayout>
         <!--</android.support.v4.widget.NestedScrollView>-->
 
     </android.support.design.widget.CoordinatorLayout>

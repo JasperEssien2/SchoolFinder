@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.example.android.schoolfinder.R;
 import com.example.android.schoolfinder.Utility.PicassoImageLoader;
 import com.example.android.schoolfinder.databinding.ActivitySchoolDetail2Binding;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
+import com.example.android.schoolfinder.normalUsers.Adapters.CategoryAdapter;
 import com.example.android.schoolfinder.normalUsers.DialogFragments.RatingDialogFragment;
 import com.example.android.schoolfinder.normalUsers.Fragments.DialogFragmentMap;
 import com.example.android.schoolfinder.normalUsers.Fragments.SchoolDetailFragment;
@@ -122,7 +124,7 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
                             loadImage(image.getImageUrl());
                             Log.e(TAG, "Data Gotten --- School info: --- " + schol.toString());
                             setSliderViews();
-
+                            setupCategoriesRecyclerview();
 
 //                            if(fomerSchoolObject != null) {
 //                                if (fomerSchoolObject.getSchoolImages().size() != school.getSchoolImages().size()) {
@@ -248,6 +250,11 @@ public class SchoolDetailActivity extends AppCompatActivity implements FirebaseT
 //    }
 
 
+    private void setupCategoriesRecyclerview() {
+        if (school == null) return;
+        schoolDetailBinding.schoolCategoryFrame.setAdapter(new CategoryAdapter(this, school.getSchoolCategory()));
+        schoolDetailBinding.schoolCategoryFrame.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
     private void loadImage(String url) {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();

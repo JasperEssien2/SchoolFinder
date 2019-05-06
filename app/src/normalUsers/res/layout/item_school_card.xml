@@ -29,7 +29,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="220dp">
+                android:layout_height="180dp">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/schoolCardBackgroundImage"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/curved_20dp_bottom_rectangle_white"
-                android:paddingBottom="8dp">
+                android:paddingBottom="4dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -72,12 +72,12 @@
                         android:ellipsize="end"
                         android:gravity="center_vertical|start"
                         android:maxLines="1"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="#222222"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:fontFamily="serif"
                         tools:text="Bright Hope Standard" />
 
                     <TextView
@@ -125,8 +125,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/school_logo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_gravity="top|start"
             android:layout_margin="16dp"
             android:elevation="32dp"
@@ -170,15 +170,16 @@
                         android:id="@+id/follow_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="100"
                         android:textColor="@color/colorWhite"
-                        android:textStyle="bold" />
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="100" />
                 </LinearLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/follow_indicator"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:src="#ffffff"
                     android:visibility="gone" />
             </FrameLayout>
@@ -207,15 +208,15 @@
                         android:id="@+id/satisfied_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="10"
                         android:textColor="@color/colorWhite"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="10" />
                 </LinearLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/satisfied_indicator"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:src="#ffffff"
                     android:visibility="gone" />
             </FrameLayout>
@@ -244,15 +245,15 @@
                         android:id="@+id/neutral_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="100"
                         android:textColor="@color/colorWhite"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="100" />
                 </LinearLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/neutral_indicator"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:src="#ffffff"
                     android:visibility="gone" />
             </FrameLayout>
@@ -280,15 +281,15 @@
                         android:id="@+id/dissatisfied_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="100"
                         android:textColor="@color/colorWhite"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="100" />
                 </LinearLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/dissatisfied_indicator"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:src="#ffffff"
                     android:visibility="gone" />
             </FrameLayout>
@@ -299,8 +300,8 @@
             android:id="@+id/selected_indicator"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="#77000000"
             android:contentDescription="@string/content_desc_selected_background"
+            android:src="#77000000"
             android:visibility="gone" />
     </android.support.v7.widget.CardView>
 

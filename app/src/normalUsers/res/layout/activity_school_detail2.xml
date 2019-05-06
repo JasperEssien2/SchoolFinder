@@ -202,6 +202,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
+
                         app:layout_constraintBottom_toTopOf="@+id/view_school_in_map"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
@@ -229,6 +230,25 @@
                         android:textColor="@color/colorWhite"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
+
+                    <Button
+                        android:id="@+id/view_school_classes"
+                        style="@style/TextAppearance.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/curved_button_background_cyan_200_variant"
+                        android:drawableStart="@drawable/ic_class_settings_white"
+                        android:drawablePadding="6dp"
+                        android:gravity="start|center"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:text="Classes"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/view_school_in_map" />
 
 
                     <android.support.v7.widget.AppCompatImageButton
