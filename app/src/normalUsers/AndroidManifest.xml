@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application>
+    <application android:name="com.example.android.schoolfinder.normalUsers.App">
+        <activity android:name="com.example.android.schoolfinder.normalUsers.Activities.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name="com.example.android.schoolfinder.normalUsers.WidgetsUtils.SavedSchoolWidget"
             android:permission="android.permission.BIND_REMOTEVIEWS">
@@ -15,11 +23,7 @@
         </receiver>
 
         <activity android:name="com.example.android.schoolfinder.normalUsers.Activities.AuthenticationViewPagerActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity"
