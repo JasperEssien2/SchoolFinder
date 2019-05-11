@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.android.countryregioncitypicker.CountryPickerDialogFragment;
 import com.example.android.countryregioncitypicker.Models.Country;
+import com.example.android.countryregioncitypicker.Models.GeoNamesViewModels;
 import com.example.android.countryregioncitypicker.Models.StateRegion;
 import com.example.android.countryregioncitypicker.OnCountrySelected;
 import com.example.android.countryregioncitypicker.OnStateSelected;
@@ -36,12 +37,8 @@ import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.normalUsers.Adapters.SearchStackedCardAdapter;
 import com.example.android.schoolfinder.normalUsers.Interfaces.SearchSchoolOfflineDatabaseCallback;
 import com.example.android.schoolfinder.normalUsers.SearchSchoolViewModels;
-import com.google.firebase.auth.FirebaseAuth;
-import com.yuyakaido.android.cardstackview.CardStackListener;
-import com.yuyakaido.android.cardstackview.Direction;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 //import com.example.android.schoolfinder.normalUsers.R;
@@ -49,12 +46,13 @@ import java.util.List;
 /**
  * A simple {@link Activity} subclass.
  */
-public class SearchActivity extends AppCompatActivity implements CardStackListener, OnCountrySelected,
+public class SearchActivity extends AppCompatActivity implements OnCountrySelected,
         FirebaseTransactionCallback, SearchSchoolOfflineDatabaseCallback, OnStateSelected {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
     ActivitySearchBinding searchBinding;
     LiveData<List<School>> schoolListLiveData;
+    //    LiveData<List<StateRegion>> stateLiveData;
     CountryPickerDialogFragment dialogFragment = new CountryPickerDialogFragment();
     private SearchSchoolViewModels searchSchoolViewModels;
     private FirebaseTransactionsAction transactionsAction = new FirebaseTransactionsAction(this);
@@ -62,8 +60,11 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
     private List<String> categoryList = new ArrayList<>();
     private int position;
     private Observer<List<School>> observer;
-    private Country countrySelected;
+    GeoNamesViewModels.StatesRegionViewModel viewModel = new ViewModelProvider.NewInstanceFactory().create(GeoNamesViewModels.StatesRegionViewModel.class);
     private StateRegion stateRegionSelected;
+    //    private Observer<List<StateRegion>> observerStateRegion;
+    private Country countrySelected;
+
     final SearchStackedCardAdapter cardAdapter = new SearchStackedCardAdapter(this, new ArrayList<School>(),
             transactionsAction, searchSchoolViewModels);
     private String countryCode, stateCode;
@@ -73,6 +74,15 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
     }
 
     private boolean isOffline = false;
+    private SearchStackedCardAdapter.StateRegionAdapter stateRegionAdapter;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_activity_menu, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,18 +96,16 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
         setSupportActionBar(searchBinding.toolbar);
 
 
+
 //        getSupportActionBar()
 //                .setDefaultDisplayHomeAsUpEnabled(true);
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        manager.setStackFrom(StackFrom.Top);
-//        manager.setMaxDegree(20f);
-//        manager.setSwipeThreshold(0.3f);
-//        manager.setCanScrollHorizontal(true);
-//        manager.setCanScrollVertical(true);
+//
         final RecyclerView cardStackView = searchBinding.swipeStack;
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(cardAdapter);
+//        setUpStatesRegionRecyclerView();
 //        cardAdapter.addItems(getDummySchoolList());
 
         observer = new Observer<List<School>>() {
@@ -115,24 +123,31 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
                     Snackbar.make(searchBinding.getRoot(), "No school found", Snackbar.LENGTH_SHORT);
             }
         };
+//        observerStateRegion = new Observer<List<StateRegion>>() {
+//            @Override
+//            public void onChanged(@Nullable List<StateRegion> stateRegions) {
+////                adapter.setStateRegionList(stateRegions);
+//                List<StateRegionImage> stateRegionImages = new ArrayList<>();
+//                for (StateRegion stateRegion : stateRegions)
+//                    stateRegionImages.add(new StateRegionImage(stateRegion.getToponymName(), null));
+//                stateRegionAdapter.setItems(stateRegionImages);
+//            }
+//        };
+
+
         countryCode = "United States";
         stateCode = "California";
+
         if (!isOffline)
             schoolListLiveData = searchSchoolViewModels.getSchoolsLivedata(countryCode, stateCode, categoryList);
         else
             schoolListLiveData = searchSchoolViewModels.getOfflineSchoolsLivedata(countryCode, stateCode, categoryList);
 
         schoolListLiveData.observe(this, observer);
-
+//        stateLiveData = viewModel.getStateRegionList(6252001);
+//        stateLiveData.observe(this, observerStateRegion);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_activity_menu, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -312,8 +327,13 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
     public void countrySelected(Country country) {
         countrySelected = country;
         dialogFragment.dismiss();
+//        viewModel.getStateRegionList(country.getGeoNameId());
         Log.e(TAG, "Country selected details ---- " + country.toString());
         showStateRegionDialog(country.getGeoNameId());
+    }
+
+    private void getStatesRegion() {
+
     }
 
     @Override
@@ -353,78 +373,6 @@ public class SearchActivity extends AppCompatActivity implements CardStackListen
 
     }
 
-    @Override
-    public void onCardDragging(Direction direction, float ratio) {
-
-    }
-
-    @Override
-    public void onCardSwiped(Direction direction) {
-        if (direction.equals(Direction.Right)) {
-            searchSchoolViewModels.insertSchool(mSchools.get(position));
-        } else if (direction.equals(Direction.Left)) {
-            searchSchoolViewModels.deleteSchool(mSchools.get(position));
-        }
-    }
-
-    @Override
-    public void onCardRewound() {
-
-    }
-
-    @Override
-    public void onCardCanceled() {
-
-    }
-
-    @Override
-    public void onCardAppeared(View view, final int position) {
-        this.position = position;
-        if (mSchools == null) return;
-        if (mSchools.isEmpty()) return;
-        showAllFabs();
-        School school = null;
-        try {
-            school = mSchools.get(position);
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            hideAllFabs();
-        }
-        if (school != null) {
-            searchBinding.negativeCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
-            searchBinding.followersCount.setText(String.valueOf(school.getFollowersCount()));
-            searchBinding.positiveCount.setText(String.valueOf(school.getImpressedExpressionCount()));
-            searchBinding.neutralCount.setText(String.valueOf(school.getNormalExpressionCount()));
-
-            if (school.getNormalExpressions() == null)
-                school.setNormalExpressions(new HashMap<String, Boolean>());
-            if (school.getNormalExpressions().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
-                searchBinding.neutralButton.setImageResource(R.drawable.ic_neutral);
-            else searchBinding.neutralButton.setImageResource(R.drawable.ic_neutral_deactivated);
-
-            if (school.getNotImpressedExpressions() == null)
-                school.setNotImpressedExpressions(new HashMap<String, Boolean>());
-            if (school.getNotImpressedExpressions().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
-                searchBinding.negativeButton.setImageResource(R.drawable.ic_sad__1);
-            else searchBinding.negativeButton.setImageResource(R.drawable.ic_sad__1_deactivated);
-
-            if (school.getImpressedExpressions() == null)
-                school.setImpressedExpressions(new HashMap<String, Boolean>());
-            if (school.getImpressedExpressions().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
-                searchBinding.positiveButton.setImageResource(R.drawable.ic_smile);
-            else searchBinding.positiveButton.setImageResource(R.drawable.ic_smile_deactivated);
-
-//            if(school.getFollowers() == null) school.setFollowers(new HashMap<String, Boolean>());
-//            if(school.getFollowers().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid()))
-//                searchBinding.followButton.setImageResource(R.drawable.ic_neutral);
-//            else searchBinding.followButton.setImageResource(R.drawable.ic_neutral_deactivated);
-        }
-    }
-
-    @Override
-    public void onCardDisappeared(View view, int position) {
-
-    }
 
     @Override
     public void post(Post post, boolean isSuccessful) {

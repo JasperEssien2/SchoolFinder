@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
+    <android.support.v7.widget.CardView
         android:layout_width="90dp"
         android:layout_height="90dp">
 
@@ -11,5 +11,5 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/content_desc_certificate"
             android:scaleType="centerCrop" />
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 </layout>

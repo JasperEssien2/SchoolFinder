@@ -60,12 +60,14 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
             <FrameLayout
                 android:id="@+id/slider_frame_layout"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:fitsSystemWindows="true"
                 android:background="@color/colorCyan200"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

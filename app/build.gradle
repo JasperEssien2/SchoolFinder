@@ -90,6 +90,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.github.medyo:fancybuttons:1.9.1'
     implementation 'com.github.florent37:arclayout:1.0.3'
+    implementation 'org.jsoup:jsoup:1.11.3'
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     // Add dependency
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'

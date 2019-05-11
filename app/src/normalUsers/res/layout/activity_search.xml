@@ -14,31 +14,103 @@
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
             android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:textAlignment="center"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:visibility="visible">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorCyan200"
+                android:layout_gravity="top"
+                android:background="@color/colorWhite"
                 android:fitsSystemWindows="true"
-                app:navigationIcon="@drawable/ic_arrow_back_white"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:navigationIcon="@drawable/ic_navigation_icon"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-                app:title="Search" />
+                app:title="Explore" />
 
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom|center"
+                android:layout_margin="16dp"
+                android:background="@drawable/curved_rectangle_10dp_white"
+                android:gravity="end"
+                app:defaultQueryHint="Search"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search">
+
+
+            </android.support.v7.widget.SearchView>
+
+            <!---->
+            <!--<FrameLayout-->
+            <!--android:id="@+id/search_frame"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:layout_marginTop="24dp"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--android:background="@drawable/curved_rectangle_10dp_white"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent">-->
+
+            <!---->
+            <!--<ImageButton-->
+            <!--android:id="@+id/menu_option"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@null"-->
+            <!--android:src="@drawable/ic_option_menu"-->
+            <!--android:tint="@color/colorLighterGrey"-->
+            <!--android:layout_gravity="end|center"-->
+            <!--/>-->
+
+            <!--</FrameLayout>-->
         </android.support.design.widget.AppBarLayout>
 
-        <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-        <android.support.constraint.ConstraintLayout
+        <TextView
+            android:id="@+id/schools_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Searched schools"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/filter_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_layout" />
+
+        <ImageButton
+            android:id="@+id/filter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:src="@drawable/ic_navigation_icon"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/schools_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/schools_header" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
             android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/schools_header">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/swipeStack"
@@ -50,7 +122,6 @@
 
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="bottom|center"
@@ -94,10 +165,10 @@
                         android:elevation="7dp"
                         android:gravity="center"
                         android:padding="4dp"
-                        tools:text="9"
                         android:textColor="#FFF"
                         android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="9" />
 
                 </FrameLayout>
 
@@ -131,10 +202,10 @@
                         android:elevation="7dp"
                         android:gravity="center"
                         android:padding="4dp"
-                        tools:text="100k"
                         android:textColor="#FFF"
                         android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="100k" />
 
                 </FrameLayout>
 
@@ -168,10 +239,10 @@
                         android:elevation="7dp"
                         android:gravity="center"
                         android:padding="4dp"
-                        tools:text="10k"
                         android:textColor="#FFF"
                         android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="10k" />
 
                 </FrameLayout>
 
@@ -205,16 +276,23 @@
                         android:elevation="7dp"
                         android:gravity="center"
                         android:padding="4dp"
-                        tools:text="100k"
                         android:textColor="#FFF"
                         android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="100k" />
 
                 </FrameLayout>
 
             </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </FrameLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="78dp" />
         <!--</android.support.v4.widget.NestedScrollView>-->
 
     </android.support.design.widget.CoordinatorLayout>

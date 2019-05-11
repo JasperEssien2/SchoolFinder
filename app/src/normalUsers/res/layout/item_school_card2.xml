@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clipToPadding="false"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/schoolCardBackgroundImage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="#777777"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline11"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_border_width="0dp"
+                app:riv_corner_radius_bottom_left="8dp"
+                app:riv_corner_radius_top_left="8dp" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/curved_20dp_bottom_rectangle_white"
+                android:paddingBottom="4dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline11"
+                app:layout_constraintTop_toTopOf="@+id/schoolCardBackgroundImage">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/item_school_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|start"
+                        android:maxLines="1"
+                        android:textColor="#222222"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Bright Hope Standard" />
+
+                    <TextView
+                        android:id="@+id/item_school_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|start"
+                        android:maxLines="1"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/item_school_name"
+                        tools:text="Toronto, Canada" />
+
+                    <TextView
+                        android:id="@+id/item_school_motto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="middle"
+                        android:gravity="center_vertical|start"
+                        android:singleLine="true"
+                        android:textSize="@dimen/text_size_16sp"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/item_school_location"
+                        tools:text="Secure your future through knowledge!!" />
+
+                </android.support.constraint.ConstraintLayout>
+
+
+            </FrameLayout>
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="180dp">-->
+
+            <!--<com.makeramen.roundedimageview.RoundedImageView-->
+            <!--android:id="@+id/schoolCardBackgroundImage"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:padding="0dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="#777777"-->
+            <!--app:riv_border_width="0dp"-->
+            <!--app:riv_corner_radius_top_left="5dp"-->
+            <!--app:riv_corner_radius_top_right="5dp" />-->
+
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@drawable/scrim_gradient2_color_cyan_200"-->
+            <!--android:fitsSystemWindows="true" />-->
+
+            <!--</FrameLayout>-->
+
+            <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="@drawable/curved_20dp_bottom_rectangle_white"-->
+            <!--android:paddingBottom="4dp"-->
+            <!--android:visibility="gone">-->
+
+            <!--<android.support.constraint.ConstraintLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/item_school_name"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:ellipsize="end"-->
+            <!--android:gravity="center_vertical|start"-->
+            <!--android:maxLines="1"-->
+            <!--android:textColor="#222222"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--tools:text="Bright Hope Standard" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/item_school_location"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:ellipsize="end"-->
+            <!--android:gravity="center_vertical|start"-->
+            <!--android:maxLines="1"-->
+            <!--android:textSize="@dimen/text_size_16sp"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/item_school_name"-->
+            <!--tools:text="Toronto, Canada" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/item_school_motto"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:ellipsize="middle"-->
+            <!--android:gravity="center_vertical|start"-->
+            <!--android:singleLine="true"-->
+            <!--android:textSize="@dimen/text_size_16sp"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/item_school_location"-->
+            <!--tools:text="Secure your future through knowledge!!" />-->
+
+            <!--</android.support.constraint.ConstraintLayout>-->
+
+
+            <!--</FrameLayout>-->
+
+
+            <!--</LinearLayout>-->
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/school_logo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="16dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="4dp"
+                android:elevation="8dp"
+                android:src="@drawable/ic_geography_course"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/schoolCardBackgroundImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageButton
+                android:id="@+id/satisfied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:contentDescription="@string/content_desc_positive"
+                android:src="@drawable/ic_smile_18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/neutral" />
+
+            <ImageButton
+                android:id="@+id/neutral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:contentDescription="@string/content_desc_neutral"
+                android:src="@drawable/ic_neutral_18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dissatisfied" />
+
+            <ImageButton
+                android:id="@+id/dissatisfied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:contentDescription="@string/content_desc_negative"
+                android:src="@drawable/ic_sad__16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/follow"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/curved_rectangle_cyan_200"
+                android:contentDescription="@string/content_desc_follow"
+                android:text="follow"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="@+id/reactions"
+                app:layout_constraintStart_toStartOf="@+id/guideline11" />
+
+            <TextView
+                android:id="@+id/follow_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="252dp"
+                tools:layout_editor_absoluteY="118dp"
+                tools:text="100" />
+
+            <TextView
+                android:id="@+id/satisfied_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="10" />
+
+            <TextView
+                android:id="@+id/neutral_count"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+
+                tools:layout_editor_absoluteX="78dp"
+                tools:layout_editor_absoluteY="90dp"
+                tools:text="100" />
+
+            <TextView
+                android:id="@+id/dissatisfied_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="100" />
+
+            <LinearLayout
+                android:id="@+id/reactions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <!--<FrameLayout-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<ImageButton-->
+                <!--android:id="@+id/follow"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@null"-->
+                <!--android:contentDescription="@string/content_desc_follow"-->
+                <!--android:src="@drawable/ic_follow_" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/follow_count"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/colorWhite"-->
+                <!--android:textSize="12sp"-->
+                <!--android:textStyle="bold"-->
+                <!--tools:text="100" />-->
+                <!--</LinearLayout>-->
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/follow_indicator"-->
+                <!--android:layout_width="12dp"-->
+                <!--android:layout_height="12dp"-->
+                <!--android:src="#ffffff"-->
+                <!--android:visibility="gone" />-->
+                <!--</FrameLayout>-->
+
+
+                <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="16dp">-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<ImageButton-->
+                <!--android:id="@+id/satisfied"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@null"-->
+                <!--android:contentDescription="@string/content_desc_positive"-->
+                <!--android:src="@drawable/ic_sentiment_satisfied" />-->
+
+
+                <!--</LinearLayout>-->
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/satisfied_indicator"-->
+                <!--android:layout_width="12dp"-->
+                <!--android:layout_height="12dp"-->
+                <!--android:src="#ffffff"-->
+                <!--android:visibility="gone" />-->
+                <!--</FrameLayout>-->
+
+                <!--TODO: Use a small white circle to indicate when d user follow or express-->
+                <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="16dp">-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<ImageButton-->
+                <!--android:id="@+id/neutral"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@null"-->
+                <!--android:contentDescription="@string/content_desc_neutral"-->
+                <!--android:src="@drawable/ic_sentiment_neutral" />-->
+
+
+                <!--</LinearLayout>-->
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/neutral_indicator"-->
+                <!--android:layout_width="12dp"-->
+                <!--android:layout_height="12dp"-->
+                <!--android:src="#ffffff"-->
+                <!--android:visibility="gone" />-->
+                <!--</FrameLayout>-->
+
+                <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="16dp">-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<ImageButton-->
+                <!--android:id="@+id/dissatisfied"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@null"-->
+                <!--android:contentDescription="@string/content_desc_negative"-->
+                <!--android:src="@drawable/ic_sentiment_dissatisfied" />-->
+
+
+                <!--</LinearLayout>-->
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/dissatisfied_indicator"-->
+                <!--android:layout_width="12dp"-->
+                <!--android:layout_height="12dp"-->
+                <!--android:src="#ffffff"-->
+                <!--android:visibility="gone" />-->
+                <!--</FrameLayout>-->
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/selected_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/content_desc_selected_background"
+                android:src="#77000000"
+                android:visibility="gone" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.38" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+</layout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?><layout xmlns:android="http://schemas.android.com/apk/res/android"xmlns:app="http://schemas.android.com/apk/res-auto"xmlns:tools="http://schemas.android.com/tools">-->
+
+    <!--<FrameLayoutandroid:layout_width="match_parent"android:layout_height="match_parent"android:layout_marginBottom="16dp"android:layout_marginStart="16dp"android:layout_marginEnd="16dp"android:background="@android:color/transparent"android:elevation="7dp">-->
+
+    <!--<FrameLayoutandroid:layout_width="match_parent"android:layout_height="match_parent"android:layout_gravity="bottom"android:layout_marginTop="25dp"android:background="@android:color/transparent">-->
+
+    <!--<com.makeramen.roundedimageview.RoundedImageViewandroid:id="@+id/schoolCardBackgroundImage"android:layout_width="match_parent"android:layout_height="match_parent"android:padding="0dp"android:scaleType="centerCrop"android:src="#777777"app:riv_border_width="0dp"app:riv_corner_radius="20dp" />-->
+
+
+    <!--<View-->
+
+    <!--android:layout_width="match_parent"android:layout_height="match_parent"android:background="@drawable/curved_rectangle_gray_20dp" />-->
+
+
+    <!--<android.support.constraint.ConstraintLayoutandroid:layout_width="match_parent"android:layout_height="match_parent">-->
+
+
+    <!--<TextViewandroid:id="@+id/item_school_name"android:layout_width="0dp"android:layout_height="wrap_content"android:layout_marginStart="8dp"android:layout_marginTop="80dp"android:layout_marginEnd="8dp"android:gravity="center_vertical|center_horizontal"android:textColor="@color/colorWhite"android:textSize="30sp"android:textStyle="bold"app:layout_constraintEnd_toEndOf="parent"app:layout_constraintStart_toStartOf="parent"app:layout_constraintTop_toTopOf="parent"tools:fontFamily="serif"tools:text="Bright Hope Standard" />-->
+
+    <!--<TextViewandroid:id="@+id/item_school_location"android:layout_width="0dp"android:layout_height="wrap_content"android:layout_marginStart="8dp"android:layout_marginTop="8dp"android:layout_marginEnd="8dp"android:gravity="center_vertical|center_horizontal"-->
+
+    <!--android:textColor="@color/colorWhite"android:textSize="24sp"android:textStyle="bold"app:layout_constraintEnd_toEndOf="parent"app:layout_constraintStart_toStartOf="parent"app:layout_constraintTop_toBottomOf="@+id/item_school_name"tools:text="Toronto, Canada" />-->
+
+    <!--<TextViewandroid:id="@+id/item_school_motto"android:layout_width="0dp"android:layout_height="wrap_content"android:layout_marginStart="8dp"android:layout_marginTop="16dp"android:layout_marginEnd="8dp"android:gravity="center_vertical|center_horizontal"android:textColor="@color/colorWhite"android:textSize="24sp"android:textStyle="bold|italic"app:layout_constraintEnd_toEndOf="parent"app:layout_constraintStart_toStartOf="parent"app:layout_constraintTop_toBottomOf="@+id/item_school_location"tools:text="Secure your future through knowledge!!" />-->
+
+    <!--<LinearLayoutandroid:id="@+id/linearLayout"android:layout_width="0dp"android:layout_height="wrap_content"android:layout_marginStart="8dp"android:layout_marginTop="16dp"android:layout_marginEnd="8dp"android:gravity="center"android:orientation="horizontal"app:layout_constraintEnd_toEndOf="parent"app:layout_constraintStart_toStartOf="parent"app:layout_constraintTop_toBottomOf="@+id/item_school_motto">-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageViewandroid:id="@+id/school_internet"android:layout_width="@dimen/dimen_30dp"android:layout_height="@dimen/dimen_30dp"android:layout_gravity="center"android:src="@drawable/ic_internet"app:civ_border_color="@color/colorWhite"app:civ_border_width="2dp" />-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageViewandroid:id="@+id/school_email"android:layout_width="@dimen/dimen_30dp"android:layout_height="@dimen/dimen_30dp"android:layout_gravity="center"android:layout_marginStart="8dp"android:src="@drawable/ic_email"app:civ_border_color="@color/colorWhite"app:civ_border_width="2dp" />-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageViewandroid:id="@+id/school_facebook"android:layout_width="@dimen/dimen_30dp"android:layout_height="@dimen/dimen_30dp"android:layout_gravity="center"android:layout_marginStart="8dp"android:src="@drawable/ic_facebook"app:civ_border_color="@color/colorWhite"app:civ_border_width="2dp" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<FrameLayoutandroid:id="@+id/school_details_mid_card"android:layout_width="0dp"android:layout_height="wrap_content"android:background="@android:color/transparent"android:paddingBottom="20dp"app:layout_constraintBottom_toBottomOf="parent"app:layout_constraintEnd_toEndOf="parent"app:layout_constraintStart_toStartOf="parent">-->
+
+    <!--<LinearLayoutandroid:layout_width="match_parent"android:layout_height="match_parent"android:layout_gravity="center"android:background="@android:color/transparent"android:gravity="center"android:orientation="horizontal">-->
+
+    <!--<LinearLayoutandroid:id="@+id/follow_frame"android:layout_width="0dp"android:layout_height="match_parent"android:layout_weight="1"android:orientation="vertical"android:padding="8dp">-->
+
+    <!--<ImageViewandroid:layout_width="match_parent"android:layout_height="40dp"android:src="@drawable/ic_follow" />-->
+
+    <!--<TextViewandroid:id="@+id/followers_count"style="@style/ExpressionCountTextStyle"android:layout_width="match_parent"android:layout_height="wrap_content"android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayoutandroid:id="@+id/neutral_count_frame"android:layout_width="0dp"android:layout_height="match_parent"android:layout_weight="1"android:orientation="vertical"android:padding="8dp">-->
+
+    <!--<ImageViewandroid:layout_width="match_parent"android:layout_height="40dp"android:src="@drawable/ic_neutral" />-->
+
+    <!--<TextViewandroid:id="@+id/neutral_count_textview"style="@style/ExpressionCountTextStyle"android:layout_width="match_parent"android:layout_height="wrap_content"android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayoutandroid:id="@+id/smile_count_frame"android:layout_width="0dp"android:layout_height="match_parent"android:layout_weight="1"android:orientation="vertical"android:padding="8dp">-->
+
+    <!--<ImageViewandroid:layout_width="match_parent"android:layout_height="40dp"android:src="@drawable/ic_smile" />-->
+
+    <!--<TextViewandroid:id="@+id/smile_count_textview"style="@style/ExpressionCountTextStyle"android:layout_width="match_parent"android:layout_height="wrap_content"android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayoutandroid:id="@+id/sad_count_frame"android:layout_width="0dp"android:layout_height="match_parent"android:layout_weight="1"android:orientation="vertical"android:padding="8dp">-->
+
+    <!--<ImageViewandroid:layout_width="match_parent"android:layout_height="40dp"android:src="@drawable/ic_sad__1" />-->
+
+    <!--<TextViewandroid:id="@+id/sad_count_textview"style="@style/ExpressionCountTextStyle"android:layout_width="match_parent"android:layout_height="wrap_content"android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--</FrameLayout>-->
+
+    <!--<android.support.constraint.Guidelineandroid:id="@+id/guideline6"android:layout_width="wrap_content"android:layout_height="wrap_content"android:orientation="horizontal"app:layout_constraintGuide_percent="0.71" />-->
+
+    <!--</android.support.constraint.ConstraintLayout>-->
+
+    <!--</FrameLayout>-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageViewandroid:id="@+id/school_owner_detail_image_view"android:layout_width="50dp"android:layout_height="50dp"android:layout_gravity="top|center"android:elevation="10dp"android:src="@drawable/place_holder"app:civ_border_color="@color/colorCyan200"app:civ_border_width="2dp"app:civ_circle_background_color="@color/colorGrey" />-->
+
+    <!--</FrameLayout></layout>-->
+
+    <!--<FrameLayout android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_gravity="bottom"--><!--android:layout_marginTop="25dp"--><!--android:background="@android:color/transparent"--><!--xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--<com.makeramen.roundedimageview.RoundedImageView--><!--android:id="@+id/schoolCardBackgroundImage"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:padding="0dp"--><!--android:scaleType="centerCrop"--><!--android:src="#777777"--><!--app:riv_border_width="0dp"--><!--app:riv_corner_radius="20dp" />-->
+
+
+    <!--<View-->
+
+    <!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@drawable/curved_rectangle_gray_20dp" />-->
+
+
+    <!--<android.support.constraint.ConstraintLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
+
+
+    <!--<TextView--><!--android:id="@+id/item_school_name"--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_marginStart="8dp"--><!--android:layout_marginTop="80dp"--><!--android:layout_marginEnd="8dp"--><!--android:gravity="center_vertical|center_horizontal"--><!--android:textColor="@color/colorWhite"--><!--android:textSize="30sp"--><!--android:textStyle="bold"--><!--app:layout_constraintEnd_toEndOf="parent"--><!--app:layout_constraintStart_toStartOf="parent"--><!--app:layout_constraintTop_toTopOf="parent"--><!--tools:fontFamily="serif"--><!--tools:text="Bright Hope Standard" />-->
+
+    <!--<TextView--><!--android:id="@+id/item_school_location"--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_marginStart="8dp"--><!--android:layout_marginTop="8dp"--><!--android:layout_marginEnd="8dp"--><!--android:gravity="center_vertical|center_horizontal"-->
+
+    <!--android:textColor="@color/colorWhite"--><!--android:textSize="24sp"--><!--android:textStyle="bold"--><!--app:layout_constraintEnd_toEndOf="parent"--><!--app:layout_constraintStart_toStartOf="parent"--><!--app:layout_constraintTop_toBottomOf="@+id/item_school_name"--><!--tools:text="Toronto, Canada" />-->
+
+    <!--<TextView--><!--android:id="@+id/item_school_motto"--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_marginStart="8dp"--><!--android:layout_marginTop="16dp"--><!--android:layout_marginEnd="8dp"--><!--android:gravity="center_vertical|center_horizontal"--><!--android:textColor="@color/colorWhite"--><!--android:textSize="24sp"--><!--android:textStyle="bold|italic"--><!--app:layout_constraintEnd_toEndOf="parent"--><!--app:layout_constraintStart_toStartOf="parent"--><!--app:layout_constraintTop_toBottomOf="@+id/item_school_location"--><!--tools:text="Secure your future through knowledge!!" />-->
+
+    <!--<LinearLayout--><!--android:id="@+id/linearLayout"--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_marginStart="8dp"--><!--android:layout_marginTop="16dp"--><!--android:layout_marginEnd="8dp"--><!--android:gravity="center"--><!--android:orientation="horizontal"--><!--app:layout_constraintEnd_toEndOf="parent"--><!--app:layout_constraintStart_toStartOf="parent"--><!--app:layout_constraintTop_toBottomOf="@+id/item_school_motto">-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView--><!--android:id="@+id/school_internet"--><!--android:layout_width="@dimen/dimen_30dp"--><!--android:layout_height="@dimen/dimen_30dp"--><!--android:layout_gravity="center"--><!--android:src="@drawable/ic_internet"--><!--app:civ_border_color="@color/colorWhite"--><!--app:civ_border_width="2dp" />-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView--><!--android:id="@+id/school_email"--><!--android:layout_width="@dimen/dimen_30dp"--><!--android:layout_height="@dimen/dimen_30dp"--><!--android:layout_gravity="center"--><!--android:layout_marginStart="8dp"--><!--android:src="@drawable/ic_email"--><!--app:civ_border_color="@color/colorWhite"--><!--app:civ_border_width="2dp" />-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView--><!--android:id="@+id/school_facebook"--><!--android:layout_width="@dimen/dimen_30dp"--><!--android:layout_height="@dimen/dimen_30dp"--><!--android:layout_gravity="center"--><!--android:layout_marginStart="8dp"--><!--android:src="@drawable/ic_facebook"--><!--app:civ_border_color="@color/colorWhite"--><!--app:civ_border_width="2dp" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<FrameLayout--><!--android:id="@+id/school_details_mid_card"--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:background="@android:color/transparent"--><!--android:paddingBottom="20dp"--><!--app:layout_constraintBottom_toBottomOf="parent"--><!--app:layout_constraintEnd_toEndOf="parent"--><!--app:layout_constraintStart_toStartOf="parent">-->
+
+    <!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:layout_gravity="center"--><!--android:background="@android:color/transparent"--><!--android:gravity="center"--><!--android:orientation="horizontal">-->
+
+    <!--<LinearLayout--><!--android:id="@+id/follow_frame"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_weight="1"--><!--android:orientation="vertical"--><!--android:padding="8dp">-->
+
+    <!--<ImageView--><!--android:layout_width="match_parent"--><!--android:layout_height="40dp"--><!--android:src="@drawable/ic_follow" />-->
+
+    <!--<TextView--><!--android:id="@+id/followers_count"--><!--style="@style/ExpressionCountTextStyle"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout--><!--android:id="@+id/neutral_count_frame"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_weight="1"--><!--android:orientation="vertical"--><!--android:padding="8dp">-->
+
+    <!--<ImageView--><!--android:layout_width="match_parent"--><!--android:layout_height="40dp"--><!--android:src="@drawable/ic_neutral" />-->
+
+    <!--<TextView--><!--android:id="@+id/neutral_count_textview"--><!--style="@style/ExpressionCountTextStyle"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout--><!--android:id="@+id/smile_count_frame"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_weight="1"--><!--android:orientation="vertical"--><!--android:padding="8dp">-->
+
+    <!--<ImageView--><!--android:layout_width="match_parent"--><!--android:layout_height="40dp"--><!--android:src="@drawable/ic_smile" />-->
+
+    <!--<TextView--><!--android:id="@+id/smile_count_textview"--><!--style="@style/ExpressionCountTextStyle"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout--><!--android:id="@+id/sad_count_frame"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_weight="1"--><!--android:orientation="vertical"--><!--android:padding="8dp">-->
+
+    <!--<ImageView--><!--android:layout_width="match_parent"--><!--android:layout_height="40dp"--><!--android:src="@drawable/ic_sad__1" />-->
+
+    <!--<TextView--><!--android:id="@+id/sad_count_textview"--><!--style="@style/ExpressionCountTextStyle"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:text="100k" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--</FrameLayout>-->
+
+    <!--<android.support.constraint.Guideline--><!--android:id="@+id/guideline6"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--app:layout_constraintGuide_percent="0.71" />-->
+
+    <!--</android.support.constraint.ConstraintLayout>-->
+
+    <!--</FrameLayout>-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView--><!--android:id="@+id/school_owner_detail_image_view"--><!--android:layout_width="50dp"--><!--android:layout_height="50dp"--><!--android:layout_gravity="top|center"--><!--android:elevation="10dp"--><!--android:src="@drawable/place_holder"--><!--app:civ_border_color="@color/colorCyan200"--><!--app:civ_border_width="2dp"--><!--app:civ_circle_background_color="@color/colorGrey" />--><!--</--><!--</layout>-->

@@ -21,7 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity" />
+        <activity
+            android:name="com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity"
+            android:theme="@style/SchoolDetailTheme" />
+        <activity
+            android:name="com.example.android.schoolfinder.normalUsers.Activities.SearchActivity"
+            android:theme="@style/SchoolSearchTheme" />
     </application>
 
 </manifest>
