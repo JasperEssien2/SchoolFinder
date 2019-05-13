@@ -114,6 +114,10 @@
     <string name="content_desc_school_twitter">School Twitter link</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
+    <string name="bottom_explore">Explore</string>
+    <string name="bottom_feed">Feed</string>
+    <string name="bottom_profile">Profile</string>
+    <string name="bottom_nav_chat">Chat</string>
 
 
 </resources>

@@ -5,55 +5,58 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.android.schoolfinder.FirebaseHelper.Authentication;
 import com.example.android.schoolfinder.Models.School;
 import com.example.android.schoolfinder.Models.Users;
 import com.example.android.schoolfinder.R;
-import com.example.android.schoolfinder.Utility.PicassoImageLoader;
-import com.example.android.schoolfinder.databinding.ActivityHomeBinding;
+import com.example.android.schoolfinder.databinding.ActivityHome2Binding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.normalUsers.Activities.AuthenticationViewPagerActivity;
-import com.example.android.schoolfinder.normalUsers.Activities.SearchActivity;
-import com.example.android.schoolfinder.normalUsers.Fragments.ActivitiesFragment;
-import com.example.android.schoolfinder.normalUsers.Fragments.SettingsFragment;
+import com.example.android.schoolfinder.normalUsers.Utility.Navigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity implements AuthenticationCallbacks {
 
-    ActivityHomeBinding homeBinding;
+    ActivityHome2Binding homeBinding;
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private Users mUser;
     private Authentication authentication;
+    ActionBarDrawerToggle t;
+    private Toolbar toolbar;
+    private Navigation bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        setSupportActionBar(homeBinding.toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setElevation(8.0f);
-        ViewCompat.setElevation(homeBinding.userDetailsView, 8.0f);
-        ViewCompat.setElevation(homeBinding.homeUserImage, 8.0f);
+        homeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home2);
+        bottomNavigation = new Navigation(this, homeBinding);
+        bottomNavigation.setSelected(R.id.action_search_page);
+        bottomNavigation.init();
 
-        ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, homeBinding.homeDrawerLayout, homeBinding.toolbar, R.string.Open, R.string.Close);
+//        setSupportActionBar(homeBinding.toolbar);
+//        getSupportActionBar().setTitle("");
+//        getSupportActionBar().setElevation(8.0f);
+//        ViewCompat.setElevation(homeBinding.userDetailsView, 8.0f);
+//        ViewCompat.setElevation(homeBinding.homeUserImage, 8.0f);
 
-        homeBinding.homeDrawerLayout.addDrawerListener(t);
-        t.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
+//        ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, homeBinding.homeDrawerLayout, homeBinding.toolbar, R.string.Open, R.string.Close);
+//
+//        homeBinding.homeDrawerLayout.addDrawerListener(t);
+//        t.syncState();
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+////        getSupportActionBar().setHomeButtonEnabled(true);
 
         homeBinding.homeNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -93,39 +96,39 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
         if (FirebaseAuth.getInstance().getCurrentUser() != null)
             authentication.getUserDetail(FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
 
-        homeBinding.buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        homeBinding.buttonSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                getSupportFragmentManager()
+////                        .beginTransaction()
+////                        .addToBackStack(null)
+////                        .replace(homeBinding.activityHome.getId(), new SearchPageFragment())
+////                        .commit();
+//                Intent intent = new Intent(HomeActivity.this, SearchPageFragment.class);
+//                startActivity(intent);
+//            }
+//        });
+//        homeBinding.buttonNotification.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
 //                getSupportFragmentManager()
 //                        .beginTransaction()
 //                        .addToBackStack(null)
-//                        .replace(homeBinding.activityHome.getId(), new SearchActivity())
+//                        .replace(homeBinding.activityHome.getId(), new ActivitiesFragment())
 //                        .commit();
-                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-        homeBinding.buttonNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(homeBinding.activityHome.getId(), new ActivitiesFragment())
-                        .commit();
-            }
-        });
-
-        homeBinding.buttonSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(homeBinding.activityHome.getId(), new SettingsFragment())
-                        .commit();
-            }
-        });
+//            }
+//        });
+//
+//        homeBinding.buttonSettings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .addToBackStack(null)
+//                        .replace(homeBinding.activityHome.getId(), new SettingsFragment())
+//                        .commit();
+//            }
+//        });
 
     }
 
@@ -201,16 +204,29 @@ public class HomeActivity extends AppCompatActivity implements AuthenticationCal
 
     }
 
+    public void initToolbar(Toolbar toolbar) {
+
+        this.toolbar = toolbar;
+        if (toolbar == null) return;
+        setSupportActionBar(toolbar);
+        t = new ActionBarDrawerToggle(this, homeBinding.homeDrawerLayout, toolbar, R.string.Open, R.string.Close);
+
+        homeBinding.homeDrawerLayout.addDrawerListener(t);
+        t.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
     private void setUpViewWithData() {
         if (mUser == null) return;
         if (mUser.getProfileImageUrl() != null && !mUser.getProfileImageUrl().isEmpty()) {
-            new PicassoImageLoader(this, mUser.getProfileImageUrl(), R.color.colorLightGrey,
-                    R.color.colorLightGrey, homeBinding.homeUserImage);
-            new PicassoImageLoader(this, mUser.getProfileImageUrl(), R.color.colorLightGrey,
-                    R.color.colorLightGrey, homeBinding.backgroundImage);
+//            new PicassoImageLoader(this, mUser.getProfileImageUrl(), R.color.colorLightGrey,
+//                    R.color.colorLightGrey, homeBinding.homeUserImage);
+//            new PicassoImageLoader(this, mUser.getProfileImageUrl(), R.color.colorLightGrey,
+//                    R.color.colorLightGrey, homeBinding.backgroundImage);
         }
-        homeBinding.name.setText(mUser.getName() != null ? mUser.getName() : "");
-        homeBinding.email.setText(mUser.getEmail() != null ? mUser.getEmail() : "");
-        homeBinding.location.setText(mUser.getLocation() != null ? mUser.getLocation() : "");
+//        homeBinding.name.setText(mUser.getName() != null ? mUser.getName() : "");
+//        homeBinding.email.setText(mUser.getEmail() != null ? mUser.getEmail() : "");
+//        homeBinding.location.setText(mUser.getLocation() != null ? mUser.getLocation() : "");
     }
 }

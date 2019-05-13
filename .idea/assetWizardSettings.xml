@@ -41,8 +41,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="555555" />
-                            <entry key="outputName" value="ic_navigation_icon" />
-                            <entry key="sourceFile" value="C:\Users\JAHSWILL\Documents\School Finder App\menu_open.svg" />
+                            <entry key="outputName" value="ic_gear" />
+                            <entry key="sourceFile" value="C:\Users\JAHSWILL\Documents\School Finder App\gear.svg" />
                           </map>
                         </option>
                       </PersistentState>

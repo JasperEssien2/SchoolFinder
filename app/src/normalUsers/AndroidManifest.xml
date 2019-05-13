@@ -29,7 +29,11 @@
             android:name="com.example.android.schoolfinder.normalUsers.Activities.SchoolDetailActivity"
             android:theme="@style/SchoolDetailTheme" />
         <activity
-            android:name="com.example.android.schoolfinder.normalUsers.Activities.SearchActivity"
+            android:name="com.example.android.schoolfinder.normalUsers.Fragments.SearchPageFragment"
+            android:theme="@style/SchoolSearchTheme" />
+
+        <activity
+            android:name="com.example.android.schoolfinder.normalUsers.HomeActivity"
             android:theme="@style/SchoolSearchTheme" />
     </application>
 

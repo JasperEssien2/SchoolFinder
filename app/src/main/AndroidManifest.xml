@@ -30,11 +30,10 @@
         <!--</activity>-->
         <activity android:name=".Activities.SettingsActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".normalUsers.HomeActivity" />
         <activity android:name=".schoolOwners.HomeActivity" />
         <activity android:name=".schoolOwners.Activities.SettingsViewPagerActivity" />
         <activity android:name=".normalUsers.Activities.AuthenticationViewPagerActivity" />
-        <activity android:name=".normalUsers.Activities.SearchActivity" />
+        <activity android:name=".normalUsers.Fragments.SearchPageFragment" />
         <activity android:name=".normalUsers.Activities.Splash" />
         <!--<activity android:name=".schoolOwners.HomeActivity" />-->
         <!--<activity android:name=".schoolOwners.Activities.AuthenticationViewPagerActivity" />-->

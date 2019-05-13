@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_search_page"
+        android:icon="@drawable/ic_school_building"
+        android:title="@string/bottom_explore" />
+    <item
+        android:id="@+id/action_feed_page"
+        android:icon="@drawable/ic_rss"
+        android:title="@string/bottom_feed" />
+
+    <item
+        android:id="@+id/action_chat_page"
+        android:icon="@drawable/ic_chat_"
+        android:title="@string/bottom_nav_chat" />
+
+    <item
+        android:id="@+id/action_profile_page"
+        android:icon="@drawable/ic_gear"
+        android:title="@string/bottom_profile" />
+
+    <!--<item-->
+    <!--android:id="@+id/action_gallery_setting"-->
+    <!--android:icon="@drawable/ic_gallery_settings"-->
+    <!--android:title="@string/bottom_nav_gallery" />-->
+</menu>

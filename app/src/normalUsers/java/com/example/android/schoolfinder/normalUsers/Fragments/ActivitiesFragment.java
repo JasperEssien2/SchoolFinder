@@ -30,6 +30,7 @@ import com.example.android.schoolfinder.databinding.FragmentActivitiesBinding;
 import com.example.android.schoolfinder.interfaces.AuthenticationCallbacks;
 import com.example.android.schoolfinder.interfaces.FirebaseTransactionCallback;
 import com.example.android.schoolfinder.interfaces.MediaStorageCallback;
+import com.example.android.schoolfinder.normalUsers.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -69,6 +70,7 @@ public class ActivitiesFragment extends Fragment implements AuthenticationCallba
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
+        ((HomeActivity) getActivity()).initToolbar(binding.toolbar);
         postAdapter = new PostAdapter(getActivity(), false);
         postAdapter.initTransactionsObject(transactionsAction);
         setUpRecyclerView();

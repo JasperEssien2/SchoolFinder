@@ -6,7 +6,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorCyan500"
+        android:background="@color/colorWhite"
         tools:context=".DialogFragments.GalleryFragment">
 
         <LinearLayout
@@ -19,17 +19,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_anchorGravity="top">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/colorCyan200"
+                    android:background="@color/colorWhite"
                     android:fitsSystemWindows="true"
                     app:layout_scrollFlags="snap"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+                    app:navigationIcon="@drawable/ic_navigation_icon"
+
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:title="Activities" />
 
             </android.support.design.widget.AppBarLayout>
@@ -48,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/colorCyan500"
+                android:background="@color/colorWhite"
                 android:fitsSystemWindows="true"
                 app:layout_behavior="">
 
@@ -60,7 +62,6 @@
                     android:padding="16dp"
                     android:text="@string/postt_empty_list_text"
                     android:textAlignment="center"
-                    android:textColor="@color/colorCyan200"
                     android:textSize="24sp"
                     android:textStyle="italic|bold" />
 

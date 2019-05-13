@@ -88,7 +88,7 @@ public class SettingsFragment extends Fragment implements AuthenticationCallback
                 getActivity().onBackPressed();
             }
         });
-        ((HomeActivity) getActivity()).setSupportActionBar(binding.toolbar);
+        ((HomeActivity) getActivity()).initToolbar(binding.toolbar);
         ((HomeActivity) getActivity()).getSupportActionBar().setTitle("Setup");
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((HomeActivity) getActivity()).getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
