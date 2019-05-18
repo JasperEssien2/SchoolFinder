@@ -226,7 +226,7 @@
                 android:layout_marginTop="4dp"
                 android:elevation="8dp"
                 android:src="@drawable/ic_geography_course"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@+id/schoolCardBackgroundImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -237,11 +237,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:visibility="invisible"
                 android:background="@null"
                 android:contentDescription="@string/content_desc_positive"
                 android:src="@drawable/ic_smile_18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/neutral" />
+                app:layout_constraintEnd_toEndOf="@+id/neutral" />
+
 
             <ImageButton
                 android:id="@+id/neutral"
@@ -250,20 +252,35 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@null"
+                android:visibility="invisible"
                 android:contentDescription="@string/content_desc_neutral"
                 android:src="@drawable/ic_neutral_18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/dissatisfied" />
+                app:layout_constraintEnd_toEndOf="@+id/dissatisfied" />
 
             <ImageButton
                 android:id="@+id/dissatisfied"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:visibility="invisible"
+                android:contentDescription="@string/content_desc_negative"
+                android:src="@drawable/ic_sad__16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/openCloseRating" />
+
+            <ImageButton
+                android:id="@+id/openCloseRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:background="@null"
-                android:contentDescription="@string/content_desc_negative"
-                android:src="@drawable/ic_sad__16dp"
+                android:contentDescription="@string/content_desc_positive"
+                android:src="@drawable/ic_close"
+                android:tint="@color/colorCyan200"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

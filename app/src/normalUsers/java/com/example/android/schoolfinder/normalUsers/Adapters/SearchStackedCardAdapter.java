@@ -5,15 +5,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.schoolfinder.Constants.BundleConstants;
@@ -85,6 +92,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
             notifyDataSetChanged();
         }
     };
+//    private boolean isOpen = false;
 
 
     public SearchStackedCardAdapter(Activity activity, List<School> schoolList,
@@ -107,36 +115,7 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
     }
 
 
-    @Override
-    public void onBindViewHolder(@NonNull final SearchStackedCardViewHolder viewHolder, int i) {
-        final School school = mSchoolList.get(viewHolder.getAdapterPosition());
-        if (school == null) return;
-//        new PicassoImageLoader(mActivity, "https://images.megapixl.com/3337/33377575.jpg", R.color.colorLightGrey,
-//                R.color.colorLightGrey, viewHolder.backgroundImage);
-        viewHolder.selectItem(school);
-        if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
-            new PicassoImageLoader(mActivity, school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
-                    R.color.colorLightGrey, viewHolder.schoolLogo);
-
-        if (school.getSchoolImages() != null && school.getSchoolImages().get(0) != null)
-            new PicassoImageLoader(mActivity, school.getSchoolImages().get(0).getImageUrl(), R.color.colorLightGrey,
-                    R.color.colorLightGrey, viewHolder.backgroundImage);
-
-        viewHolder.schoolName.setText(school.getSchoolName() != null ? school.getSchoolName() : "");
-        viewHolder.schoolMotto.setText(school.getSchoolMotto() != null ? school.getSchoolMotto() : "");
-        viewHolder.schoolLocation.setText(school.getSchoolLocation() != null ? school.getSchoolLocation() : "");
-        setUpOnCLickListeners(school);
-//        viewHolder.satisfiedCount.setText(String.valueOf(school.getImpressedExpressionCount()));
-//        viewHolder.followCount.setText(String.valueOf(school.getFollowersCount()));
-//        viewHolder.dissatisfiedCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
-//        viewHolder.neutralCount.setText(String.valueOf(school.getNormalExpressionCount()));
-//        viewHolder.schoolAddress.setText(school.getSchoolLocation());
-        viewHolder.schoolName.setText(school.getSchoolName());
-//        hideOrShowIndicator(school.getFollowers(), viewHolder.followIndicator);
-//        hideOrShowIndicator(school.getImpressedExpressions(), viewHolder.satisfiedIndicator);
-//        hideOrShowIndicator(school.getNormalExpressions(), viewHolder.neutralIndicator);
-//        hideOrShowIndicator(school.getNotImpressedExpressions(), viewHolder.dissatisfiedIndicator);
-    }
+    private ConstraintLayout.LayoutParams layoutParams;
 
     /**
      * This method is to check if the users id id in the map of either follow, satisfied, neutral or
@@ -173,7 +152,54 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 //        notifyDataSetChanged();
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull final SearchStackedCardViewHolder viewHolder, int i) {
+        final School school = mSchoolList.get(viewHolder.getAdapterPosition());
+        if (school == null) return;
+//        new PicassoImageLoader(mActivity, "https://images.megapixl.com/3337/33377575.jpg", R.color.colorLightGrey,
+//                R.color.colorLightGrey, viewHolder.backgroundImage);
+
+        viewHolder.selectItem(school);
+        if (school.getSchoolLogoImageUrl() != null && !school.getSchoolLogoImageUrl().isEmpty())
+            new PicassoImageLoader(mActivity, school.getSchoolLogoImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, viewHolder.schoolLogo);
+
+        if (school.getSchoolImages() != null && school.getSchoolImages().get(0) != null)
+            new PicassoImageLoader(mActivity, school.getSchoolImages().get(0).getImageUrl(), R.color.colorLightGrey,
+                    R.color.colorLightGrey, viewHolder.backgroundImage);
+
+        viewHolder.schoolName.setText(school.getSchoolName() != null ? school.getSchoolName() : "");
+        viewHolder.schoolMotto.setText(school.getSchoolMotto() != null ? school.getSchoolMotto() : "");
+        viewHolder.schoolLocation.setText(school.getSchoolLocation() != null ? school.getSchoolLocation() : "");
+        setUpOnCLickListeners(school);
+//        viewHolder.satisfiedCount.setText(String.valueOf(school.getImpressedExpressionCount()));
+//        viewHolder.followCount.setText(String.valueOf(school.getFollowersCount()));
+//        viewHolder.dissatisfiedCount.setText(String.valueOf(school.getNotImpressedExpressionCount()));
+//        viewHolder.neutralCount.setText(String.valueOf(school.getNormalExpressionCount()));
+//        viewHolder.schoolAddress.setText(school.getSchoolLocation());
+        viewHolder.schoolName.setText(school.getSchoolName());
+//        hideOrShowIndicator(school.getFollowers(), viewHolder.followIndicator);
+//        hideOrShowIndicator(school.getImpressedExpressions(), viewHolder.satisfiedIndicator);
+//        hideOrShowIndicator(school.getNormalExpressions(), viewHolder.neutralIndicator);
+//        hideOrShowIndicator(school.getNotImpressedExpressions(), viewHolder.dissatisfiedIndicator);
+    }
+
+    /**
+     * To control the Contexual Action bar to show delete instead of save when in offline mode
+     *
+     * @param isOffline
+     */
+    public void isOffline(boolean isOffline) {
+        this.isOffline = isOffline;
+    }
+
+    private void animateSizeUpOnClick(View view) {
+        ObjectAnimator objectAnimator = new ObjectAnimator();
+//        objectAnimator.
+    }
+
     private void setUpOnCLickListeners(final School school) {
+
         mItemSchoolCardBinding.follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,21 +243,143 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 //                }
             }
         });
+
+
+    }
+
+    private void animateMovingLeft(final ImageButton imageButton, final int smiley, final int newRightMargin, final SearchStackedCardViewHolder viewHolder) {
+        Log.e(TAG, "animateMovingLeft --- smiley Number -- " + smiley + ", newRightMargin : " + newRightMargin);
+//        int smiley1 = smiley;
+//        int newRightMargin = 0;
+//        if(smiley == 0) newRightMargin = 8;
+//        else if(smiley == 1) newRightMargin = 16;
+//        else if(smiley == 2) newRightMargin = 24;
+        imageButton.setVisibility(View.VISIBLE);
+
+        final Animation a = new Animation() {
+
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+
+                layoutParams = (ConstraintLayout.LayoutParams) imageButton.getLayoutParams();
+                if (smiley != 0) layoutParams.rightMargin = 8;
+                imageButton.setLayoutParams(layoutParams);
+//                newRightMargin = convertPxToDp(newRightMargin);
+                Log.e(TAG, "newIghtMarging for smiley number " + smiley + ", " + newRightMargin * interpolatedTime);
+
+                layoutParams.rightMargin = (int) (newRightMargin * interpolatedTime);
+//                layoutParams.leftMargin = (int) (storeMargins.get("topAndStartMargin").get(1) * interpolatedTime);
+//                layoutParams.setMarginStart((int) (storeMargins.get("topAndStartMargin").get(1) * interpolatedTime));
+                imageButton.setLayoutParams(layoutParams);
+            }
+        };
+
+        a.setDuration(700); // in ms
+        a.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                imageButton.setVisibility(View.VISIBLE);
+//                a.setStartOffset(2000);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+//                if(smiley == 0) smiley1 = 1;
+//                if(smiley == 0) animateMovingLeft(viewHolder.neutral, 1, 24, viewHolder);
+//                else if(smiley == 1) animateMovingLeft(viewHolder.satisfied, 2, 32, viewHolder);
+//                a.setRepeatMode(Animation.RESTART);
+//                a.setRepeatCount(Animation.INFINITE);
+//                animation.setStartOffset(2000);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+//        imageButton.anim
+        imageButton.setAnimation(a);
+    }
+
+    private void animateMovingRight(final ImageButton imageButton, final int smiley, final int newRightMargin, final SearchStackedCardViewHolder viewHolder) {
+        Log.e(TAG, "animateMovingLeft --- smiley Number -- " + smiley + ", newRightMargin : " + newRightMargin);
+//        int smiley1 = smiley;
+//        int newRightMargin = 0;
+//        if(smiley == 0) newRightMargin = 8;
+//        else if(smiley == 1) newRightMargin = 16;
+//        else if(smiley == 2) newRightMargin = 24;
+//        imageButton.setVisibility(View.INVISIBLE);
+
+        final Animation a = new Animation() {
+
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+
+                layoutParams = (ConstraintLayout.LayoutParams) imageButton.getLayoutParams();
+                if (smiley != 0) layoutParams.rightMargin = 8;
+                imageButton.setLayoutParams(layoutParams);
+                Log.e(TAG, "newIghtMarging for smiley number " + smiley + ", " + newRightMargin * interpolatedTime);
+
+                layoutParams.rightMargin = (int) (newRightMargin * interpolatedTime);
+//                layoutParams.leftMargin = (int) (storeMargins.get("topAndStartMargin").get(1) * interpolatedTime);
+//                layoutParams.setMarginStart((int) (storeMargins.get("topAndStartMargin").get(1) * interpolatedTime));
+                imageButton.setLayoutParams(layoutParams);
+            }
+        };
+
+        a.setDuration(900); // in ms
+        a.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+//                a.setStartOffset(2000);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+//                if(smiley == 0) smiley1 = 1;
+                imageButton.setVisibility(View.
+                        INVISIBLE);
+
+                if (smiley == 0) animateMovingRight(viewHolder.neutral, 1, 0, viewHolder);
+                else if (smiley == 1) animateMovingRight(viewHolder.satisfied, 2, 0, viewHolder);
+//                a.setRepeatMode(Animation.RESTART);
+//                a.setRepeatCount(Animation.INFINITE);
+//                animation.setStartOffset(2000);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+//        imageButton.anim
+        imageButton.setAnimation(a);
     }
 
     /**
-     * To control the Contexual Action bar to show delete instead of save when in offline mode
+     * This method gets the dp of px passed
      *
-     * @param isOffline
+     * @param val an int of dimen px
+     * @return an int of type dp
      */
-    public void isOffline(boolean isOffline) {
-        this.isOffline = isOffline;
+    private int getDp(int val) {
+//        float d = getContext().getResources().getDisplayMetrics().density;
+//        int margin = (int)(val * d); // margin in pixels
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, val,
+                mActivity.getResources().getDisplayMetrics());
+//        return margin;
     }
 
-    private void animateSizeUpOnClick(View view) {
-        ObjectAnimator objectAnimator = new ObjectAnimator();
-//        objectAnimator.
+    /**
+     * this method converts px to dp
+     *
+     * @param px dimen in px
+     * @return an int in dp
+     */
+    public int convertPxToDp(int px) {
+        return (int) (px / mActivity.getResources().getDisplayMetrics().density);
     }
+
 
     public void initSchoolViewModels(SearchSchoolViewModels searchSchoolViewModels) {
 
@@ -364,10 +512,14 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
     public class SearchStackedCardViewHolder extends RecyclerView.ViewHolder {
         public TextView satisfiedCount, followCount, neutralCount, dissatisfiedCount;
         public CircleImageView followIndicator, satisfiedIndicator, neutralIndicator, dissatisfiedIndicator;
+        public ImageButton openCloseRating;
+        public Button followButton;
         RoundedImageView backgroundImage;
         TextView schoolName, schoolLocation, schoolMotto, schoolFbLink, schoolEmailLink, schoolWebsiteLink,
                 shoolEmailLink, schoolTwitterLink;
+        ImageButton satisfied, neutral, disatisfied;
         CircleImageView schoolLogo;
+        boolean isOpen = false;
 
         public SearchStackedCardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -380,10 +532,15 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 //            }catch (ArrayIndexOutOfBoundsException e){
 //                e.printStackTrace();
 //            }
+            followButton = mItemSchoolCardBinding.follow;
             backgroundImage = mItemSchoolCardBinding.schoolCardBackgroundImage;
             schoolName = mItemSchoolCardBinding.itemSchoolName;
             schoolLocation = mItemSchoolCardBinding.itemSchoolLocation;
             schoolMotto = mItemSchoolCardBinding.itemSchoolMotto;
+            satisfied = mItemSchoolCardBinding.satisfied;
+            neutral = mItemSchoolCardBinding.neutral;
+            disatisfied = mItemSchoolCardBinding.dissatisfied;
+            openCloseRating = mItemSchoolCardBinding.openCloseRating;
 //            satisfiedCount = mItemSchoolCardBinding.satisfiedCount;
             followCount = mItemSchoolCardBinding.followCount;
 //            neutralCount = mItemSchoolCardBinding.neutralCount;
@@ -397,6 +554,24 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
 //            schoolNormalExpressionCount = mItemSchoolCardBinding.neutralCountTextview;
 //            schoolNotImpressedExpressionCount = mItemSchoolCardBinding.sadCountTextview;
             schoolLogo = mItemSchoolCardBinding.schoolLogo;
+            this.openCloseRating.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isOpen = !isOpen;
+                    if (isOpen) {
+                        animateMovingLeft(disatisfied, 0, 16, SearchStackedCardViewHolder.this);
+                        animateMovingLeft(neutral, 1, 98, SearchStackedCardViewHolder.this);
+                        animateMovingLeft(satisfied, 2, 98, SearchStackedCardViewHolder.this);
+//                    isOpen = false;
+                        followButton.setVisibility(View.GONE);
+                    } else {
+//                    isOpen = true;
+                        animateMovingRight(disatisfied, 0, 0, SearchStackedCardViewHolder.this);
+                        followButton.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+
         }
 
         void update(School item) {
@@ -432,6 +607,8 @@ public class SearchStackedCardAdapter extends RecyclerView.Adapter<SearchStacked
                     }
                 }
             });
+
+
         }
 
         void selectItem(School item) {

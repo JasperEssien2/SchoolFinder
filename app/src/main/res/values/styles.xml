@@ -61,7 +61,7 @@
     </style>
 
     <style name="SchoolSearchTheme" parent="AppThemeLight">
-        <item name="android:statusBarColor">@color/colorWhite</item>
+        <item name="android:statusBarColor">#bcbcbc</item>
     </style>
 
     <style name="Dialog" parent="android:style/Theme.Dialog">

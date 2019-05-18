@@ -617,6 +617,7 @@ public class FirebaseTransactionsAction {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
                         Post post1 = dataSnapshot.getValue(Post.class);
+                        if (post1.getSenderUid() == null) return;
                         dbRef.child(FirebaseConstants.SCHOOLS_USERS_NODE)
                                 .child(post1.getSenderUid())
                                 .child(FirebaseConstants.SCHOOL_DETAIL_NODE)

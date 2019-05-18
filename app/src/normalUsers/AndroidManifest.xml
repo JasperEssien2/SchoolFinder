@@ -3,11 +3,7 @@
 
     <application android:name="com.example.android.schoolfinder.normalUsers.App">
         <activity android:name="com.example.android.schoolfinder.normalUsers.Activities.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver
@@ -34,7 +30,13 @@
 
         <activity
             android:name="com.example.android.schoolfinder.normalUsers.HomeActivity"
-            android:theme="@style/SchoolSearchTheme" />
+            android:theme="@style/SchoolSearchTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

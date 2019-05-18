@@ -47,7 +47,7 @@ public class Navigation {
                         selected = R.id.action_search_page;
                         ((AppCompatActivity) activity).getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.content, new SearchPageFragment(), "search_page")
+                                .add(R.id.content, new SearchPageFragment(), "search_page")
                                 .commit();
 
                         break;
@@ -57,7 +57,7 @@ public class Navigation {
                         selected = R.id.action_feed_page;
                         ((AppCompatActivity) activity).getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.content, new ActivitiesFragment(), "owner_settings")
+                                .add(R.id.content, new ActivitiesFragment(), "owner_settings")
                                 .commit();
                         break;
 
@@ -68,7 +68,7 @@ public class Navigation {
 //                        bundle.putBoolean(BundleConstants.IS_CLASS_SEETTING, true);
                         ((AppCompatActivity) activity).getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.content, new SettingsFragment(), "profile page")
+                                .add(R.id.content, new SettingsFragment(), "profile page")
                                 .commit();
 
                         break;
